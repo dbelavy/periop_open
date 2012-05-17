@@ -39,3 +39,9 @@ gem "bootstrap-sass", ">= 2.0.1"
 gem "will_paginate_mongoid"
 gem "therubyracer", :group => :assets, :platform => :ruby
 gem "simple_form"
+
+group :production do
+  gem 'thin'
+end
+
+gem "heroku"
