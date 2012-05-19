@@ -45,3 +45,4 @@ group :production do
 end
 
 gem "heroku"
+gem "cancan"

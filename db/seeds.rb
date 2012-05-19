@@ -5,10 +5,33 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+def dev_email param
+  'alexander.khitev+' + param + '@gmail.com'
+end
+
 puts 'EMPTY THE MONGODB DATABASE'
-Mongoid.master.collections.reject { |c| c.name =~ /^system/}.each(&:drop)
+Mongoid.master.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
 puts 'SETTING UP DEFAULT USER LOGIN'
-user = User.create! :name => 'First User', :email => 'user@example.com', :password => 'please', :password_confirmation => 'please', :confirmed_at => Time.now.utc
-puts 'New user created: ' << user.name
-user2 = User.create! :name => 'Second User', :email => 'user2@example.com', :password => 'please', :password_confirmation => 'please', :confirmed_at => Time.now.utc
-puts 'New user created: ' << user2.name
+
+if ENV["RAILS_ENV"] == 'production'
+  if ENV["ADMIN_PASSWORD"].nil?
+    puts 'ADMIN_PASSWORD env variable should be not empty'
+    raise
+  end
+  # for production to have secure password
+  user = User.create! :name => 'Admin', :email => 'admin@production.com', :password => ENV["AMDIN_PASSWORD"], :password_confirmation => ENV["AMDIN_PASSWORD"], :confirmed_at => Time.now.utc
+else
+  user = User.create! :name => 'Admin', :email => dev_email('admin'), :password => '123456', :password_confirmation => '123456', :confirmed_at => Time.now.utc
+  user.update_attribute(:role, 'admin')
+end
+
+puts 'admin created: ' << user.name + user.email
+
+user = User.create! :name => 'First User', :email => dev_email('doctor'), :password => '123456', :password_confirmation => '123456', :confirmed_at => Time.now.utc
+user.update_attribute(:role, 'doctor')
+
+
+puts 'New user Doctor created: ' << user.name + user.email
+
+user = User.create! :name => 'First User', :email => dev_email('patient'), :password => '123456', :password_confirmation => '123456', :confirmed_at => Time.now.utc
+

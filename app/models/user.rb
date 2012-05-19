@@ -40,7 +40,17 @@ class User
   # run 'rake db:mongoid:create_indexes' to create indexes
   index :email, :unique => true
   field :name
+
+  field :role,:type => String, :default =>'patient'
+
+  # ROLES constant
+  ROLES = %w[admin doctor patient]
+
+
   validates_presence_of :name
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at,:role
+
+  attr_protected :role
+
 end
 
