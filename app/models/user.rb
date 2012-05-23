@@ -7,28 +7,28 @@ class User
          :recoverable, :rememberable, :trackable, :validatable
 
   ## Database authenticatable
-  field :email,              :type => String, :null => false, :default => ""
+  field :email, :type => String, :null => false, :default => ""
   field :encrypted_password, :type => String, :null => false, :default => ""
 
   ## Recoverable
-  field :reset_password_token,   :type => String
+  field :reset_password_token, :type => String
   field :reset_password_sent_at, :type => Time
 
   ## Rememberable
   field :remember_created_at, :type => Time
 
   ## Trackable
-  field :sign_in_count,      :type => Integer, :default => 0
+  field :sign_in_count, :type => Integer, :default => 0
   field :current_sign_in_at, :type => Time
-  field :last_sign_in_at,    :type => Time
+  field :last_sign_in_at, :type => Time
   field :current_sign_in_ip, :type => String
-  field :last_sign_in_ip,    :type => String
+  field :last_sign_in_ip, :type => String
 
   ## Confirmable
-  field :confirmation_token,   :type => String
-  field :confirmed_at,         :type => Time
+  field :confirmation_token, :type => String
+  field :confirmed_at, :type => Time
   field :confirmation_sent_at, :type => Time
-  field :unconfirmed_email,    :type => String # Only if using reconfirmable
+  field :unconfirmed_email, :type => String # Only if using reconfirmable
 
   ## Lockable
   # field :failed_attempts, :type => Integer, :default => 0 # Only if lock strategy is :failed_attempts
@@ -41,16 +41,45 @@ class User
   index :email, :unique => true
   field :name
 
-  field :role,:type => String, :default =>'patient'
+  field :user_role, :type => String, :default => 'undefined'
 
-  # ROLES constant
-  ROLES = %w[admin doctor patient]
-
+  # user related to role specific entity
+  has_one :patient
+  has_one :doctor
+  has_one :admin
 
   validates_presence_of :name
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at,:role
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at
 
-  attr_protected :role
+  attr_protected :user_role
 
+  def admin_role?
+    self.role=='admin'
+  end
+
+  def doctor_role?
+    self.role == 'doctor'
+  end
+
+  def patient_role?
+    self.role =='patient'
+  end
+
+  def assign_role( role_name)
+    if self.user_role != 'undefined'
+      raise 'Role already assigned'
+    end
+    puts 'setup role : ' + role_name
+    update_attributes!(:user_role => role_name )
+    if role_name == 'admin'
+
+    elsif role_name == 'doctor'
+      self.create_doctor();
+    elsif role_name == 'patient'
+      self.create_patient();
+    else
+      raise 'Unknown role! ' + role_name
+    end
+  end
 end
 

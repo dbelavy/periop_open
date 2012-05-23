@@ -10,6 +10,23 @@ describe User do
       :password_confirmation => "foobar"
     }
   end
+
+
+  describe "user roles" do
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+
+    #
+    #it "should assign new role" do
+    #  @user.assign_role('doctor')
+    #  @user.role.should eq('doctor')
+    #  User.first.role.should eq 'doctor'
+    #end
+
+
+  end
+
   
   it "should create a new instance given a valid attribute" do
     User.create!(@attr)
@@ -62,6 +79,7 @@ describe User do
     it "should have a password confirmation attribute" do
       @user.should respond_to(:password_confirmation)
     end
+
   end
   
   describe "password validations" do

@@ -1,3 +1,11 @@
 %h3 Home
 - @users.each do |user|
   %p User: #{link_to user.name + ' | ' + user.role, user}
+
+TODO professional entry
+TODO patient entry
+
+- if signed_in?
+  %p Loggged in as: #{current_user.name + ' Role: ' +  current_user.role}
+- else
+  %p not signed in TODO
