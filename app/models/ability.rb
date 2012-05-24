@@ -9,7 +9,8 @@ class Ability
       can :manage, :all
     elsif user.doctor?
       can :read, :all
-    else
+    elsif user.patient?
+      can :read, :question
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.
