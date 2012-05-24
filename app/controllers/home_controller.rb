@@ -5,11 +5,11 @@ class HomeController < ApplicationController
     return
     end
 
-    if current_user.admin_role?
-      redirect_to admin_path
-    elsif current_user.doctor_role?
+    if current_user.admin?
+      redirect_to users_path
+    elsif current_user.doctor?
       redirect_to doctor_path
-    elsif current_user.patient_role?
+    elsif current_user.patient?
       redirect_to patient_path(current_user.patient)
     end
   end

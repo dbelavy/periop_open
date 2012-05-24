@@ -1,6 +1,6 @@
 %h2 Users
 - @users.each do |user|
   %br/
-  #{link_to user.email, user} role #{user.role}
+  #{link_to user.email, user} role #{user.user_role}
 
 = will_paginate

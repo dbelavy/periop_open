@@ -1,0 +1,6 @@
+%h2 Patients
+- @patients.each do |patient|
+  %br/
+  #{link_to patient.user.email, patient} name #{patient.user.name}
+
+= will_paginate

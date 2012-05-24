@@ -1,0 +1,18 @@
+= simple_form_for(@question) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :question_type
+    = f.input :display_conditions
+    = f.input :short_name
+    = f.input :clinical_terms
+    = f.input :question_for_patient
+    = f.input :compulsory_for_patient_reported_assessment
+    = f.input :input_type
+    = f.input :option_list
+    = f.input :used_in_patient_assesment
+    = f.input :used_in_phone_assesment
+    = f.input :snomed_concept
+
+  .form-actions
+    = f.button :submit

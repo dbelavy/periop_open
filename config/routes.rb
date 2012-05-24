@@ -1,4 +1,6 @@
 Periop::Application.routes.draw do
+  resources :questions
+
   authenticated :user do
     root :to => 'home#index'
   end

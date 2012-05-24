@@ -1,1 +1,15 @@
 human readible url's
+
+
+questions functionality
+
+ rails generate scaffold question question_type display_conditions short_name clinical_terms question_for_patient compulsory_for_patient_reported_assessment input_type option_list used_in_patient_assesment used_in_phone_assesment snomed_concept
+
+
+ Question type from heirarchy	Question sequence in heirarchy
+ Conditions for display
+ Short_display_name	Clinician terms	Question_for_patient
+ Compulsory for Patient reported assessment
+ Input type
+ Option list
+ Free text length	If answered previously, persists without update in all future Patient reported assessments	Question used in patient assessment	Question used in telephone assessment by clinician	Question used in clinic or bedside assessment by clinician	SNOMED Concept		Other qualifiers		Other	Temporal context	Person referred to

@@ -1,0 +1,39 @@
+%p#notice= notice
+
+%p
+  %b Question type:
+  = @question.question_type
+%p
+  %b Display conditions:
+  = @question.display_conditions
+%p
+  %b Short name:
+  = @question.short_name
+%p
+  %b Clinical terms:
+  = @question.clinical_terms
+%p
+  %b Question for patient:
+  = @question.question_for_patient
+%p
+  %b Compulsory for patient reported assessment:
+  = @question.compulsory_for_patient_reported_assessment
+%p
+  %b Input type:
+  = @question.input_type
+%p
+  %b Option list:
+  = @question.option_list
+%p
+  %b Used in patient assesment:
+  = @question.used_in_patient_assesment
+%p
+  %b Used in phone assesment:
+  = @question.used_in_phone_assesment
+%p
+  %b Snomed concept:
+  = @question.snomed_concept
+
+= link_to 'Edit', edit_question_path(@question)
+\|
+= link_to 'Back', questions_path

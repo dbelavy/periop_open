@@ -53,16 +53,16 @@ class User
 
   attr_protected :user_role
 
-  def admin_role?
-    self.role=='admin'
+  def admin?
+    self.user_role=='admin'
   end
 
-  def doctor_role?
-    self.role == 'doctor'
+  def doctor?
+    self.user_role == 'doctor'
   end
 
-  def patient_role?
-    self.role =='patient'
+  def patient?
+    self.user_role =='patient'
   end
 
   def assign_role( role_name)
@@ -70,7 +70,9 @@ class User
       raise 'Role already assigned'
     end
     puts 'setup role : ' + role_name
-    update_attributes!(:user_role => role_name )
+    #update_attributes!(:user_role =>   role_name )
+    self[:user_role] =  role_name
+    save!
     if role_name == 'admin'
 
     elsif role_name == 'doctor'
@@ -82,4 +84,3 @@ class User
     end
   end
 end
-
