@@ -39,7 +39,6 @@ class User
   # field :authentication_token, :type => String
   # run 'rake db:mongoid:create_indexes' to create indexes
   index :email, :unique => true
-  field :name
 
   field :user_role, :type => String, :default => 'undefined'
 
@@ -48,8 +47,8 @@ class User
   has_one :doctor
   has_one :admin
 
-  validates_presence_of :name
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at
+  validates_presence_of :email
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :confirmed_at
 
   attr_protected :user_role
 
@@ -65,12 +64,24 @@ class User
     self.user_role =='patient'
   end
 
+  def name
+    if ((!user_role.nil?) && (user_role!= 'undefined')&&(user_role!= 'admin'))
+      related = self.send(user_role)
+      puts 'related ' + related.to_s
+      puts 'user_role ' + user_role
+      related.name.to_s
+      #eval '#{related}.name'
+    else
+      "admin"
+    end
+
+  end
+
+
   def assign_role( role_name)
     if self.user_role != 'undefined'
       raise 'Role already assigned'
     end
-    puts 'setup role : ' + role_name
-    #update_attributes!(:user_role =>   role_name )
     self[:user_role] =  role_name
     save!
     if role_name == 'admin'

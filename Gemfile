@@ -13,8 +13,10 @@ gem "haml-rails", ">= 0.3.4", :group => :development
 gem "rspec-rails", ">= 2.10.1", :group => [:development, :test]
 gem "database_cleaner", ">= 0.7.2", :group => :test
 gem "mongoid-rspec", ">= 1.4.4", :group => :test
-gem "machinist", :group => :test
+#gem "machinist", :group => :test
+gem "factory_girl", :group => [:development, :test]
 gem "factory_girl_rails", ">= 3.3.0", :group => [:development, :test]
+gem "faker", :group => [:development, :test]
 gem "email_spec", ">= 1.2.1", :group => :test
 gem "guard", ">= 0.6.2", :group => :development  
 case HOST_OS
@@ -47,6 +49,7 @@ end
 group :test do
   gem 'guard-spork', '0.3.2'
   gem 'spork', '0.9.0'
+  gem 'capybara'
 end
 
 gem "heroku"
