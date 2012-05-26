@@ -11,9 +11,12 @@ class Ability
       can :read, :all
     elsif user.patient?
       can :read, :question
-      can :read, Patient do |patient|
-        patient.eql? user.patient
+      can :show, Patient do |patient|
+        result = patient.eql? user.patient
+        Rails.logger.debug 'name: ' + patient.name + ' authoirzed: ' + result.to_s
+        result
       end
+
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

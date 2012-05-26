@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :patient do
-    association user {create :patient_user}
+    user
     name Faker::Name.name
     ssn "MyString"
     birth_day "1965-05-21"
