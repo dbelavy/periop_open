@@ -9,4 +9,28 @@ class PatientsController < ApplicationController
     @patients = Patient.paginate(:page => params[:page])
   end
 
+  def new
+    @patient = Patient.new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @patient}
+    end
+  end
+  
+  # POST /patients
+  # POST /patients.json
+  def create
+    @patient = Patient.new(params[:patient])
+
+    respond_to do |format|
+      if @patient.save
+        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
+        format.json { render json: @patient, status: :created, location: @patient }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @patient.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
 end

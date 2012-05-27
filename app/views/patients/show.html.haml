@@ -2,4 +2,8 @@
 %p
   User: #{@patient.name}
 %p
-  Email: #{@patient.user.email if @patient.user.email}
+  Email: #{@patient.user.email if @patient.user}
+
+= link_to 'Edit', edit_patient_path(@patient)
+\|
+= link_to 'Back', patients_path

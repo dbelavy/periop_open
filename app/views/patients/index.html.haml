@@ -1,6 +1,7 @@
 %h2 Patients
 - @patients.each do |patient|
   %br/
-  #{link_to patient.user.email, patient} name #{patient.user.name}
+  #{link_to patient.name, patient} name #{patient.user.name if patient.user}
 
 = will_paginate
+= link_to 'New Patient', new_patient_path

@@ -8,6 +8,7 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.doctor?
+      can :manage, Patient
       can :read, :all
     elsif user.patient?
       can :read, :question

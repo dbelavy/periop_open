@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     if current_user.admin?
       redirect_to users_path
     elsif current_user.doctor?
-      redirect_to doctor_path
+      redirect_to doctor_path current_user.doctor
     elsif current_user.patient?
       redirect_to patient_path(current_user.patient)
     end

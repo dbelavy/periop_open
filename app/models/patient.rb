@@ -5,6 +5,7 @@ class Patient
   field :ssn, :type => String
   field :birth_day, :type => Date
 
+  validates_presence_of :name,:ssn
   belongs_to :user
 
 end

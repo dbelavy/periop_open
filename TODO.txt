@@ -2,6 +2,8 @@ human readible url's
 
 custom exceptions pages + email to developer?
 
+devise customization (no reset password for users, separate login\signup screens)
+
 integration tests for roles access
 
 therubyracer - the use of this gem in production is strongly discouraged as it uses a very large amount of memory.| investigate

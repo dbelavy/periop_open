@@ -7,6 +7,4 @@ class DoctorsController < ApplicationController
   def index
     @doctors = Doctor.paginate(:page => params[:page])
   end
-
-  
 end

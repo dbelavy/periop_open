@@ -1,0 +1,10 @@
+= simple_form_for(@patient) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :ssn
+    = f.input :birth_day  ,:as => :date, :start_year => Date.today.year - 120,:end_year => Date.today.year - 12, :order => [:day , :month, :year]
+
+  .form-actions
+    = f.button :submit
