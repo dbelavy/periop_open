@@ -1,4 +1,6 @@
 Periop::Application.routes.draw do
+  devise_for :patients
+
   resources :questions
 
   authenticated :user do
