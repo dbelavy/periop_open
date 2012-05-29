@@ -67,10 +67,7 @@ class User
   def name
     if ((!user_role.nil?) && (user_role!= 'undefined')&&(user_role!= 'admin'))
       related = self.send(user_role)
-      puts 'related ' + related.to_s
-      puts 'user_role ' + user_role
       related.name.to_s
-      #eval '#{related}.name'
     else
       "admin"
     end
