@@ -6,7 +6,7 @@ namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
    Rake::Task['db:seed'].invoke
-   create_user('doctor','doctor','Dr House')
+   create_user('professional','professional','Dr House')
    FactoryGirl.create(:patient,:name => 'Viktor Navorski')
    FactoryGirl.create(:patient,:name => 'Forrest Gump')
 

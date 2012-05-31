@@ -18,9 +18,9 @@ describe User do
     end
 
     it "should assign new role" do
-      @user.assign_role('doctor')
-      @user.user_role.should eq('doctor')
-      User.first.user_role.should eq 'doctor'
+      @user.assign_role('professional')
+      @user.user_role.should eq('professional')
+      User.first.user_role.should eq 'professional'
     end
 
     it "should not change role by mass assignment" do

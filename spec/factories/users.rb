@@ -13,9 +13,9 @@ FactoryGirl.define do
       patient{ Factory.build(:patient)}
     end
 
-    factory :doctor_user do
-      user_role 'doctor'
-      doctor
+    factory :professional_user do
+      user_role 'professional'
+      professional
     end
   end
 end

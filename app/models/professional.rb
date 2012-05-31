@@ -1,4 +1,4 @@
-class Doctor
+class Professional
   include Mongoid::Document
   field :name, :type => String
 

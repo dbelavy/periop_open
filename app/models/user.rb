@@ -44,7 +44,7 @@ class User
 
   # user related to role specific entity
   has_one :patient
-  has_one :doctor
+  has_one :professional
   has_one :admin
 
   validates_presence_of :email
@@ -56,8 +56,8 @@ class User
     self.user_role=='admin'
   end
 
-  def doctor?
-    self.user_role == 'doctor'
+  def professional?
+    self.user_role == 'professional'
   end
 
   def patient?
@@ -83,8 +83,8 @@ class User
     save!
     if role_name == 'admin'
 
-    elsif role_name == 'doctor'
-      self.create_doctor();
+    elsif role_name == 'professional'
+      self.create_professional();
     elsif role_name == 'patient'
       self.create_patient();
     else
