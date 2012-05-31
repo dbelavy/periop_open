@@ -2,7 +2,12 @@
 # More info at https://github.com/guard/guard#readme
 
 
-guard 'spork',  :wait => 50,:rspec_env => { 'RAILS_ENV' => 'test' }, :rspec => true ,:cucumber => false, :test_unit => false, :bundler => false do
+guard 'rails' do
+  watch('Gemfile.lock')
+  watch(%r{^(config|lib)/.*})
+end
+
+guard 'spork',  :rspec_env => { 'RAILS_ENV' => 'test' }, :rspec => true ,:cucumber => false, :test_unit => false, :bundler => false do
   watch('config/application.rb')
   watch('config/environment.rb')
   watch(%r{^config/environments/.+\.rb$})
@@ -18,11 +23,6 @@ guard 'bundler' do
   watch('Gemfile')
   # Uncomment next line if Gemfile contain `gemspec' command
   # watch(/^.+\.gemspec/)
-end
-
-guard 'rails' do
-  watch('Gemfile.lock')
-  watch(%r{^(config|lib)/.*})
 end
 
 guard 'rspec', :version => 2,:all_after_pass => false, :cli => '--drb' do

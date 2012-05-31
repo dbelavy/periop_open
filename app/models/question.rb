@@ -11,4 +11,5 @@ class Question
   field :used_in_patient_assesment, :type => String
   field :used_in_phone_assesment, :type => String
   field :snomed_concept, :type => String
+  #field registered, :type => Date
 end

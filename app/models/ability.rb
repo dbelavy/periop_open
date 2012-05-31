@@ -4,20 +4,25 @@ class Ability
   def initialize(user)
     # Define abilities for the passed in user here. For example:
     #
-    user ||= User.new # guest user (not logged in)
-    if user.admin?
-      can :manage, :all
-    elsif user.doctor?
-      can :manage, Patient
-      can :read, :all
-    elsif user.patient?
+    Rails.logger.debug 'initialize ability for : ' + user.to_s
+    if user.instance_of? Patient
+
       can :read, :question
       can :show, Patient do |patient|
-        result = patient.eql? user.patient
-        Rails.logger.debug 'name: ' + patient.name + ' authoirzed: ' + result.to_s
+        result = patient.eql? user
+        Rails.logger.debug 'current patient: ' + patient.name + ' authoirzed: ' + result.to_s
         result
       end
-
+    elsif user.instance_of? User
+      user ||= User.new # guest user (not logged in)
+      if user.admin?
+        can :manage, :all
+      elsif user.doctor?
+        can :manage, Patient
+        can :read, :all
+      elsif user.patient?
+        raise 'wrong role for user' + user.to_s
+      end
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

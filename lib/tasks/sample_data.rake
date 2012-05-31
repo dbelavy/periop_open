@@ -7,8 +7,14 @@ namespace :db do
   task populate: :environment do
    Rake::Task['db:seed'].invoke
    create_user('doctor','doctor','Dr House')
-   create_user('patient','patient','Mr Navorski')
-   create_user('patient','patient1','Forrest Gump')
+   FactoryGirl.create(:patient,:name => 'Viktor Navorski')
+   FactoryGirl.create(:patient,:name => 'Forrest Gump')
+
+   10.times do
+   FactoryGirl.create(:patient)
+   end
+
+
 
   end
 end

@@ -1,5 +1,8 @@
 Periop::Application.routes.draw do
-  devise_for :patients
+
+  devise_for :patients, :path_prefix => 'd'
+
+  resources :patients
 
   resources :questions
 
@@ -10,6 +13,6 @@ Periop::Application.routes.draw do
   devise_for :users
   resources :users, :only => [:show, :index]
   resources :doctors
-  resources :patients
+
 
 end

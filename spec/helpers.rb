@@ -8,3 +8,8 @@ def create_user( role, email,name)
   user.send(role).update_attribute(:name, name)
   return user
 end
+
+def create_patient(name)
+  #create(:patient,:name => name)
+end
+

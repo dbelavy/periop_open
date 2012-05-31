@@ -2,9 +2,11 @@
 
 FactoryGirl.define do
   factory :patient do
-    user
-    name Faker::Name.name
-    ssn "MyString"
-    birth_day "1965-05-21"
+    sequence(:email) {|n| "email#{n}@factory.com" }
+    password '123456'
+    password_confirmation { |u| u.password }
+    sequence(:name) {|n| Faker::Name.name}
+    sequence(:ssn) {Random.rand(1000000).to_s}
+    dob "1965-05-21"
   end
 end

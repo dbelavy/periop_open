@@ -1,6 +1,6 @@
-new patient nested form
+new patient form
 http://stackoverflow.com/questions/5999870/rails-simple-form-two-models
-!devise customization (no reset password for users, separate login\signup screens)
++devise customization (no reset password for users, separate login\signup screens)
 
 
 human readible url's

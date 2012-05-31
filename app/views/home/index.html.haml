@@ -2,15 +2,19 @@
 - @users.each do |user|
   %p User: #{link_to user.name + ' | ' + user.user_role, user}
 
-
-TODO professional entry
-TODO patient entry
-
+%br
+= link_to('Professional entry',new_user_session_path)
+%br
+= link_to('Patient entry',new_patient_session_path)
+%br
 TODO What is pre-op.net? About pre-op.net.
+%br
 TODO Privacy / legal etc
+%br
 
-
-- if signed_in?
+- if user_signed_in?
   %p Loggged in as: #{current_user.name + ' Role: ' +  current_user.user_role}
+- elsif patient_signed_in?
+  %p Loggged in as patient: #{current_patient.name }
 - else
   %p not signed in TODO

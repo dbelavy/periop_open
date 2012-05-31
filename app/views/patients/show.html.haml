@@ -1,9 +1,11 @@
 %h2 Patient screen
 %p
-  User: #{@patient.name}
+    Name: #{@patient.name}
 %p
-  Email: #{@patient.user.email if @patient.user}
-
+    SSN: #{@patient.ssn}
+%p
+    Date of birth: #{ @patient.dob}
 = link_to 'Edit', edit_patient_path(@patient)
 \|
 = link_to 'Back', patients_path
+= debug @patient

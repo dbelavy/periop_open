@@ -21,7 +21,10 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     @patient = Patient.new(params[:patient])
-
+    password = @patient.dob.to_s
+    @patient.password= password
+    @patient.password_confirmation= password
+    logger.debug 'created patient ' + @patient.to_yaml
     respond_to do |format|
       if @patient.save
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }

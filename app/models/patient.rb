@@ -1,5 +1,6 @@
 class Patient
   include Mongoid::Document
+  include Mongoid::MultiParameterAttributes
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -9,7 +10,7 @@ class Patient
 
 
   ## Database authenticatable
-  field :email, :type => String, :null => false, :default => ""
+  field :email, :type => String, :null => false
   field :encrypted_password, :type => String, :null => false, :default => ""
 
   ## Recoverable
