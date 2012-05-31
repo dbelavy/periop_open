@@ -1,11 +1,17 @@
 %h2 Patient screen
-%p
+
+- if !patient_signed_in?
+  %p
     Name: #{@patient.name}
-%p
+  %p
     SSN: #{@patient.ssn}
-%p
+  %p
     Date of birth: #{ @patient.dob}
-= link_to 'Edit', edit_patient_path(@patient)
-\|
-= link_to 'Back', patients_path
-= debug @patient
+  %p
+    Planned date of surgery: #{ @patient.planned_date_of_surgery}
+  = link_to 'Edit', edit_patient_path(@patient)
+  \|
+  = link_to 'Back', patients_path
+  = debug @patient
+- else
+  %p TODO proceed patient to assessment

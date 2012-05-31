@@ -44,9 +44,11 @@ class Patient
   field :name, :type => String
   field :ssn, :type => String
   field :dob, :type => Date
+  field :planned_date_of_surgery, :type => Date
+
+
 
   validates_presence_of :name, :ssn
-  #attr_accessible :name, :ssn,:dob
   belongs_to :user
 
 end
