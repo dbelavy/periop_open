@@ -6,6 +6,9 @@
     = f.input :email
     = f.input :ssn
     = f.input :dob  ,:as => :date, :start_year => Date.today.year - 120,:end_year => Date.today.year , :order => [:day , :month, :year]
-
+    = f.input :planned_date_of_surgery ,:as => :date, :start_year => Date.today.year,:end_year => Date.today.year + 10 , :order => [:day , :month, :year]
+    = f.association :surgeon ,:collection => Professional.all
+    -#,:collection => Professional.surgeons
+    -#= f.association :professional,:collection => Professional.anaesthetists
   .form-actions
     = f.button :submit

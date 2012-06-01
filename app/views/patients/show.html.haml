@@ -4,11 +4,15 @@
   %p
     Name: #{@patient.name}
   %p
-    SSN: #{@patient.ssn}
-  %p
     Date of birth: #{ @patient.dob}
   %p
+    SSN: #{@patient.ssn}
+  %p
     Planned date of surgery: #{ @patient.planned_date_of_surgery}
+  %p
+    Surgeon: #{ @patient.surgeon.name if !@patient.surgeon.nil?}
+  %p
+    Anaesthetist: #{ @patient.anaesthetist.name if !@patient.anaesthetist.nil?}
   = link_to 'Edit', edit_patient_path(@patient)
   \|
   = link_to 'Back', patients_path

@@ -51,4 +51,7 @@ class Patient
   validates_presence_of :name, :ssn
   belongs_to :user
 
+  belongs_to :surgeon, :class_name => 'Professional', :inverse_of => :surgeon_patients
+  belongs_to :anaesthetist, :class_name=> 'Professional',:inverse_of => :anaesthetist_patients
+
 end
