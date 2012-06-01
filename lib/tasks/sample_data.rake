@@ -1,10 +1,11 @@
 require Rails.root.join('spec','helpers.rb')
 require 'rubygems'           #so it can load gems
-require 'factory_girl_rails' #so it can run in development
+
 
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
+  require 'factory_girl_rails' #so it can run in development
    Rake::Task['db:seed'].invoke
    10.times do |n|
      create_professional(Professional::SURGEON,'s' + n.to_s  ,Faker::Name.name)
