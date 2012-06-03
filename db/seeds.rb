@@ -19,9 +19,8 @@ if ENV["ADMIN_PASSWORD"].nil?
 end
 if ENV["RAILS_ENV"] == 'production'
   # for production to have secure password
-  user = User.create! :email => 'admin@production.com', :password => ENV["ADMIN_PASSWORD"], :password_confirmation => ENV["ADMIN_PASSWORD"], :confirmed_at => Time.now.utc
-
-
+  admin_email = ENV["ADMIN_EMAIL"].nil? ? 'admin@pre-op.net' : ENV["ADMIN_EMAIL"]
+  user = User.create! :email => admin_email, :password => ENV["ADMIN_PASSWORD"], :password_confirmation => ENV["ADMIN_PASSWORD"], :confirmed_at => Time.now.utc
 else
   user = User.create! :email => dev_email('admin'), :password => '123456', :password_confirmation => '123456', :confirmed_at => Time.now.utc
   user.assign_role 'admin'
