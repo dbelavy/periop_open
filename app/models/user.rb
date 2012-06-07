@@ -3,7 +3,7 @@ class User
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :confirmable,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   ## Database authenticatable
@@ -52,12 +52,17 @@ class User
 
   attr_protected :user_role
 
+  PROFESSIONAL = 'professional'
+  ADMIN = 'admin'
+
+
   def admin?
-    self.user_role=='admin'
+    self.user_role==ADMIN
+
   end
 
   def professional?
-    self.user_role == 'professional'
+    self.user_role == PROFESSIONAL
   end
 
   def patient?
@@ -65,14 +70,16 @@ class User
   end
 
   def name
-    if ((!user_role.nil?) && (user_role!= 'undefined')&&(user_role!= 'admin'))
-      related = self.send(user_role)
-      related.name.to_s
-    else
-      "admin"
+    if ((!user_role.nil?) && (user_role!= 'undefined'))
+        if (user_role!= 'admin')
+        related = self.send(user_role)
+        related.name.to_s
+        else
+          "admin"
+        end
     end
-
   end
+
 
 
   def assign_role( role_name)
@@ -81,14 +88,18 @@ class User
     end
     self[:user_role] =  role_name
     save!
-    if role_name == 'admin'
+    if role_name == ADMIN
 
-    elsif role_name == 'professional'
+    elsif role_name == PROFESSIONAL
       self.create_professional();
-    elsif role_name == 'patient'
-      self.create_patient();
     else
       raise 'Unknown role! ' + role_name
     end
+  end
+
+  def to_s
+    result = 'User : '
+    result += ' '  + name + ' | '  + user_role
+    result
   end
 end

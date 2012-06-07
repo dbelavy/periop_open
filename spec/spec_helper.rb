@@ -12,6 +12,7 @@ Spork.prefork do
   require 'rspec/rails'
   require 'email_spec'
   require 'rspec/autorun'
+  require 'factory_girl_rails'
   require 'faker'
 
   # Requires supporting ruby files with custom matchers and macros, etc,

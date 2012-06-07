@@ -3,12 +3,19 @@
   User: #{@professional.name}
 %p
   Email: #{@professional.user.email if @professional.user.email}
-
-TODO Start new or edit preoperative assessments
-%br
-%br
-#{link_to 'New / find patient (professional version)', patients_path}
-%br
-TODO Review assessments
-%br
-TODO Edit settings
+%p
+  Speciality #{@professional.speciality}
+-#  professional personal part
+- if (!current_user.nil? && (current_user.eql? @professional.user))
+  TODO Start new or edit preoperative assessments
+  %br
+  %br
+  #{link_to 'New / find patient (professional version)', patients_path}
+  %br
+  TODO Review assessments
+  %br
+  TODO Edit settings
+- if !current_user.nil? && (current_user.admin?)
+  = link_to 'Reset password', reset_password_professional_path(@professional),:method => :post
+  \|
+  = link_to 'Back', professionals_path

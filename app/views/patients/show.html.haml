@@ -13,8 +13,11 @@
     Surgeon: #{ @patient.surgeon.name if !@patient.surgeon.nil?}
   %p
     Anaesthetist: #{ @patient.anaesthetist.name if !@patient.anaesthetist.nil?}
-  = link_to 'Edit', edit_patient_path(@patient)
-  \|
-  = link_to 'Back', patients_path
+  - if can? :edit, @patient
+    = link_to 'Edit', edit_patient_path(@patient)
+    \|
+    = link_to 'Back', patients_path
+  - else
+    = link_to 'Back', patients_path
 - else
   %p TODO proceed patient to assessment

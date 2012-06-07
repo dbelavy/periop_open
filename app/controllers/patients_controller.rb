@@ -37,8 +37,7 @@ class PatientsController < ApplicationController
       end
     end
   end
-  
-  
+
   # POST /patients
   # POST /patients.json
   def create

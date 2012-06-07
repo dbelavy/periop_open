@@ -16,12 +16,16 @@ class Ability
     elsif user.instance_of? User
       user ||= User.new # guest user (not logged in)
       if user.admin?
-        can :manage, :all
+        Rails.logger.debug 'admin user'
+        can :read, Patient
+        can :manage, Professional
+        can :manage, User
       elsif user.professional?
+        Rails.logger.debug 'professional user'
         can :manage, Patient
         can :read, :all
-      elsif user.patient?
-        raise 'wrong role for user' + user.to_s
+      else
+
       end
     end
     #

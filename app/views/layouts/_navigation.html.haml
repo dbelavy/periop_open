@@ -2,16 +2,17 @@
 %ul.nav.pull-right
   - if user_signed_in? && current_user.admin?
     %li
-      Loggged in as admin: #{current_user.name}
-    %li
       = link_to('Questions managment', questions_path)
     %li
       = link_to('Patients managment', patients_path)
     %li
       = link_to('Professionals management', professionals_path)
-  - if user_signed_in?
     %li
-      %a{:href => '#'}Loggged in as professional: #{current_user.name}
+      %a{:href => '#'}Loggged in as admin: #{current_user.name}
+  - if user_signed_in?
+    - if current_user.professional?
+      %li
+        %a{:href => '#'}Loggged in as professional: #{current_user.name}
     %li
       = link_to('Logout', destroy_user_session_path, :method=>'delete')
   - elsif patient_signed_in?
