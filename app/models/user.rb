@@ -98,8 +98,7 @@ class User
   end
 
   def to_s
-    result = 'User : '
-    result += ' '  + name + ' | '  + email
+    result = 'User : ' + email
     result
   end
 end

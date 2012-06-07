@@ -24,7 +24,7 @@ namespace :db do
    Patient.first.surgeon = Professional.surgeons.first
    10.times do |n|
      p = Patient.find(:all)[n]
-     p.surgeon = Professional.surgeons[Random.rand 3]
+     p.surgeon = Faker::Name.name + ' surgeon'
      p.anaesthetist= Professional.anaesthetists[Random.rand 3]
      p.save!
    end

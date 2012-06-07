@@ -6,22 +6,26 @@ class PatientsController < ApplicationController
   end
 
   def index
-    @patients = Patient.paginate(:page => params[:page])
+    #@patients = Patient.paginate(:page => params[:page])
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: PatientsDatatable.new(view_context)}
+    end
   end
 
   def new
     @patient = Patient.new
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @patient}
+      format.json { render json: @patient }
     end
   end
-  
+
   # GET /patients/1/edit
   def edit
     @patient = Patient.find(params[:id])
   end
-  
+
   # PUT /patients/1
   # PUT /patients/1.json
   def update
@@ -56,5 +60,5 @@ class PatientsController < ApplicationController
       end
     end
   end
-  
+
 end

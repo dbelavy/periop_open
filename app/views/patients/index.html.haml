@@ -1,8 +1,24 @@
 %h2 Patients
-- @patients.each do |patient|
-  %br/
-  #{link_to patient.name, patient}
+%table#patients{:data => {:source => [patients_url(format: "json") ]}}
+  %thead
+    %tr
+      %th Name
+      %th Date of birth
+      %th  Anaesthetist
+      %th  Surgeon
+      %th  Planned date of Procedure
+      -#%th  assesment workflow flag
+      %th  Ready for surgery flag
+    %tbody
+      -#- @patients.each do |patient|
+      -#  %tr
+      -#    %td #{link_to patient.name, patient}
+      -#    %td #{patient.dob}
+      -#    %td #{patient.anaesthetist.name if !patient.anaesthetist.nil?}
+      -#    %td #{patient.surgeon}
+      -#    %td #{patient.planned_date_of_surgery}
+      -#    %td no
 
-= will_paginate
+-#= will_paginate
 %br
 = link_to 'New Patient', new_patient_path

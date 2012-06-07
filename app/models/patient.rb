@@ -44,6 +44,7 @@ class Patient
   field :name, :type => String
   field :ssn, :type => String
   field :dob, :type => Date
+  field :ready_to_surgery, :type => Boolean,:default => false
   field :planned_date_of_surgery, :type => Date
 
 
@@ -51,7 +52,7 @@ class Patient
   validates_presence_of :name, :ssn
   belongs_to :user
 
-  belongs_to :surgeon, :class_name => 'Professional', :inverse_of => :surgeon_patients
+  field :surgeon, :type => String
   belongs_to :anaesthetist, :class_name=> 'Professional',:inverse_of => :anaesthetist_patients
 
 end
