@@ -10,7 +10,7 @@
   %p
     Planned date of surgery: #{ @patient.planned_date_of_surgery}
   %p
-    Surgeon: #{ @patient.surgeon.name if !@patient.surgeon.nil?}
+    Surgeon: #{ @patient.surgeon}
   %p
     Anaesthetist: #{ @patient.anaesthetist.name if !@patient.anaesthetist.nil?}
   - if can? :edit, @patient

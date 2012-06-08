@@ -8,9 +8,6 @@ namespace :db do
   require 'factory_girl_rails' #so it can run in development
    Rake::Task['db:seed'].invoke
    10.times do |n|
-     create_professional(Professional::SURGEON,'s' + n.to_s  ,Faker::Name.name)
-   end
-   10.times do |n|
      create_professional(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
    end
    FactoryGirl.create(:patient,:name => 'Viktor Navorski')

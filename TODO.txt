@@ -20,11 +20,42 @@ questions functionality
 
  rails generate scaffold question question_type display_conditions short_name clinical_terms question_for_patient compulsory_for_patient_reported_assessment input_type option_list used_in_patient_assesment used_in_phone_assesment snomed_concept
 
+Data classification
+ type from hierarchy
+ sequence in hierarchy
+ question_id
 
- Question type from heirarchy	Question sequence in heirarchy
- Conditions for display
- Short_display_name	Clinician terms	Question_for_patient
- Compulsory for Patient reported assessment
- Input type
- Option list
- Free text length	If answered previously, persists without update in all future Patient reported assessments	Question used in patient assessment	Question used in telephone assessment by clinician	Question used in clinic or bedside assessment by clinician	SNOMED Concept		Other qualifiers		Other	Temporal context	Person referred to
+ Question
+     question_id
+     data_point
+     Conditions for display
+     Short_display_name
+     Clinician terms
+     Question_for_patient
+     Compulsory for Patient reported assessment
+     Input type
+     Option list
+     SNOMED Concept
+
+
+Form
+ form_id
+ form_name {Patient Form | Patient Update Assessment Form|
+           Telephone Assessment Form | Clinic / ward Assessment Form}
+
+ questions {question_id:x1234,
+            ...
+            question_id:x553}
+
+Assesment
+ form_id
+ state {Not started | Started but incomplete
+        date started | Complete }
+ answers {question_id: x123,
+          answer: "yes",
+          details: "chain smoking since 12"}
+          ...
+          {question_id: x2123,
+           answer: 123  }
+
+
