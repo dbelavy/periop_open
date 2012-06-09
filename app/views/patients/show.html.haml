@@ -13,6 +13,10 @@
     Surgeon: #{ @patient.surgeon}
   %p
     Anaesthetist: #{ @patient.anaesthetist.name if !@patient.anaesthetist.nil?}
+  %p
+    - @patient.assessments.each do |a|
+      %li #{a.name} status : #{a.status}
+
   - if can? :edit, @patient
     = link_to 'Edit', edit_patient_path(@patient)
     \|

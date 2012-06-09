@@ -10,7 +10,7 @@ namespace :db do
    10.times do |n|
      create_professional(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
    end
-   FactoryGirl.create( patient , name: 'Viktor Navorski')
+   FactoryGirl.create( :patient , :name => 'Viktor Navorski')
    FactoryGirl.create(:patient,:name => 'Forrest Gump')
 
    10.times do
@@ -52,12 +52,19 @@ namespace :db do
                      person_role: [Question::PATIENT , Question::PROFESSIONAL],
                      concept: "Parent_Guardian_Name" )
 
-    patient_form =  Form.create!(name: "patient assesment", person_role: [Question::PATIENT])
+    patient_form =  Form.create!(name: "Patient assessment", person_role: [Question::PATIENT])
     patient_form.questions.push Question.where(display_name: "Surname").first
     patient_form.questions.push Question.where(display_name: "Date of birth").first
     patient_form.questions.push Question.where(display_name: "Family name").first
     patient_form.questions.push Question.where(display_name: "What is your gender").first
 
+    phone_form =  Form.create!(name: "Telephone Assessment", person_role: [Question::PROFESSIONAL])
+    phone_form.questions.push Question.where(display_name: "Surname").first
+    phone_form.questions.push Question.where(display_name: "Date of birth").first
+
+    clinic_form =  Form.create!(name: "Clinic Assessment", person_role: [Question::PROFESSIONAL])
+    clinic_form.questions.push Question.where(display_name: "Parent_Guardian_Name").first
+    clinic_form.questions.push Question.where(display_name: "Date of birth").first
 
   end
 

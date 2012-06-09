@@ -54,5 +54,33 @@ class Patient
 
   field :surgeon, :type => String
   belongs_to :anaesthetist, :class_name=> 'Professional',:inverse_of => :anaesthetist_patients
+  has_many :assessments
+
+  def assigned
+    assessments.map{|a| a.name}
+  end
+
+
+
+  def assigned= new_types
+    assigned_types = assigned
+    puts 'create assessments' + new_types.to_s
+    (new_types - assigned_types).each{|n|
+      if !n.to_s.empty?
+        form = Form.where(:name => n).first
+        Assessment.create_for_patient(form,self)
+      end
+    }
+  end
+
+
+  def assessment_types
+    assigned_types = assigned
+      result = Hash.new
+      Form.all.each do |f|
+        result[f.name]= assigned_types.include? f.name
+      end
+    result
+  end
 
 end

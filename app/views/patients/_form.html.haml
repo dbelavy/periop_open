@@ -9,6 +9,7 @@
     = f.input :planned_date_of_surgery ,:as => :date, :start_year => Date.today.year,:end_year => Date.today.year + 10 , :order => [:day , :month, :year]
     = f.input :surgeon
     = f.input :anaesthetist_id ,:collection => Professional.anaesthetists
+    = f.collection_check_boxes :assigned, @patient.assessment_types, :first, :last
   .form-actions
     = f.button :submit
 = debug @patient
