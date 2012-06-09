@@ -1,0 +1,27 @@
+%h1 Listing concepts
+
+%table
+  %tr
+    %th Name
+    %th Display name
+    %th Snomed code
+    %th Mpog code
+    %th Position
+    %th
+    %th
+    %th
+
+  - @concepts.each do |concept|
+    %tr
+      %td= concept.name
+      %td= concept.display_name
+      %td= concept.snomed_code
+      %td= concept.mpog_code
+      %td= concept.position
+      %td= link_to 'Show', concept
+      %td= link_to 'Edit', edit_concept_path(concept)
+      %td= link_to 'Destroy', concept, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Concept', new_concept_path

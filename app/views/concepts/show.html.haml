@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @concept.name
+%p
+  %b Display name:
+  = @concept.display_name
+%p
+  %b Snomed code:
+  = @concept.snomed_code
+%p
+  %b Mpog code:
+  = @concept.mpog_code
+%p
+  %b Position:
+  = @concept.position
+
+= link_to 'Edit', edit_concept_path(@concept)
+\|
+= link_to 'Back', concepts_path

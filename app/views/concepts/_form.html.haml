@@ -1,0 +1,12 @@
+= simple_form_for(@concept) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :display_name
+    = f.input :snomed_code
+    = f.input :mpog_code
+    = f.input :position
+
+  .form-actions
+    = f.button :submit

@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Status:
+  = @assessment.status
+
+= link_to 'Edit', edit_assessment_path(@assessment)
+\|
+= link_to 'Back', assessments_path

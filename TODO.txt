@@ -18,7 +18,14 @@ therubyracer - the use of this gem in production is strongly discouraged as it u
 
 questions functionality
 
- rails generate scaffold question question_type display_conditions short_name clinical_terms question_for_patient compulsory_for_patient_reported_assessment input_type option_list used_in_patient_assesment used_in_phone_assesment snomed_concept
+ rails generate scaffold question question_type display_conditions short_name clinical_terms
+ question_for_patient compulsory_for_patient_reported_assessment input_type option_list
+ used_in_patient_assesment used_in_phone_assesment snomed_concept
+
+rails generate scaffold concept name display_name snomed_code mpog_code position:integer
+rails generate scaffold assessment status
+rails generate scaffold form name person_role
+
 
 Data classification
  type from hierarchy
@@ -57,5 +64,3 @@ Assesment
           ...
           {question_id: x2123,
            answer: 123  }
-
-

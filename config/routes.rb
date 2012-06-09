@@ -1,5 +1,11 @@
 Periop::Application.routes.draw do
 
+  resources :forms
+
+  resources :assessments
+
+  resources :concepts
+
   devise_for :patients, :path_prefix => 'd'
 
   resources :patients

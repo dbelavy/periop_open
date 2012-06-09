@@ -43,9 +43,7 @@ class User
   field :user_role, :type => String, :default => 'undefined'
 
   # user related to role specific entity
-  has_one :patient
   has_one :professional
-  has_one :admin
 
   validates_presence_of :email
   attr_accessible :email, :password, :password_confirmation, :remember_me, :confirmed_at

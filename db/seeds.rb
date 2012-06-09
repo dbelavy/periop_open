@@ -27,3 +27,4 @@ else
   user.assign_role 'admin'
 end
 puts 'admin created: ' <<  user.email
+

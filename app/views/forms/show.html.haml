@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @form.name
+%p
+  %b Person role:
+  = @form.person_role
+
+= link_to 'Edit', edit_form_path(@form)
+\|
+= link_to 'Back', forms_path
