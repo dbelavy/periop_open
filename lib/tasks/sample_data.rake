@@ -7,6 +7,7 @@ namespace :db do
   task populate: :environment do
   require 'factory_girl_rails' #so it can run in development
    Rake::Task['db:seed'].invoke
+   Rake::Task['db:questions'].invoke
    10.times do |n|
      create_professional(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
    end
@@ -23,6 +24,7 @@ namespace :db do
      p = Patient.find(:all)[n]
      p.surgeon = Faker::Name.name + ' surgeon'
      p.anaesthetist= Professional.anaesthetists[Random.rand 3]
+     p.assigned= Form.all.map{|f| f.name}
      p.save!
    end
   end
