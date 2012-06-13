@@ -7,8 +7,8 @@ class Question
   field :question_type, :type => String
   field :conditions, :type => String
   field :short_name, :type => String
-  field :input_type, :type => String
-  field :option_list, :type => String
+  field :input_type, :type => String, :default => 'text'
+  field :option_list, :type => Array
   field :person_role, :type => Array
 
   belongs_to :concept

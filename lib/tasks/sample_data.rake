@@ -19,12 +19,11 @@ namespace :db do
    end
 
 
-   Patient.first.surgeon = Professional.surgeons.first
+   Patient.first!.surgeon = Professional.surgeons.first!
    10.times do |n|
      p = Patient.find(:all)[n]
      p.surgeon = Faker::Name.name + ' surgeon'
      p.anaesthetist= Professional.anaesthetists[Random.rand 3]
-     p.assigned= Form.all.map{|f| f.name}
      p.save!
    end
   end
@@ -33,6 +32,7 @@ namespace :db do
 
     Concept.delete_all
     Question.delete_all
+    Form.delete_all
     # populate questions
     Concept.create!(name: "Patient_Surname",display_name: "Surname")
     Concept.create!(name: "Patient_DOB",display_name: "DOB")
@@ -42,14 +42,15 @@ namespace :db do
     Question.build_with_concept(display_name: "Surname", person_role: [Question::PROFESSIONAL],concept: "Patient_Surname")
     Question.build_with_concept(display_name: "Family name", person_role: [Question::PATIENT],concept: "Patient_Surname")
 
-    Question.build_with_concept(display_name: "Date of birth",
+    Question.build_with_concept(display_name: "Date of birth",input_type: 'date',
                                 person_role: [Question::PATIENT , Question::PROFESSIONAL],
                                 concept: "Patient_DOB")
 
     Question.build_with_concept(display_name: "What is your gender", person_role: [Question::PATIENT],
-                                concept: "Patient_Gender" )
+                                concept: "Patient_Gender",option_list: ['Male','Female'] ,input_type: 'select')
     Question.build_with_concept(display_name: "Gender", person_role: [Question::PROFESSIONAL],
-                                concept: "Patient_Gender" )
+                                concept: "Patient_Gender",
+                                option_list: ['Male','Female','Transitive','Other'],input_type: 'select')
     Question.build_with_concept(display_name: "Parent/Guardian name" , conditions: "if DOB < 18 years ago",
                      person_role: [Question::PATIENT , Question::PROFESSIONAL],
                      concept: "Parent_Guardian_Name" )
@@ -65,8 +66,18 @@ namespace :db do
     phone_form.questions.push Question.where(display_name: "Date of birth").first
 
     clinic_form =  Form.create!(name: "Clinic Assessment", person_role: [Question::PROFESSIONAL])
-    clinic_form.questions.push Question.where(display_name: "Parent_Guardian_Name").first
+    clinic_form.questions.push Question.where(display_name: "Parent/Guardian name").first
     clinic_form.questions.push Question.where(display_name: "Date of birth").first
+    clinic_form.questions.push Question.where(display_name: "Gender").first
+
+
+    Assessment.delete_all
+    10.times do |n|
+      p = Patient.find(:all)[n]
+      #assign assesments
+      p.assigned= Form.all.map{|f| f.name}
+      p.save!
+    end
 
   end
 

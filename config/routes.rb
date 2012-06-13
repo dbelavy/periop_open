@@ -12,6 +12,8 @@ Periop::Application.routes.draw do
     resources :assessments
   end
 
+  resources :assessments
+
 
   resources :questions
 

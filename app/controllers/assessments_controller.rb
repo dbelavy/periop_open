@@ -1,4 +1,5 @@
 class AssessmentsController < ApplicationController
+  #load_and_authorize_resource
   # GET /assessments
   # GET /assessments.json
   def index
@@ -35,6 +36,7 @@ class AssessmentsController < ApplicationController
   # GET /assessments/1/edit
   def edit
     @assessment = Assessment.find(params[:id])
+    @questions = @assessment.form.questions
   end
 
   # POST /assessments
@@ -59,7 +61,7 @@ class AssessmentsController < ApplicationController
     @assessment = Assessment.find(params[:id])
 
     respond_to do |format|
-      if @assessment.update_attributes(params[:assessment])
+      if @assessment.update_assessment (params[:assessment])
         format.html { redirect_to @assessment, notice: 'Assessment was successfully updated.' }
         format.json { head :no_content }
       else

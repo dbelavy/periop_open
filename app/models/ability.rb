@@ -20,9 +20,11 @@ class Ability
         can :read, Patient
         can :manage, Professional
         can :manage, User
+        can :manage, Question
       elsif user.professional?
         Rails.logger.debug 'professional user'
         can :manage, Patient
+        can :manage, Assessment
         can :read, :all
       else
 
