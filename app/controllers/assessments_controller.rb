@@ -37,6 +37,7 @@ class AssessmentsController < ApplicationController
   def edit
     @assessment = Assessment.find(params[:id])
     @questions = @assessment.form.questions
+    @patient = Patient.find(params[:patient_id])
   end
 
   # POST /assessments
@@ -62,7 +63,7 @@ class AssessmentsController < ApplicationController
 
     respond_to do |format|
       if @assessment.update_assessment (params[:assessment])
-        format.html { redirect_to @assessment, notice: 'Assessment was successfully updated.' }
+        format.html { redirect_to patient_assessment_path, notice: 'Assessment was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

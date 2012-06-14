@@ -1,21 +1,27 @@
-%h2
-  = @assessment.form.name
-
-= simple_form_for(@assessment,:url => { :action => "update" }) do |f|
+= simple_form_for(@assessment,:url => patient_assessment_path ) do |f|
   = f.error_notification
   .form-inputs
-  - @questions.each do |q|
+  = f.simple_fields_for :answers do |a|
+    - question = a.object.question
+    %br
+      = question.display_name if !question.nil?
+      - if !question.nil? && question.input_type=='select'
+        = a.select(:value, question.option_list)
+      - else
+        = a.text_field :value
+  -#- @questions.each do |q|
+
+    - value = @assessment.answer(q).nil? ? ""  : @assessment.answer(q).value
+    - name = "assessment[answer[#{q._id}]]"
+    - label = q.display_name
     %br
     - if q.input_type=='date'
       -#= f.input :answer ,:as => :date , :start_year => Date.today.year,:end_year => Date.today.year + 10 ,:label => "#{q.display_name}",:input_html => { :name => 'answer' ,:value => @assessment.answer(q)}
     - elsif q.input_type=='select'
-      = f.input :answers ,:as => "#{q.input_type}",:collection => q.option_list,:label => "#{q.display_name}",
-      :input_html => { :name => "assessment[answer[#{q._id}]]"  ,:value => @assessment.answer(q)}
+      = f.input :answers, :as => "#{q.input_type}",:collection => q.option_list, :label => label,
+      :input_html => { :name => name,:value =>  value  }
     - else
-      = f.input :answers ,:label => "#{q.display_name}",:input_html => { :name => "assessment[answer[#{q._id}]]" ,:value => @assessment.answer(q)}
-
-
+      = f.input :answers ,:label => label , :input_html => { :name => name , :value => value }
   = f.input :status, :collection => Assessment.status_list
-
   .form-actions
     = f.button :submit

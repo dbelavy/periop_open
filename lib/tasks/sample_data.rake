@@ -7,7 +7,6 @@ namespace :db do
   task populate: :environment do
   require 'factory_girl_rails' #so it can run in development
    Rake::Task['db:seed'].invoke
-   Rake::Task['db:questions'].invoke
    10.times do |n|
      create_professional(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
    end
@@ -15,17 +14,18 @@ namespace :db do
    FactoryGirl.create(:patient,:name => 'Forrest Gump')
 
    10.times do
-   FactoryGirl.create(:patient)
+     FactoryGirl.create(:patient)
    end
 
-
-   Patient.first!.surgeon = Professional.surgeons.first!
+   Patient.first.surgeon = Professional.surgeons.first
    10.times do |n|
      p = Patient.find(:all)[n]
      p.surgeon = Faker::Name.name + ' surgeon'
      p.anaesthetist= Professional.anaesthetists[Random.rand 3]
      p.save!
    end
+
+  Rake::Task['db:questions'].invoke
   end
 
   task questions: :environment do
@@ -50,22 +50,25 @@ namespace :db do
                                 concept: "Patient_Gender",option_list: ['Male','Female'] ,input_type: 'select')
     Question.build_with_concept(display_name: "Gender", person_role: [Question::PROFESSIONAL],
                                 concept: "Patient_Gender",
-                                option_list: ['Male','Female','Transitive','Other'],input_type: 'select')
+                                option_list: ['Male','Female','Indeterminate','Transgender'],input_type: 'select')
     Question.build_with_concept(display_name: "Parent/Guardian name" , conditions: "if DOB < 18 years ago",
                      person_role: [Question::PATIENT , Question::PROFESSIONAL],
                      concept: "Parent_Guardian_Name" )
 
     patient_form =  Form.create!(name: "Patient assessment", person_role: [Question::PATIENT])
+
     patient_form.questions.push Question.where(display_name: "Surname").first
     patient_form.questions.push Question.where(display_name: "Date of birth").first
     patient_form.questions.push Question.where(display_name: "Family name").first
     patient_form.questions.push Question.where(display_name: "What is your gender").first
 
     phone_form =  Form.create!(name: "Telephone Assessment", person_role: [Question::PROFESSIONAL])
+
     phone_form.questions.push Question.where(display_name: "Surname").first
     phone_form.questions.push Question.where(display_name: "Date of birth").first
 
     clinic_form =  Form.create!(name: "Clinic Assessment", person_role: [Question::PROFESSIONAL])
+
     clinic_form.questions.push Question.where(display_name: "Parent/Guardian name").first
     clinic_form.questions.push Question.where(display_name: "Date of birth").first
     clinic_form.questions.push Question.where(display_name: "Gender").first
