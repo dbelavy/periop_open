@@ -1,10 +1,11 @@
-= simple_form_for(@assessment,:url => patient_assessment_path ) do |f|
+= simple_form_for(setup_assessment(@assessment),:url => patient_assessment_path ) do |f|
   = f.error_notification
   .form-inputs
   = f.simple_fields_for :answers do |a|
     - question = a.object.question
     %br
       = question.display_name if !question.nil?
+      = a.input :question_id, :as => :hidden
       - if !question.nil? && question.input_type=='select'
         = a.select(:value, question.option_list)
       - else

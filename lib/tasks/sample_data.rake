@@ -18,7 +18,7 @@ namespace :db do
    end
 
    Patient.first.surgeon = Professional.surgeons.first
-   10.times do |n|
+   11.times do |n|
      p = Patient.find(:all)[n]
      p.surgeon = Faker::Name.name + ' surgeon'
      p.anaesthetist= Professional.anaesthetists[Random.rand 3]
@@ -57,7 +57,6 @@ namespace :db do
 
     patient_form =  Form.create!(name: "Patient assessment", person_role: [Question::PATIENT])
 
-    patient_form.questions.push Question.where(display_name: "Surname").first
     patient_form.questions.push Question.where(display_name: "Date of birth").first
     patient_form.questions.push Question.where(display_name: "Family name").first
     patient_form.questions.push Question.where(display_name: "What is your gender").first

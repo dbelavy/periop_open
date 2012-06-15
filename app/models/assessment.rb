@@ -13,7 +13,8 @@ class Assessment
   belongs_to :form
 
   embeds_many :answers
-  accepts_nested_attributes_for :answers
+  accepts_nested_attributes_for :answers, reject_if: :all_blank
+
 
   def self.create_for_patient(form, patient)
     assessment = self.create!(:name => form.name,)
