@@ -55,3 +55,11 @@ end
 
 gem "heroku"
 gem "cancan"
+
+# populate db for overview & test on heroku
+group :production do
+  gem "faker"
+  gem "factory_girl"
+  gem "factory_girl_rails", ">= 3.3.0"
+end
+
