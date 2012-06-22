@@ -38,9 +38,26 @@ namespace :db do
     Concept.create!(name: "Patient_DOB",display_name: "DOB")
     Concept.create!(name: "Patient_Gender",display_name: "Gender")
     Concept.create!(name: "Parent_Guardian_Name",display_name: "Parent/Guardian_Name")
+    Concept.create!(name: "Pregnacy",display_name: "Pregnacy")
+    Concept.create!(name: "Allergies",display_name: "Allergies")
+    Concept.create!(name: "Allergy_cause_reaction",display_name: "Allergy_cause_reaction")
+
+
 
     Question.build_with_concept(display_name: "Surname", person_role: [Question::PROFESSIONAL],concept: "Patient_Surname")
     Question.build_with_concept(display_name: "Family name", person_role: [Question::PATIENT],concept: "Patient_Surname")
+
+    Question.build_with_concept(display_name: "Allergy", person_role: [Question::PROFESSIONAL],concept: "Allergies")
+    Question.build_with_concept(display_name: "Do you have any allergies including medicines, latex rubber, tapes or food?", person_role: [Question::PATIENT],concept: "Allergies")
+
+
+    Question.build_with_concept(display_name: "Allergy cause and reaction", condition: "Allergies = Y", person_role: [Question::PROFESSIONAL],concept: "Allergy_cause_reaction")
+    Question.build_with_concept(display_name: "What are you allergic to?", condition: "Allergies = Y", person_role: [Question::PATIENT],concept: "Allergy_cause_reaction")
+
+    Question.build_with_concept(short_name: "Pregnacy" ,display_name: "Current pregnancy", person_role: [Question::PROFESSIONAL],
+                                concept: "Pregnacy", condition: "gender = female",)
+    Question.build_with_concept(display_name: "Are you pregnant?", person_role: [Question::PATIENT],
+                                concept: "Pregnacy")
 
     Question.build_with_concept(display_name: "Date of birth",input_type: 'date',
                                 person_role: [Question::PATIENT , Question::PROFESSIONAL],
@@ -51,7 +68,7 @@ namespace :db do
     Question.build_with_concept(display_name: "Gender", person_role: [Question::PROFESSIONAL],
                                 concept: "Patient_Gender",
                                 option_list: ['Male','Female','Indeterminate','Transgender'],input_type: 'select')
-    Question.build_with_concept(display_name: "Parent/Guardian name" , conditions: "if DOB < 18 years ago",
+    Question.build_with_concept(display_name: "Parent/Guardian name" , condition: "age < 18",
                      person_role: [Question::PATIENT , Question::PROFESSIONAL],
                      concept: "Parent_Guardian_Name" )
 
@@ -60,17 +77,26 @@ namespace :db do
     patient_form.questions.push Question.where(display_name: "Date of birth").first
     patient_form.questions.push Question.where(display_name: "Family name").first
     patient_form.questions.push Question.where(display_name: "What is your gender").first
+    patient_form.questions.push Question.where(display_name: "Are you pregnant?").first
+    patient_form.questions.push Question.where(display_name: "Do you have any allergies including medicines, latex rubber, tapes or
+ food?").first
+    patient_form.questions.push Question.where(display_name: "What are you allergic to?").first
 
     phone_form =  Form.create!(name: "Telephone Assessment", person_role: [Question::PROFESSIONAL])
 
     phone_form.questions.push Question.where(display_name: "Surname").first
     phone_form.questions.push Question.where(display_name: "Date of birth").first
+    phone_form.questions.push Question.where(display_name: "Allergy").first
+    phone_form.questions.push Question.where(display_name: "What are you allergic to?").first
 
     clinic_form =  Form.create!(name: "Clinic Assessment", person_role: [Question::PROFESSIONAL])
 
     clinic_form.questions.push Question.where(display_name: "Parent/Guardian name").first
     clinic_form.questions.push Question.where(display_name: "Date of birth").first
     clinic_form.questions.push Question.where(display_name: "Gender").first
+    clinic_form.questions.push Question.where(display_name: "Current pregnancy").first
+    clinic_form.questions.push Question.where(display_name: "Allergy").first
+    clinic_form.questions.push Question.where(display_name: "Allergy cause and reaction").first
 
 
     Assessment.delete_all
@@ -80,7 +106,5 @@ namespace :db do
       p.assigned= Form.all.map{|f| f.name}
       p.save!
     end
-
   end
-
 end

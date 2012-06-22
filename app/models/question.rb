@@ -5,7 +5,7 @@ class Question
   PROFESSIONAL = :professional
 
   field :question_type, :type => String
-  field :conditions, :type => String
+  field :condition, :type => String
   field :short_name, :type => String
   field :input_type, :type => String, :default => 'text'
   field :option_list, :type => Array
@@ -26,6 +26,17 @@ class Question
     question = Question.create! args
     concept = Concept.where( :name => args[:concept]).first
     question.concept= concept
+    question.update_attribute(:short_name ,concept.display_name)
     question.save!
+  end
+
+  def condition= conditionStr
+    if !conditionStr.nil?
+      conditionStr = conditionStr.to_s.downcase
+      if conditionStr[0..2] == "if "
+        conditionStr = conditionStr[3..conditionStr.length]
+      end
+    end
+    self[:condition] = conditionStr
   end
 end
