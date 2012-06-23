@@ -8,6 +8,7 @@
       = a.input :question_id, :as => :hidden
       - if !question.nil? && question.input_type=='select'
         = a.input :value,:label => label,:as => :select , :collection => question.option_list,
+        :label_method => :label , :value_method => :value,
         :input_html => {:data => {:short_name => question.short_name.downcase, :condition => question.condition }, :class => 'question'}
       - else
         = a.input :value,:label => label ,:data_short_name => question.short_name,

@@ -31,6 +31,7 @@ namespace :db do
   task questions: :environment do
 
     Concept.delete_all
+    OptionList.delete_all
     Question.delete_all
     Form.delete_all
     # populate questions
@@ -42,17 +43,37 @@ namespace :db do
     Concept.create!(name: "Allergies",display_name: "Allergies")
     Concept.create!(name: "Allergy_cause_reaction",display_name: "Allergy_cause_reaction")
 
+    # option list
+    OptionList.create!(:name => "Y_N_U_Clinician",:order_number => 1, :label => "Unknown",:value => "Unknown")
+    OptionList.create!(:name => "Y_N_U_Clinician",:order_number => 2, :label => "Yes",:value => "Yes")
+    OptionList.create!(:name => "Y_N_U_Clinician",:order_number => 3, :label => "No",:value => "No")
 
+    OptionList.create!(:name => "Y_N_U_Patient",:order_number => 1, :label => "Don't know",:value => "Unknown")
+    OptionList.create!(:name => "Y_N_U_Patient",:order_number => 2, :label => "Yes",:value => "Yes")
+    OptionList.create!(:name => "Y_N_U_Patient",:order_number => 3, :label => "No",:value => "No")
 
-    Question.build_with_concept(display_name: "Surname", person_role: [Question::PROFESSIONAL],concept: "Patient_Surname")
-    Question.build_with_concept(display_name: "Family name", person_role: [Question::PATIENT],concept: "Patient_Surname")
+    OptionList.create!(:name => "Gender_clinician",:order_number => 1, :label => "Unknown",:value => "Unknown")
+    OptionList.create!(:name => "Gender_clinician",:order_number => 2, :label => "Female",:value => "Female")
+    OptionList.create!(:name => "Gender_clinician",:order_number => 3, :label => "Male",:value => "Male")
+    OptionList.create!(:name => "Gender_clinician",:order_number => 4, :label => "Other",:value => "Other")
+
+    OptionList.create!(:name => "Gender_patient",:order_number => 1, :label => "Female",:value => "Female")
+    OptionList.create!(:name => "Gender_patient",:order_number => 2, :label => "Male",:value => "Male")
+
+    Question.build_with_concept(display_name: "Surname", person_role: [Question::PROFESSIONAL],concept: "Patient_Surname",
+                                input_type: "text")
+    Question.build_with_concept(display_name: "Family name", person_role: [Question::PATIENT],concept: "Patient_Surname",
+                                input_type: "text")
 
     Question.build_with_concept(display_name: "Allergy", person_role: [Question::PROFESSIONAL],concept: "Allergies")
-    Question.build_with_concept(display_name: "Do you have any allergies including medicines, latex rubber, tapes or food?", person_role: [Question::PATIENT],concept: "Allergies")
+    Question.build_with_concept(display_name: "Do you have any allergies including medicines, latex rubber, tapes or food?", person_role: [Question::PATIENT],concept: "Allergies",
+                                input_type: "text")
 
 
-    Question.build_with_concept(display_name: "Allergy cause and reaction", condition: "Allergies = Y", person_role: [Question::PROFESSIONAL],concept: "Allergy_cause_reaction")
-    Question.build_with_concept(display_name: "What are you allergic to?", condition: "Allergies = Y", person_role: [Question::PATIENT],concept: "Allergy_cause_reaction")
+    Question.build_with_concept(display_name: "Allergy cause and reaction", condition: "Allergies = Y", person_role: [Question::PROFESSIONAL],concept: "Allergy_cause_reaction",
+                                input_type: "text")
+    Question.build_with_concept(display_name: "What are you allergic to?", condition: "Allergies = Y", person_role: [Question::PATIENT],concept: "Allergy_cause_reaction",
+                                input_type: "text")
 
     Question.build_with_concept(short_name: "Pregnacy" ,display_name: "Current pregnancy", person_role: [Question::PROFESSIONAL],
                                 concept: "Pregnacy", condition: "gender = female",)
@@ -64,12 +85,12 @@ namespace :db do
                                 concept: "Patient_DOB")
 
     Question.build_with_concept(display_name: "What is your gender", person_role: [Question::PATIENT],
-                                concept: "Patient_Gender",option_list: ['Male','Female'] ,input_type: 'select')
+                                concept: "Patient_Gender",option_list_name: "Gender_patient" ,input_type: 'select')
     Question.build_with_concept(display_name: "Gender", person_role: [Question::PROFESSIONAL],
                                 concept: "Patient_Gender",
-                                option_list: ['Male','Female','Indeterminate','Transgender'],input_type: 'select')
+                                option_list_name: "Gender_clinician",input_type: 'select')
     Question.build_with_concept(display_name: "Parent/Guardian name" , condition: "age < 18",
-                     person_role: [Question::PATIENT , Question::PROFESSIONAL],
+                     person_role: [Question::PATIENT , Question::PROFESSIONAL],input_type: "text",
                      concept: "Parent_Guardian_Name" )
 
     patient_form =  Form.create!(name: "Patient assessment", person_role: [Question::PATIENT])
