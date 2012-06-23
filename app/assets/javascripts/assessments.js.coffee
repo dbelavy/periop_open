@@ -26,15 +26,27 @@ $(document).ready ->
         if arr.length == 3
           return {shortname: arr[0],operation: arr[1],value: arr[2]}
         else alert 'not implemented yet :' + condition
+
     check: (conditionHash) ->
       if conditionHash.shortname == 'age'
-#        value = $('question.dob').val() TODO
+#       value =  TODO
       else
-        value = $('question.' + conditionHash.shortname).val()
+        value = $('[data-short-name=\"' +conditionHash.shortname + '\"]').val().toLowerCase()
       if conditionHash.operation == "="
         return value == conditionHash.value
       else if conditionHash.operation == "<"
        return value < conditionHash.value
+    getAndCheck: ($input) ->
+        condHash = condition.getConditions($input)
+        result = condition.check(condHash)
+        if (result)
+          $input.parents('.control-group').show()
+          $input.removeAttr("disabled")
+        else
+          $input.parents('.control-group').hide()
+          $input.attr("disabled","disabled")
+
+
 
 
 
@@ -44,11 +56,8 @@ $(document).ready ->
      if condHash
        $(formSelector).bind('question.' + condHash.shortname,{input: this}
          (event) ->
-           alert 'event.data ' + event.data
            input = event.data.input
-  #        TODO check condition
-           condHash = condition.getConditions($(input))
-
+           condition.getAndCheck($(input))
          )
        true
   )

@@ -70,9 +70,9 @@ namespace :db do
                                 input_type: "text")
 
 
-    Question.build_with_concept(display_name: "Allergy cause and reaction", condition: "Allergies = Y", person_role: [Question::PROFESSIONAL],concept: "Allergy_cause_reaction",
+    Question.build_with_concept(display_name: "Allergy cause and reaction", condition: "Allergies = Yes", person_role: [Question::PROFESSIONAL],concept: "Allergy_cause_reaction",
                                 input_type: "text")
-    Question.build_with_concept(display_name: "What are you allergic to?", condition: "Allergies = Y", person_role: [Question::PATIENT],concept: "Allergy_cause_reaction",
+    Question.build_with_concept(display_name: "What are you allergic to?", condition: "Allergies = Yes", person_role: [Question::PATIENT],concept: "Allergy_cause_reaction",
                                 input_type: "text")
 
     Question.build_with_concept(short_name: "Pregnacy" ,display_name: "Current pregnancy", person_role: [Question::PROFESSIONAL],
@@ -118,7 +118,6 @@ namespace :db do
     clinic_form.questions.push Question.where(display_name: "Current pregnancy").first
     clinic_form.questions.push Question.where(display_name: "Allergy").first
     clinic_form.questions.push Question.where(display_name: "Allergy cause and reaction").first
-
 
     Assessment.delete_all
     10.times do |n|
