@@ -41,25 +41,27 @@ $(document).ready ->
           shortname = arr[0]
           return {shortname: shortname,operation: arr[1],value: arr[2]}
         else alert 'not implemented yet :' + condition
-
+      else null
     check: (conditionHash) ->
-      if conditionHash.shortname == 'age'
-       value =  calculateAge()
-      else
-        value = $('[data-short-name=\"' +conditionHash.shortname + '\"]').val().toLowerCase()
-      if conditionHash.operation == "="
-        return value == conditionHash.value
-      else if conditionHash.operation == "<"
-       return value < conditionHash.value
-    getAndCheck: ($input) ->
-        condHash = condition.getConditions($input)
-        result = condition.check(condHash)
-        if (result)
-          $input.parents('.control-group').show()
-          $input.removeAttr("disabled")
+      if conditionHash != null
+        if conditionHash.shortname == 'age'
+         value =  calculateAge()
         else
-          $input.parents('.control-group').hide()
-          $input.attr("disabled","disabled")
+          value = $('[data-short-name=\"' +conditionHash.shortname + '\"]').val().toLowerCase()
+        if conditionHash.operation == "="
+          return value == conditionHash.value
+        else if conditionHash.operation == "<"
+         return value < conditionHash.value
+    checkAndApply: ($input) ->
+        condHash = condition.getConditions($input)
+        if condHash != null
+          result = condition.check(condHash)
+          if (result)
+            $input.parents('.control-group').show()
+            $input.removeAttr("disabled")
+          else
+            $input.parents('.control-group').hide()
+            $input.attr("disabled","disabled")
 
   $(questionsSelector).each(
    ->
@@ -68,8 +70,9 @@ $(document).ready ->
        $(formSelector).bind('question.' + condHash.shortname,{input: this}
          (event) ->
            input = event.data.input
-           condition.getAndCheck($(input))
+           condition.checkAndApply($(input))
          )
        true
+     condition.checkAndApply($(this))
   )
   #.bind( eventType [, eventData], handler(eventObject) )
