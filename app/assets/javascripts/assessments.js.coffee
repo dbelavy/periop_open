@@ -12,10 +12,24 @@ $(document).ready ->
   ->
     shortname = $(this).data("short-name")
     newValue = $(this).val()
+    if shortname == "dob"
+      shortname = "age"
     event = $.Event('question.' + shortname)
     $(formSelector).trigger(event,[newValue])
   )
-  #TODO sample conditions:  gender = female and age > 14 and age < 45
+
+  calculateAge = () ->
+    day = $('[data-short-name="dob"]').eq(0).val()
+    month = $('[data-short-name="dob"]').eq(1).val() - 1
+    year = $('[data-short-name="dob"]').eq(2).val()
+    today=new Date();
+    age = today.getFullYear()-year;
+    if(today.getMonth()<month || (today.getMonth()==month && today.getDate()<day))
+      age--
+    age
+
+
+#TODO sample conditions:  gender = female and age > 14 and age < 45
   # gender = female , male
   # gender = female
   condition =
@@ -24,12 +38,13 @@ $(document).ready ->
       if conditionStr  != null
         arr = conditionStr.split(" ")
         if arr.length == 3
-          return {shortname: arr[0],operation: arr[1],value: arr[2]}
+          shortname = arr[0]
+          return {shortname: shortname,operation: arr[1],value: arr[2]}
         else alert 'not implemented yet :' + condition
 
     check: (conditionHash) ->
       if conditionHash.shortname == 'age'
-#       value =  TODO
+       value =  calculateAge()
       else
         value = $('[data-short-name=\"' +conditionHash.shortname + '\"]').val().toLowerCase()
       if conditionHash.operation == "="
@@ -45,10 +60,6 @@ $(document).ready ->
         else
           $input.parents('.control-group').hide()
           $input.attr("disabled","disabled")
-
-
-
-
 
   $(questionsSelector).each(
    ->

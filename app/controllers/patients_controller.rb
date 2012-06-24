@@ -6,7 +6,7 @@ class PatientsController < ApplicationController
   end
 
   def index
-    #@patients = Patient.paginate(:page => params[:page])
+    @patients = @patients.paginate(:page => params[:page])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: PatientsDatatable.new(view_context)}
