@@ -29,12 +29,21 @@ describe "authorisation checks" do
       response.status.should be(302)
     end
 
-    it "sould not see patients" do
+    it "should not see patients" do
 
     end
 
 
-    #let(:user) { FactoryGirl.create ( :user ) }
+    #describe "assessments checks " do
+    #  let(:patient) { create(:patient) }
+    #
+    #  it "should not see other patients assessments" do
+    #
+    #  end
+    #end
+
+
+      #let(:user) { FactoryGirl.create ( :user ) }
     #let(:user) { User.create!*(:name ) }
     #let(:patient2) { FactoryGirl.create ( :patient ) }
 

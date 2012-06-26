@@ -40,6 +40,15 @@ class AssessmentsController < ApplicationController
     @patient = Patient.find(params[:patient_id])
   end
 
+  # GET /assessments/edit_patient
+  def edit_patient
+    @patient = current_patient
+    patientForm = Form.where(name: "Patient assessment")
+    @assessment = current_patient.assesments.where(:status => Assessment::NOT_STARTED,form:  patientForm)
+    @questions = @assessment.form.questions
+  end
+
+
   # POST /assessments
   # POST /assessments.json
   def create

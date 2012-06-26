@@ -3,11 +3,11 @@
 FactoryGirl.define do
   factory :patient do
     sequence(:email) {|n| "email#{n}@factory.com" }
-    password '123456'
+    password { |u| u.dob }
     password_confirmation { |u| u.password }
     sequence(:name) {|n| Faker::Name.name}
     sequence(:ssn) {Random.rand(1000000).to_s}
     sequence(:planned_date_of_surgery) { Date.current.advance(:days=> Random.rand(1..55)) }
-    dob "1965-05-21"
+    dob "1961-04-12"
   end
 end

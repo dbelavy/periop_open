@@ -10,8 +10,8 @@ namespace :db do
    10.times do |n|
      create_professional(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
    end
-   FactoryGirl.create( :patient , :name => 'Viktor Navorski')
-   FactoryGirl.create(:patient,:name => 'Forrest Gump')
+   FactoryGirl.create( :patient , :name => 'Viktor Navorski',ssn: "1234567")
+   FactoryGirl.create(:patient,:name => 'Forrest Gump',ssn: "555")
 
    10.times do
      FactoryGirl.create(:patient)

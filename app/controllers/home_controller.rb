@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     end
 
     if patient_signed_in?
-      redirect_to patient_path(current_patient)
+      redirect_to edit_patient_patient_assessments(current_patient)
     end
 
     if current_user.nil?

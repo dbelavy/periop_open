@@ -1,8 +1,8 @@
 %h2 Sign in
 = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
   .inputs
-    = f.input :ssn, :required => false, :autofocus => true
-    = f.input :password, :required => false,:hint => 'date of birth, example: 1965-12-22'
+    = f.input :ssn,:label =>'SSN', :required => false, :autofocus => true
+    = f.input :password, :required => false,:hint => 'date of birth in yyyy-mm-dd format, example: 1961-04-12'
     = f.input :remember_me, :as => :boolean if devise_mapping.rememberable?
   .actions
     = f.button :submit, "Sign in"

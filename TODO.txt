@@ -66,3 +66,5 @@ Assesment
            answer: 123  }
 
 MONGOHQ_URL=mongodb://localhost/periop_production
+
+heroku run rake

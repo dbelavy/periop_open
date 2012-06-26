@@ -28,19 +28,6 @@ class Assessment
     result = answers.where(:question_id => question._id).first
   end
 
-
-=begin
-  def answer_attributes=(params)
-    #TODO validate answers
-    params.each do |key, value|
-      answer_var = answers.find_or_create_by(question_id: key)
-      answer_var.update_attribute(:value, value)
-      answers.create!
-      #TODO save history ?
-    end
-  end
-=end
-
   def self.status_list
     [NOT_STARTED, STARTED_BUT_INCOMPLETE, COMPLETE]
   end
@@ -50,9 +37,5 @@ class Assessment
     if result
       result = update_attributes(params)
     end
-    #params[:answer].each do |a|
-    #  answer=(a)
-    #end
-
   end
 end
