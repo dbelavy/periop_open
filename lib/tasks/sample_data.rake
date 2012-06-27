@@ -10,22 +10,23 @@ namespace :db do
    10.times do |n|
      create_professional(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
    end
-   FactoryGirl.create( :patient , :name => 'Viktor Navorski',ssn: "1234567")
-   FactoryGirl.create(:patient,:name => 'Forrest Gump',ssn: "555")
-
-   10.times do
-     FactoryGirl.create(:patient)
-   end
-
-   Patient.first.surgeon = Professional.surgeons.first
-   11.times do |n|
-     p = Patient.find(:all)[n]
-     p.surgeon = Faker::Name.name + ' surgeon'
-     p.anaesthetist= Professional.anaesthetists[Random.rand 3]
-     p.save!
-   end
 
   Rake::Task['db:questions'].invoke
+  end
+
+  def setup_patients
+      #FactoryGirl.create( :patient , :name => 'Viktor Navorski',ssn: "1234567")
+      #FactoryGirl.create(:patient,:name => 'Forrest Gump',ssn: "555")
+      #10.times do
+      #  FactoryGirl.create(:patient)
+      #end
+      Patient.first.surgeon = Professional.surgeons.first
+      11.times do |n|
+        p = Patient.find(:all)[n]
+        p.surgeon = Faker::Name.name + ' surgeon'
+        p.anaesthetist= Professional.anaesthetists[Random.rand 3]
+        p.save!
+      end
   end
 
   task questions: :environment do
@@ -66,8 +67,9 @@ namespace :db do
                                 input_type: "text")
 
     Question.build_with_concept(display_name: "Allergy", person_role: [Question::PROFESSIONAL],concept: "Allergies")
-    Question.build_with_concept(display_name: "Do you have any allergies including medicines, latex rubber, tapes or food?", person_role: [Question::PATIENT],concept: "Allergies",
-                                input_type: "text")
+    Question.build_with_concept(display_name:
+                                "Do you have any allergies including medicines, latex rubber, tapes or food?",
+                                person_role: [Question::PATIENT],concept: "Allergies")
 
 
     Question.build_with_concept(display_name: "Allergy cause and reaction", condition: "Allergies = Yes", person_role: [Question::PROFESSIONAL],concept: "Allergy_cause_reaction",
@@ -76,9 +78,9 @@ namespace :db do
                                 input_type: "text")
 
     Question.build_with_concept(short_name: "Pregnacy" ,display_name: "Current pregnancy", person_role: [Question::PROFESSIONAL],
-                                concept: "Pregnacy", condition: "gender = female",)
+                                concept: "Pregnacy", condition: "gender = female")
     Question.build_with_concept(display_name: "Are you pregnant?", person_role: [Question::PATIENT],
-                                concept: "Pregnacy")
+                                concept: "Pregnacy", condition: "gender = female")
 
     Question.build_with_concept(display_name: "Date of birth",input_type: 'date',
                                 person_role: [Question::PATIENT , Question::PROFESSIONAL],
@@ -99,8 +101,7 @@ namespace :db do
     patient_form.questions.push Question.where(display_name: "Family name").first
     patient_form.questions.push Question.where(display_name: "What is your gender").first
     patient_form.questions.push Question.where(display_name: "Are you pregnant?").first
-    patient_form.questions.push Question.where(display_name: "Do you have any allergies including medicines, latex rubber, tapes or
- food?").first
+    patient_form.questions.push Question.where(display_name: "Do you have any allergies including medicines, latex rubber, tapes or food?").first
     patient_form.questions.push Question.where(display_name: "What are you allergic to?").first
 
     phone_form =  Form.create!(name: "Telephone Assessment", person_role: [Question::PROFESSIONAL])
@@ -120,11 +121,11 @@ namespace :db do
     clinic_form.questions.push Question.where(display_name: "Allergy cause and reaction").first
 
     Assessment.delete_all
-    10.times do |n|
-      p = Patient.find(:all)[n]
-      #assign assesments
-      p.assigned= Form.all.map{|f| f.name}
-      p.save!
-    end
+    #10.times do |n|
+    #  p = Patient.find(:all)[n]
+    #  #assign assesments
+    #  p.assigned= Form.all.map{|f| f.name}
+    #  p.save!
+    #end
   end
 end

@@ -10,4 +10,9 @@ module ApplicationHelper
     assesment
   end
 
+  def patient_signed_in?
+    # TODO remove occurrences
+    false
+  end
+
 end

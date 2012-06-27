@@ -47,7 +47,9 @@ $(document).ready ->
         if conditionHash.shortname == 'age'
          value =  calculateAge()
         else
-          value = $('[data-short-name=\"' +conditionHash.shortname + '\"]').val().toLowerCase()
+          value = $('[data-short-name=\"' +conditionHash.shortname + '\"]').val()
+          if (value)
+            value = value.toLowerCase()
         if conditionHash.operation == "="
           return value == conditionHash.value
         else if conditionHash.operation == "<"

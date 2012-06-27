@@ -3,17 +3,17 @@ Periop::Application.routes.draw do
   resources :forms
   resources :concepts
 
-  devise_for :patients, :path_prefix => 'd'
+  #devise_for :patients, :path_prefix => 'd'
 
   resources :patients do
-    resources :assessments do
-      get 'edit_patient',:on => :collection
-    end
-
-
+    resources :assessments ,:only => [:index,:edit,:update,:show]
   end
 
-  resources :assessments
+  get "patient_assessment_form" => "assessments#patient_assessment_form",
+      :as => "patient_assessment_form"
+  post "patient_assessment_form" => "assessments#update_patient_assessment",
+      :as => "patient_assessment_form"
+
   resources :questions
 
   resources :professionals do

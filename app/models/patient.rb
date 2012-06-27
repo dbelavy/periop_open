@@ -4,8 +4,8 @@ class Patient
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable,
-      :registerable,:rememberable, :trackable, :validatable,:authentication_keys => [:ssn]
+  #devise :database_authenticatable,
+  #    :registerable,:rememberable, :trackable, :validatable,:authentication_keys => [:ssn]
   #:recoverable,
 
 
@@ -59,7 +59,6 @@ class Patient
   def assigned
     assessments.map{|a| a.name}
   end
-
 
 
   def assigned= new_types

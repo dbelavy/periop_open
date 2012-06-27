@@ -6,9 +6,9 @@ class HomeController < ApplicationController
       return
     end
 
-    if patient_signed_in?
-      redirect_to edit_patient_patient_assessments(current_patient)
-    end
+    #if patient_signed_in?
+    #  redirect_to edit_patient_patient_assessments(current_patient)
+    #end
 
     if current_user.nil?
       @users = User.all

@@ -1,4 +1,4 @@
-= simple_form_for(setup_assessment(@assessment),:url => patient_assessment_path ,:html => {:class => 'assessment' }) do |f|
+= simple_form_for(setup_assessment(@assessment),:url => patient_assessment_form_path ,:html => {:class => 'assessment' }) do |f|
   = f.error_notification
   .form-inputs
   = f.simple_fields_for :answers do |a|
@@ -16,6 +16,8 @@
         - else
           = a.input :value,:label => label ,:data_short_name => question.short_name,
         :input_html => {:data => {:short_name => question.short_name.downcase,:condition => question.condition}, :class => 'question'}
-  = f.input :status, :collection => Assessment.status_list
+    - if user_signed_in?
+      - if current_user.professional?
+        = f.input :status, :collection => Assessment.status_list
   .form-actions
     = f.button :submit

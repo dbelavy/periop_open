@@ -40,11 +40,10 @@ class AssessmentsController < ApplicationController
     @patient = Patient.find(params[:patient_id])
   end
 
-  # GET /assessments/edit_patient
-  def edit_patient
-    @patient = current_patient
-    patientForm = Form.where(name: "Patient assessment")
-    @assessment = current_patient.assesments.where(:status => Assessment::NOT_STARTED,form:  patientForm)
+  # GET /patient_assessment_form
+  def patient_assessment_form
+    @assessment = Assessment.new
+    @assessment.form= Form.patientForm
     @questions = @assessment.form.questions
   end
 
@@ -76,6 +75,19 @@ class AssessmentsController < ApplicationController
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
+        format.json { render json: @assessment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update_patient_assessment
+    @assessment = Assessment.new(params[:assessment])
+    respond_to do |format|
+      if @assessment.save
+        format.html { redirect_to root_path, notice: 'Assessment was successfully created.' }
+        format.json { render json: @assessment, status: :created, location: @assessment }
+      else
+        format.html { render action: "new" }
         format.json { render json: @assessment.errors, status: :unprocessable_entity }
       end
     end
