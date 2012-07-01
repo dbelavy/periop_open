@@ -16,6 +16,9 @@
   %p
     - @patient.assessments.each do |a|
       %li #{link_to a.name, edit_patient_assessment_path(@patient, a) } status : #{a.status}
+  %p
+    - if can? :edit, @patient
+      %li #{link_to 'New Patient Assessments', unassigned_patient_assessments_path(@patient)}
 
   - if can? :edit, @patient
     = link_to 'Edit', edit_patient_path(@patient)

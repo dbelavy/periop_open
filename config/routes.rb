@@ -6,7 +6,11 @@ Periop::Application.routes.draw do
   #devise_for :patients, :path_prefix => 'd'
 
   resources :patients do
-    resources :assessments ,:only => [:index,:edit,:update,:show]
+    resources :assessments ,:only => [:index,:edit,:update,:show,:unassigned] do
+      get 'unassigned', :on => :collection
+      put 'unassigned', :on => :collection
+      put 'assign'
+    end
   end
 
   get "patient_assessment_form" => "assessments#patient_assessment_form",

@@ -47,8 +47,8 @@ class PatientsController < ApplicationController
   def create
     @patient = Patient.new(params[:patient])
     password = @patient.dob.to_s
-    @patient.password= password
-    @patient.password_confirmation= password
+  # @patient.password= password
+  # @patient.password_confirmation= password
     logger.debug 'created patient ' + @patient.to_yaml
     respond_to do |format|
       if @patient.save

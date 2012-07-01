@@ -1,0 +1,23 @@
+%h1 Listing assessments
+
+%table{:class => "table table-striped table-bordered" }
+  %thead
+    %tr
+      %th Status
+      %th Name
+      %th Date
+      %th Patient
+      %th DOB
+      %th Gender
+  %tbody
+    - @assessments.each do |assessment|
+      %tr
+        %td= link_to assessment.status, patient_assessment_path(@patient,assessment)
+        %td= assessment.name
+        %td= assessment.date_started.to_s
+        %td= answer_for 'Family name', assessment
+        %td= answer_for 'Date of birth', assessment
+        %td= answer_for 'What is your gender', assessment
+%br
+
+= link_to 'Back' ,@patient

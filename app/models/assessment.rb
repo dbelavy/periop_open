@@ -7,8 +7,7 @@ class Assessment
 
 
   field :status, :type => String, :default => NOT_STARTED
-  field :date_started, :type => Date
-  field :name, :type => String
+  field :date_started, :type => DateTime
   belongs_to :patient
   belongs_to :form
 
@@ -17,7 +16,7 @@ class Assessment
 
 
   def self.create_for_patient(form, patient)
-    assessment = self.create!(:name => form.name,)
+    assessment = self.create!
     assessment.form= form
     assessment.patient= patient
     assessment.save!
@@ -37,5 +36,14 @@ class Assessment
     if result
       result = update_attributes(params)
     end
+  end
+
+  def start_assessment
+    date_started = Time.now
+    status= STARTED_BUT_INCOMPLETE
+  end
+
+  def name
+    form.name if !form.nil?
   end
 end

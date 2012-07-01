@@ -1,8 +1,7 @@
 %p#notice= notice
-
-%p
-  %b Status:
-  = @assessment.status
+= render('patients/short_info')
+= render 'assign_form'
+= render 'form', :form_disabled => true
 
 = link_to 'Edit', edit_patient_assessment_path
 \|
