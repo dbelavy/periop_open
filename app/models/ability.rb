@@ -13,7 +13,7 @@ class Ability
         Rails.logger.debug 'current patient: ' + patient.name + ' authoirzed: ' + result.to_s
         result
       end
-    elsif user.instance_of? User
+    elsif user.nil? || (user.instance_of? User)
       user ||= User.new # guest user (not logged in)
       if user.admin?
         Rails.logger.debug 'admin user'
@@ -27,7 +27,7 @@ class Ability
         can :manage, Assessment
         can :read, :all
       else
-
+       can [:patient_assessment_form,:update_patient_assessment],Assessment
       end
     end
     #

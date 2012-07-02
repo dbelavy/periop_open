@@ -90,7 +90,7 @@ class AssessmentsController < ApplicationController
   end
 
   def unassign
-    #@assessment = Assessment.find(params[:assessment_id])
+    @assessment = Assessment.find(params[:assessment_id])
     @patient = Patient.find(params[:patient_id])
     @assessment.patient= nil
     respond_to do |format|

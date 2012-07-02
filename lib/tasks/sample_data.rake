@@ -7,16 +7,21 @@ namespace :db do
   task populate: :environment do
   require 'factory_girl_rails' #so it can run in development
    Rake::Task['db:seed'].invoke
+  #if ENV["RAILS_ENV"] == 'production'
+    create_professional(Professional::ANAESTHETIST,"david@belavy.com","David Belavy")
+  #end
    10.times do |n|
-     create_professional(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
+     create_professional_dev(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
    end
+  FactoryGirl.create( :patient , :name => 'Viktor Navorski',ssn: "1234567")
+  FactoryGirl.create(:patient,:name => 'Forrest Gump',ssn: "555555")
 
   Rake::Task['db:questions'].invoke
   end
 
   def setup_patients
-      #FactoryGirl.create( :patient , :name => 'Viktor Navorski',ssn: "1234567")
-      #FactoryGirl.create(:patient,:name => 'Forrest Gump',ssn: "555")
+      FactoryGirl.create( :patient , :name => 'Viktor Navorski',ssn: "1234567")
+      FactoryGirl.create(:patient,:name => 'Forrest Gump',ssn: "555")
       #10.times do
       #  FactoryGirl.create(:patient)
       #end
