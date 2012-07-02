@@ -10,6 +10,7 @@ Periop::Application.routes.draw do
       get 'unassigned', :on => :collection
       put 'unassigned', :on => :collection
       put 'assign'
+      put 'unassign'
     end
   end
 

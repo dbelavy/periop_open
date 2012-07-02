@@ -1,1 +1,4 @@
-= link_to( 'Assign assessment to Patient', patient_assessment_assign_path(@patient,@assessment), :method => :put,:class=> "btn btn-primary")
+- if @assessment.patient.nil?
+  = link_to( 'Assign this assessment to Patient', patient_assessment_assign_path(@patient,@assessment), :method => :put,:class=> "btn btn-primary")
+- else
+  = link_to( 'Unassign this assessment to Patient', patient_assessment_unassign_path(@patient,@assessment), :method => :put,:class=> "btn btn-primary")

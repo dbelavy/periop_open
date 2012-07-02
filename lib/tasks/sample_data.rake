@@ -95,7 +95,7 @@ namespace :db do
                      person_role: [Question::PATIENT , Question::PROFESSIONAL],input_type: "text",
                      concept: "Parent_Guardian_Name" )
 
-    patient_form =  Form.create!(name: "Patient assessment", person_role: [Question::PATIENT])
+    patient_form =  Form.create!(name: Form::PATIENT_ASSESSMENT, person_role: [Question::PATIENT])
 
     patient_form.questions.push Question.where(display_name: "Date of birth").first
     patient_form.questions.push Question.where(display_name: "Family name").first

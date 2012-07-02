@@ -38,9 +38,9 @@ class Assessment
     end
   end
 
-  def start_assessment
-    date_started = Time.now
-    status= STARTED_BUT_INCOMPLETE
+  def start_and_complete_assessment
+    self.date_started = Time.now
+    self.status= COMPLETE
   end
 
   def name

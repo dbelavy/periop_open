@@ -1,5 +1,5 @@
 class AssessmentsController < ApplicationController
-  #load_and_authorize_resource
+  load_and_authorize_resource
   # GET /assessments
   # GET /assessments.json
   def index
@@ -24,7 +24,7 @@ class AssessmentsController < ApplicationController
   # GET /assessments/1
   # GET /assessments/1.json
   def show
-    @assessment = Assessment.find(params[:id])
+    #@assessment = Assessment.find(params[:id])
     @patient = Patient.find(params[:patient_id])
     respond_to do |format|
       format.html # show.html.erb
@@ -83,7 +83,22 @@ class AssessmentsController < ApplicationController
         format.html { redirect_to patient_assessment_path(@patient, @assessment), notice: 'Assessment assigned.'}
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: "show" }
+        format.json { render json: @assessment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def unassign
+    #@assessment = Assessment.find(params[:assessment_id])
+    @patient = Patient.find(params[:patient_id])
+    @assessment.patient= nil
+    respond_to do |format|
+      if @assessment.update_assessment (params[:assessment])
+        format.html { redirect_to patient_assessment_path(@patient, @assessment), notice: 'Assessment unassigned.'}
+        format.json { head :no_content }
+      else
+        format.html { render action: "show" }
         format.json { render json: @assessment.errors, status: :unprocessable_entity }
       end
     end
@@ -92,12 +107,13 @@ class AssessmentsController < ApplicationController
   def update_patient_assessment
     @assessment = Assessment.new(params[:assessment])
     @assessment.form= Form.patientForm
+    @assessment.start_and_complete_assessment
     respond_to do |format|
       if @assessment.save
         format.html { redirect_to root_path, notice: 'Assessment was successfully created.' }
         format.json { render json: @assessment, status: :created, location: @assessment }
       else
-        format.html { render action: "new" }
+        format.html { render action: "patient_assessment_form" }
         format.json { render json: @assessment.errors, status: :unprocessable_entity }
       end
     end

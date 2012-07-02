@@ -72,6 +72,10 @@ class Patient
     }
   end
 
+  def patient_assessment_assigned?
+    !assigned.find_index(Form::PATIENT_ASSESSMENT).nil?
+  end
+
 
   def assessment_types
     assigned_types = assigned
