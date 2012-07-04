@@ -26,6 +26,7 @@ rails generate scaffold concept name display_name snomed_code mpog_code position
 rails generate scaffold assessment status
 rails generate scaffold form name person_role
 
+rails generate scaffold category name level_1_name level_1_order level_2_name level_2_order summary_display
 
 Data classification
  type from hierarchy

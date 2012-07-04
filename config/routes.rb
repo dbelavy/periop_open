@@ -1,5 +1,7 @@
 Periop::Application.routes.draw do
 
+  resources :categories
+
   resources :forms
   resources :concepts
 

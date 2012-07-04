@@ -1,0 +1,29 @@
+%h1 Listing categories
+
+%table
+  %tr
+    %th Name
+    %th Level 1 name
+    %th Level 1 order
+    %th Level 2 name
+    %th Level 2 order
+    %th Summary display
+    %th
+    %th
+    %th
+
+  - @categories.each do |category|
+    %tr
+      %td= category.name
+      %td= category.level_1_name
+      %td= category.level_1_order
+      %td= category.level_2_name
+      %td= category.level_2_order
+      %td= category.summary_display
+      %td= link_to 'Show', category
+      %td= link_to 'Edit', edit_category_path(category)
+      %td= link_to 'Destroy', category, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Category', new_category_path

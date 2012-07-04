@@ -7,9 +7,9 @@ class Question
   field :question_type, :type => String
   field :condition, :type => String
   field :short_name, :type => String
+  field :display_name, :type => String
   field :input_type, :type => String, :default => 'select'
   field :option_list_name, :type =>  String
-  field :person_role, :type => Array
 
   belongs_to :concept
   #field registered, :type => Date

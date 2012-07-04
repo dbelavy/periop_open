@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @category.name
+%p
+  %b Level 1 name:
+  = @category.level_1_name
+%p
+  %b Level 1 order:
+  = @category.level_1_order
+%p
+  %b Level 2 name:
+  = @category.level_2_name
+%p
+  %b Level 2 order:
+  = @category.level_2_order
+%p
+  %b Summary display:
+  = @category.summary_display
+
+= link_to 'Edit', edit_category_path(@category)
+\|
+= link_to 'Back', categories_path
