@@ -21,7 +21,6 @@ gem "factory_girl_rails", ">= 3.3.0", :group => [:development, :test,:production
 gem "faker", :group => [:development, :test,:production]
 gem "email_spec", ">= 1.2.1", :group => :test
 gem "guard", ">= 0.6.2", :group => :development
-gem "rubyXL"
 gem "roo"
 case HOST_OS
   when /darwin/i
