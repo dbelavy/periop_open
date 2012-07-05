@@ -40,7 +40,10 @@ $(document).ready ->
         if arr.length == 3
           shortname = arr[0]
           return {shortname: shortname,operation: arr[1],value: arr[2]}
-        else alert 'not implemented yet :' + conditionStr
+        else
+        alert 'not implemented yet :' + conditionStr
+        return null
+        end
       else null
     check: (conditionHash) ->
       if conditionHash != null
@@ -59,10 +62,10 @@ $(document).ready ->
         if condHash != null
           result = condition.check(condHash)
           if (result)
-            $input.parents('.control-group').show()
+            $input.parents('.control-group').show("slow")
             $input.removeAttr("disabled")
           else
-            $input.parents('.control-group').hide()
+            $input.parents('.control-group').hide("slow")
             $input.attr("disabled","disabled")
 
   $(questionsSelector).each(

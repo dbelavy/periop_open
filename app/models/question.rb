@@ -10,6 +10,9 @@ class Question
   field :display_name, :type => String
   field :input_type, :type => String, :default => 'OneOption'
   field :option_list_name, :type =>  String
+  field :text_length, :type =>  Integer
+  field :ask_details, :type =>  String
+
 
   belongs_to :concept
   #field registered, :type => Date

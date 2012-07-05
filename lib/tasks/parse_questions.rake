@@ -63,12 +63,20 @@ def parse_questions doc
   2.upto(doc.last_row) do |line|
 
     condition = doc.cell(line,"F")
-    if !condition.nil? && condition.downcase == "all"
+    if !condition.nil?
+      condition.gsub!(/\s[\s]*/," ")
+      if condition.downcase == "all"
       condition = ""
+      elsif /\S=\S/.match condition
+        condition.gsub!("="," = ")
+      end
     end
+
     question = Question.create!(display_name: doc.cell(line,"E"),
                                 condition: condition,
                                 input_type: doc.cell(line,"G"),
+                                text_length: doc.cell(line,"I"),
+                                ask_details: doc.cell(line,"J"),
                                 option_list_name: doc.cell(line,"H")
                                 )
     concept_name = doc.cell(line, "D").downcase
@@ -84,7 +92,7 @@ def parse_questions doc
     if doc.cell(line,"M")
       #person_role << Question::PROFESSIONAL
       #  add to form
-      patient_form.questions.push question
+      telephone_form.questions.push question
     end
     if doc.cell(line,"N")
       #person_role << Question::PROFESSIONAL if person_role.find(Question::PROFESSIONAL).nil?
@@ -99,15 +107,14 @@ def parse_option_lists doc
   OptionList.delete_all
   doc.default_sheet = doc.sheets[4]
   2.upto(doc.last_row) do |line|
-    val = doc.cell(line,"D")
-    if (val.instance_of? String) && ( val.downcase == "null")
-    # skip
-    else
-      option_list = OptionList.create!(:name => doc.cell(line,"A"),
+    value = doc.cell(line,"D")
+    if value.nil?
+      value = " "
+    end
+    option_list = OptionList.create!(:name => doc.cell(line,"A"),
                        :order_number => doc.cell(line,"B"),
                        :label => doc.cell(line,"C"),
-                       :value => doc.cell(line,"D"))
-    end
+                       :value => value)
     puts 'created option List: ' + option_list.to_s
   end
 end
