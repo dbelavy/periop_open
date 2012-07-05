@@ -5,9 +5,9 @@ require 'rubygems' #so it can load gems
 def parse_concepts(doc)
   Concept.delete_all
   doc.default_sheet = doc.sheets[2]
-  2.upto(doc.last_row) do |line|
+  3.upto(360) do |line|
     concept = Concept.create!(
-        name: doc.cell(line, 'A'),
+        name: doc.cell(line, 'A').downcase,
         display_name: doc.cell(line, 'B'),
         order_in_category: doc.cell(line, 'I'),
         mpog_code: doc.cell(line, 'J'),
@@ -20,6 +20,9 @@ def parse_concepts(doc)
 
     category = Category.where(level_1_name: arr[0],
                               level_2_name: arr[1]).first
+    if category.nil?
+      raise "Not found category " + category_name + " for line "  + line.to_s
+    end
     concept.category = category
     concept.save!
     puts 'created concept: ' + concept.to_s
@@ -51,7 +54,6 @@ def create_forms
   Form.create!(name: Form::CLINIC_ASSESSMENT, person_role: [Question::PROFESSIONAL])
 end
 
-
 def parse_questions doc
   Question.delete_all
   doc.default_sheet = doc.sheets[3]
@@ -59,12 +61,21 @@ def parse_questions doc
   telephone_form =Form.where(name: Form::TELEPHONE_ASSESSMENT).first
   clinic_form =Form.where(name: Form::CLINIC_ASSESSMENT).first
   2.upto(doc.last_row) do |line|
-    person_role = []
+
+    condition = doc.cell(line,"F")
+    if !condition.nil? && condition.downcase == "all"
+      condition = ""
+    end
     question = Question.create!(display_name: doc.cell(line,"E"),
-                                condition: doc.cell(line,"F"),
+                                condition: condition,
                                 input_type: doc.cell(line,"G"),
                                 option_list_name: doc.cell(line,"H")
                                 )
+    concept_name = doc.cell(line, "D").downcase
+    question.concept = Concept.where(name: concept_name).first
+    if question.concept.nil?
+      raise "Not found concept " + concept_name
+    end
     # used in patient assessment
     if doc.cell(line,"L")
       #person_role << Question::PATIENT
@@ -88,10 +99,15 @@ def parse_option_lists doc
   OptionList.delete_all
   doc.default_sheet = doc.sheets[4]
   2.upto(doc.last_row) do |line|
-    option_list = OptionList.create!(:name => doc.cell(line,"A"),
+    val = doc.cell(line,"D")
+    if (val.instance_of? String) && ( val.downcase == "null")
+    # skip
+    else
+      option_list = OptionList.create!(:name => doc.cell(line,"A"),
                        :order_number => doc.cell(line,"B"),
                        :label => doc.cell(line,"C"),
                        :value => doc.cell(line,"D"))
+    end
     puts 'created option List: ' + option_list.to_s
   end
 end

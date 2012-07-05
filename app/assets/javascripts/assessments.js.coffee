@@ -35,12 +35,12 @@ $(document).ready ->
   condition =
     getConditions: ($el) ->
       conditionStr =  $el.data('condition')
-      if conditionStr  != null
+      if conditionStr  != null && conditionStr != ""
         arr = conditionStr.split(" ")
         if arr.length == 3
           shortname = arr[0]
           return {shortname: shortname,operation: arr[1],value: arr[2]}
-        else alert 'not implemented yet :' + condition
+        else alert 'not implemented yet :' + conditionStr
       else null
     check: (conditionHash) ->
       if conditionHash != null

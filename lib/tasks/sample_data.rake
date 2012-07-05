@@ -92,10 +92,10 @@ namespace :db do
                                 concept: "Patient_DOB")
 
     Question.build_with_concept(display_name: "What is your gender", person_role: [Question::PATIENT],
-                                concept: "Patient_Gender",option_list_name: "Gender_patient" ,input_type: 'select')
+                                concept: "Patient_Gender",option_list_name: "Gender_patient" ,input_type: 'OneOption')
     Question.build_with_concept(display_name: "Gender", person_role: [Question::PROFESSIONAL],
                                 concept: "Patient_Gender",
-                                option_list_name: "Gender_clinician",input_type: 'select')
+                                option_list_name: "Gender_clinician",input_type: 'OneOption')
     Question.build_with_concept(display_name: "Parent/Guardian name" , condition: "age < 18",
                      person_role: [Question::PATIENT , Question::PROFESSIONAL],input_type: "text",
                      concept: "Parent_Guardian_Name" )
