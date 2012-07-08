@@ -32,6 +32,17 @@ class AssessmentsController < ApplicationController
     end
   end
 
+  def summary
+    @patient = Patient.find(params[:patient_id])
+    @concepts = Concept.all
+    @assesments = @patient.assesments
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @assessment }
+    end
+  end
+
   # GET /assessments/new
   # GET /assessments/new.json
   def new

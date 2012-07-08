@@ -23,7 +23,7 @@
 
       - else
         = a.input :value,:label => label ,
-        :input_html => {:data => {:short_name => question.concept.name.downcase,:condition => question.condition}, :class => 'question'}
+        :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
   - if user_signed_in?
     - if current_user.professional?
       = f.input :status, :collection => Assessment.status_list

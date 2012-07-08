@@ -64,12 +64,18 @@ def parse_questions doc
 
     condition = doc.cell(line,"F")
     if !condition.nil?
-      condition.gsub!(/\s[\s]*/," ")
+
       if condition.downcase == "all"
       condition = ""
-      elsif /\S=\S/.match condition
+      else
+        if /\S=\S/.match condition
         condition.gsub!("="," = ")
+        end
+        if /<\S/.match condition
+          condition.gsub!("<","< ")
+        end
       end
+      condition.gsub!(/\s[\s]*/," ")
     end
 
     question = Question.create!(display_name: doc.cell(line,"E"),
