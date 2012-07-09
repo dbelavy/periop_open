@@ -21,7 +21,7 @@ def parse_concepts(doc)
     category = Category.where(level_1_name: arr[0],
                               level_2_name: arr[1]).first
     if category.nil?
-      raise "Not found category " + category_name + " for line "  + line.to_s
+      raise "Not found category " + category_name + " for line " + line.to_s
     end
     concept.category = category
     concept.save!
@@ -62,45 +62,45 @@ def parse_questions doc
   clinic_form =Form.where(name: Form::CLINIC_ASSESSMENT).first
   2.upto(doc.last_row) do |line|
 
-    condition = doc.cell(line,"F")
+    condition = doc.cell(line, "F")
     if !condition.nil?
 
       if condition.downcase == "all"
-      condition = ""
+        condition = ""
       else
         if /\S=\S/.match condition
-        condition.gsub!("="," = ")
+          condition.gsub!("=", " = ")
         end
         if /<\S/.match condition
-          condition.gsub!("<","< ")
+          condition.gsub!("<", "< ")
         end
       end
-      condition.gsub!(/\s[\s]*/," ")
+      condition.gsub!(/\s[\s]*/, " ")
     end
 
-    question = Question.create!(display_name: doc.cell(line,"E"),
+    question = Question.create!(display_name: doc.cell(line, "E"),
                                 condition: condition,
-                                input_type: doc.cell(line,"G"),
-                                text_length: doc.cell(line,"I"),
-                                ask_details: doc.cell(line,"J"),
-                                option_list_name: doc.cell(line,"H")
-                                )
+                                input_type: doc.cell(line, "G"),
+                                text_length: doc.cell(line, "I"),
+                                ask_details: doc.cell(line, "J"),
+                                option_list_name: doc.cell(line, "H")
+    )
     concept_name = doc.cell(line, "D").downcase
     question.concept = Concept.where(name: concept_name).first
     if question.concept.nil?
       raise "Not found concept " + concept_name
     end
     # used in patient assessment
-    if doc.cell(line,"L")
+    if doc.cell(line, "L")
       #person_role << Question::PATIENT
       patient_form.questions.push question
     end
-    if doc.cell(line,"M")
+    if doc.cell(line, "M")
       #person_role << Question::PROFESSIONAL
       #  add to form
       telephone_form.questions.push question
     end
-    if doc.cell(line,"N")
+    if doc.cell(line, "N")
       #person_role << Question::PROFESSIONAL if person_role.find(Question::PROFESSIONAL).nil?
       #  add to form
       clinic_form.questions.push question
@@ -113,36 +113,37 @@ def parse_option_lists doc
   OptionList.delete_all
   doc.default_sheet = doc.sheets[4]
   2.upto(doc.last_row) do |line|
-    value = doc.cell(line,"D")
+    value = doc.cell(line, "D")
     if value.nil?
       value = " "
     end
-    option_list = OptionList.create!(:name => doc.cell(line,"A"),
-                       :order_number => doc.cell(line,"B"),
-                       :label => doc.cell(line,"C"),
-                       :value => value)
+    option_list = OptionList.create!(:name => doc.cell(line, "A"),
+                                     :order_number => doc.cell(line, "B"),
+                                     :label => doc.cell(line, "C"),
+                                     :value => value)
     puts 'created option List: ' + option_list.to_s
-  end
-end
+  end.
+      end
 
-namespace :db do
-  desc "Parse questions spreadsheet"
-  task parse: :environment do
-    require 'roo'
+  namespace :db do
+    desc "Parse questions spreadsheet"
+    task parse: :environment do
+      require 'roo'
 
 
-    #workbook = RubyXL::Parser.parse("./spreadsheet/Question_properties.xlsx")
-    #workbook.worksheets[0] #returns first worksheet
-    #row = workbook[0].sheet_data[0]  #returns first worksheet
-    #puts row
+      #workbook = RubyXL::Parser.parse("./spreadsheet/Question_properties.xlsx")
+      #workbook.worksheets[0] #returns first worksheet
+      #row = workbook[0].sheet_data[0]  #returns first worksheet
+      #puts row
 
-    #oo = Openoffice.new("./spreadsheet/Question_properties.xlsx")
-    doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
+      #oo = Openoffice.new("./spreadsheet/Question_properties.xlsx")
+      doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
 
-    create_forms
-    parse_categories(doc)
-    parse_concepts(doc)
-    parse_questions doc
-    parse_option_lists doc
+      create_forms
+      parse_categories(doc)
+      parse_concepts(doc)
+      parse_questions doc
+      parse_option_lists doc
+    end
   end
 end
