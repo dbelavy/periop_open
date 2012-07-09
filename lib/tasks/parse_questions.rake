@@ -48,7 +48,6 @@ end
 
 def create_forms
   Form.delete_all
-
   Form.create!(name: Form::PATIENT_ASSESSMENT, person_role: [Question::PATIENT])
   Form.create!(name: Form::TELEPHONE_ASSESSMENT, person_role: [Question::PROFESSIONAL])
   Form.create!(name: Form::CLINIC_ASSESSMENT, person_role: [Question::PROFESSIONAL])
@@ -77,14 +76,18 @@ def parse_questions doc
       end
       condition.gsub!(/\s[\s]*/, " ")
     end
+    ask_details_criteria = doc.cell(line, "K").downcase if !doc.cell(line, "K").nil?
 
-    question = Question.create!(display_name: doc.cell(line, "E"),
+    question = Question.create!(
+                                question_id: doc.cell(line, "C"),
+                                display_name: doc.cell(line, "E"),
                                 condition: condition,
                                 input_type: doc.cell(line, "G"),
                                 text_length: doc.cell(line, "I"),
                                 ask_details: doc.cell(line, "J"),
+                                ask_details_criteria: ask_details_criteria,
                                 option_list_name: doc.cell(line, "H")
-    )
+                                )
     concept_name = doc.cell(line, "D").downcase
     question.concept = Concept.where(name: concept_name).first
     if question.concept.nil?
@@ -122,8 +125,9 @@ def parse_option_lists doc
                                      :label => doc.cell(line, "C"),
                                      :value => value)
     puts 'created option List: ' + option_list.to_s
-  end.
-      end
+  end
+end
+
 
   namespace :db do
     desc "Parse questions spreadsheet"
@@ -146,4 +150,3 @@ def parse_option_lists doc
       parse_option_lists doc
     end
   end
-end

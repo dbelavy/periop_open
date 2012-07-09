@@ -79,14 +79,16 @@ $(document).ready ->
           return value < conditionHash.value
         else if conditionHash.operation == ">"
           return value < conditionHash.value
+        else if conditionHash.operation == "!="
+          return value != conditionHash.value
         else
-          alert "operation not implemented" + conditionHash
+          alert "operation not implemented" + JSON.stringify(conditionHash)
 
     checkAndApply: ($input) ->
       condObj = condition.getConditions($input)
       if condObj != null
         if (condObj.op == "or")
-          resut = false
+          result = false
         else
           result = true
         for condHash in condObj.condArr
@@ -94,13 +96,21 @@ $(document).ready ->
             result = result || condition.checkAtomic(condHash)
           else
             result = result && condition.checkAtomic(condHash)
+        if $input.hasClass("question_details")
+          if (result)
+            $input.parents('.control-group').show("slow")
+            $input.removeAttr("disabled")
+          else
+            $input.parents('.control-group').hide("slow")
+            $input.attr("disabled","disabled")
+        else if $input.hasClass("question")
+          if (result)
+            $input.parents('fieldset').show("slow")
+            $input.removeAttr("disabled")
+          else
+            $input.parents('fieldset').hide("slow")
+            $input.attr("disabled","disabled")
 
-        if (result)
-          $input.parents('.control-group').show("slow")
-          $input.removeAttr("disabled")
-        else
-          $input.parents('.control-group').hide("slow")
-          $input.attr("disabled","disabled")
 
   window.condition =condition
   $(questionsSelector).each(
