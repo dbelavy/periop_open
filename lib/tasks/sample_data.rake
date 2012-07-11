@@ -16,7 +16,7 @@ namespace :db do
   FactoryGirl.create( :patient , :name => 'Viktor Navorski',ssn: "1234567")
   FactoryGirl.create(:patient,:name => 'Forrest Gump',ssn: "555555")
 
-  Rake::Task['db:questions'].invoke
+  Rake::Task['db:parse'].invoke
   end
 
   def setup_patients

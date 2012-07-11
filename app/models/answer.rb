@@ -4,6 +4,7 @@ class Answer
 
   belongs_to :question , inverse_of: nil
   field :value, type: String
+  field :details, type: String
   field :dateValue, type: Date
   embedded_in :assessment
 

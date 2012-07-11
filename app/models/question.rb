@@ -4,12 +4,17 @@ class Question
   PATIENT = :patient
   PROFESSIONAL = :professional
 
+  field :question_id, :type => Integer
   field :question_type, :type => String
   field :condition, :type => String
   field :short_name, :type => String
   field :display_name, :type => String
   field :input_type, :type => String, :default => 'OneOption'
   field :option_list_name, :type =>  String
+  field :text_length, :type =>  Integer
+  field :ask_details, :type =>  String
+  field :ask_details_criteria, :type =>  String
+
 
   belongs_to :concept
   #field registered, :type => Date
@@ -52,5 +57,11 @@ class Question
 
   def option_list
     OptionList.where(:name => self[:option_list_name])
+  end
+
+  def details_criteria
+    if !concept.nil? && !ask_details_criteria.nil?
+      concept.name.downcase + " = " + ask_details_criteria
+    end
   end
 end

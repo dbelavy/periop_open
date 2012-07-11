@@ -28,24 +28,47 @@ $(document).ready ->
       age--
     age
 
-
-#TODO sample conditions:  gender = female and age > 14 and age < 45
-  # gender = female , male
-  # gender = female
   condition =
     getConditions: ($el) ->
-      conditionStr =  $el.data('condition')
-      if conditionStr  != null && conditionStr != ""
-        arr = conditionStr.split(" ")
-        if arr.length == 3
-          shortname = arr[0]
-          return {shortname: shortname,operation: arr[1],value: arr[2]}
-        else alert 'not implemented yet :' + conditionStr
-      else null
-    check: (conditionHash) ->
+      result =null
+      condStr =  $el.data('condition')
+      if condStr != null && condStr != ""
+        result = condition.parseOperation(condStr,"and")
+        if result == null
+          result = condition.parseOperation(condStr,"or")
+        if result == null
+          result = new Object()
+          #          special case for atomic condition
+          result.op = "and"
+          result.condArr = [condition.getAtomicConditions(condStr)]
+      return result
+
+    parseOperation: (condStr, operation) ->
+      if condStr.search(" " + operation + " ") != -1
+        condArr = []
+        arr = condStr.split(" " + operation + " ")
+        for atomicStr in arr
+          atomicHash = condition.getAtomicConditions(atomicStr)
+          condArr.push(atomicHash)
+        result = new Object()
+        result.op = operation
+        result.condArr = condArr
+        return result
+      else
+        return null
+
+    getAtomicConditions: (str) ->
+      arr = str.split(" ")
+      if arr.length == 3
+        shortname = arr[0]
+        return {shortname: shortname,operation: arr[1],value: arr[2]}
+      else
+        alert 'atomic condition not implemented yet :' + str
+      return null
+    checkAtomic: (conditionHash) ->
       if conditionHash != null
         if conditionHash.shortname == 'age'
-         value =  calculateAge()
+          value =  calculateAge()
         else
           value = $('[data-short-name=\"' +conditionHash.shortname + '\"]').val()
           if (value)
@@ -53,28 +76,54 @@ $(document).ready ->
         if conditionHash.operation == "="
           return value == conditionHash.value
         else if conditionHash.operation == "<"
-         return value < conditionHash.value
+          return value < conditionHash.value
+        else if conditionHash.operation == ">"
+          return value < conditionHash.value
+        else if conditionHash.operation == "!="
+          return value != conditionHash.value
+        else
+          alert "operation not implemented" + JSON.stringify(conditionHash)
+
     checkAndApply: ($input) ->
-        condHash = condition.getConditions($input)
-        if condHash != null
-          result = condition.check(condHash)
+      condObj = condition.getConditions($input)
+      if condObj != null
+        if (condObj.op == "or")
+          result = false
+        else
+          result = true
+        for condHash in condObj.condArr
+          if (condObj.op == "or")
+            result = result || condition.checkAtomic(condHash)
+          else
+            result = result && condition.checkAtomic(condHash)
+        if $input.hasClass("question_details")
           if (result)
-            $input.parents('.control-group').show()
+            $input.parents('.control-group').show("slow")
             $input.removeAttr("disabled")
           else
-            $input.parents('.control-group').hide()
+            $input.parents('.control-group').hide("slow")
+            $input.attr("disabled","disabled")
+        else if $input.hasClass("question")
+          if (result)
+            $input.parents('fieldset').show("slow")
+            $input.removeAttr("disabled")
+          else
+            $input.parents('fieldset').hide("slow")
             $input.attr("disabled","disabled")
 
+
+  window.condition =condition
   $(questionsSelector).each(
-   ->
-     condHash = condition.getConditions($(this))
-     if condHash
-       $(formSelector).bind('question.' + condHash.shortname,{input: this}
-         (event) ->
-           input = event.data.input
-           condition.checkAndApply($(input))
-         )
-       true
-     condition.checkAndApply($(this))
-  )
-  #.bind( eventType [, eventData], handler(eventObject) )
+     ->
+       condObj = condition.getConditions($(this))
+       if condObj != null
+         for condHash in condObj.condArr
+           $(formSelector).bind('question.' + condHash.shortname,{input: this}
+             (event) ->
+               input = event.data.input
+               condition.checkAndApply($(input))
+             )
+           true
+           condition.checkAndApply($(this))
+
+    )
