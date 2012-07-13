@@ -9,7 +9,7 @@
     - label = question.display_name if !question.nil?
     %fieldset{:data => {:short_name => question.concept.name.downcase, :condition => question.condition }}
       %legend #{label}
-      - label = "answer"
+      - label = "Answer"
       = a.input :question_id, :as => :hidden
       - if (question.input_type == 'OneOption')
         = a.input :value,:label => label,:as => :select , :collection => question.option_list,:include_blank => false,
@@ -28,14 +28,14 @@
             :condition => question.condition},:class => 'question'}
           - else if (question.input_type == 'Text_box')
             =a.input :value,:as => :text,:label => label,
-            :input_html => {:rows => 3,:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
+            :input_html => {:rows => 5,:cols => 60,:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
             - else
               = a.input :value,:label => label ,
               :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
       - if (question.ask_details == "Y")
-        =a.input :details,:as => :text,
+        =a.input :details,:label => "Please provide more information",:as => :text,
         :input_html => {:data => {:short_name => question.concept.name.downcase + "_details", :condition => question.details_criteria},
-         :class => 'question question_details', :rows => 3}
+         :class => 'question question_details', :rows => 5}
   - if user_signed_in?
     - if current_user.professional?
       = f.input :status, :collection => Assessment.status_list
