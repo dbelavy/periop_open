@@ -53,12 +53,31 @@ def create_forms
   Form.create!(name: Form::CLINIC_ASSESSMENT, person_role: [Question::PROFESSIONAL])
 end
 
+def column_for doc,name
+  1.upto doc.last_column do |col|
+    if doc.cell(1,col).to_s == name
+      return col
+    end
+  end
+end
+
 def parse_questions doc
   Question.delete_all
   doc.default_sheet = doc.sheets[3]
   patient_form =Form.where(name: Form::PATIENT_ASSESSMENT).first
   telephone_form =Form.where(name: Form::TELEPHONE_ASSESSMENT).first
   clinic_form =Form.where(name: Form::CLINIC_ASSESSMENT).first
+  used_in_patient_assesment_col = column_for(doc,"Question used in patient assessment")
+  puts "used_in_patient_assesment_col " + doc.cell(1,used_in_patient_assesment_col)
+  used_in_professional_assesment_col = column_for(doc,"Question used in clinic or bedside assessment by professional")
+  puts "used_in_professional_assesment_col  " + doc.cell(1,used_in_professional_assesment_col)
+  used_in_telephone_assesment_col = column_for(doc,"Question used in telephone assessment by professional")
+  puts "used_in_telephone_assesment_col " + doc.cell(1,used_in_telephone_assesment_col)
+
+
+  validation_col = column_for(doc,"Validation_criteria")
+
+
   2.upto(doc.last_row) do |line|
 
     condition = doc.cell(line, "F")
@@ -70,13 +89,17 @@ def parse_questions doc
         if /\S=\S/.match condition
           condition.gsub!("=", " = ")
         end
-        if /<\S/.match condition
-          condition.gsub!("<", "< ")
+        if (/<\S/.match condition)
+        condition.gsub!("<", "< ")
+        end
+        if (/\S</.match condition)
+        condition.gsub!("<", " <")
         end
       end
       condition.gsub!(/\s[\s]*/, " ")
     end
     ask_details_criteria = doc.cell(line, "K").downcase if !doc.cell(line, "K").nil?
+    ask_details_criteria ="all" if ask_details_criteria == "any answer"
 
     question = Question.create!(
                                 question_id: doc.cell(line, "C"),
@@ -86,7 +109,8 @@ def parse_questions doc
                                 text_length: doc.cell(line, "I"),
                                 ask_details: doc.cell(line, "J"),
                                 ask_details_criteria: ask_details_criteria,
-                                option_list_name: doc.cell(line, "H")
+                                option_list_name: doc.cell(line, "H"),
+                                validation_criteria: doc.cell(line, validation_col)
                                 )
     concept_name = doc.cell(line, "D").downcase
     question.concept = Concept.where(name: concept_name).first
@@ -94,21 +118,18 @@ def parse_questions doc
       raise "Not found concept " + concept_name
     end
     # used in patient assessment
-    if doc.cell(line, "L")
-      #person_role << Question::PATIENT
+    if doc.cell(line, used_in_patient_assesment_col)
       patient_form.questions.push question
     end
-    if doc.cell(line, "M")
-      #person_role << Question::PROFESSIONAL
+    if doc.cell(line, used_in_telephone_assesment_col)
       #  add to form
       telephone_form.questions.push question
     end
-    if doc.cell(line, "N")
-      #person_role << Question::PROFESSIONAL if person_role.find(Question::PROFESSIONAL).nil?
+    if doc.cell(line, used_in_professional_assesment_col)
       #  add to form
       clinic_form.questions.push question
     end
-    puts 'created question: ' + question.to_s
+    #puts 'created question: ' + question.to_s
   end
 end
 
@@ -124,7 +145,7 @@ def parse_option_lists doc
                                      :order_number => doc.cell(line, "B"),
                                      :label => doc.cell(line, "C"),
                                      :value => value)
-    puts 'created option List: ' + option_list.to_s
+    #puts 'created option List: ' + option_list.to_s
   end
 end
 

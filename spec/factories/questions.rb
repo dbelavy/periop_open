@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :question do
-    question_type "MyString"
     display_conditions "MyString"
     short_name "MyString"
     clinical_terms "MyString"

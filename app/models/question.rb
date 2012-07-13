@@ -5,7 +5,6 @@ class Question
   PROFESSIONAL = :professional
 
   field :question_id, :type => Integer
-  field :question_type, :type => String
   field :condition, :type => String
   field :short_name, :type => String
   field :display_name, :type => String
@@ -13,6 +12,7 @@ class Question
   field :option_list_name, :type =>  String
   field :text_length, :type =>  Integer
   field :ask_details, :type =>  String
+  field :validation_criteria, :type =>  String
   field :ask_details_criteria, :type =>  String
 
 
@@ -62,6 +62,32 @@ class Question
   def details_criteria
     if !concept.nil? && !ask_details_criteria.nil?
       concept.name.downcase + " = " + ask_details_criteria
+    end
+  end
+
+
+  def start_year
+    if input_type == "Date"
+      if !validation_criteria.nil?
+        if validation_criteria.downcase == "past"
+          return Date.today.year - 120
+        elsif validation_criteria.downcase == "future"
+          return Date.today.year
+        end
+      end
+    end
+  end
+
+
+  def end_year
+    if input_type == "Date"
+      if !validation_criteria.nil?
+        if validation_criteria.downcase == "past"
+          return Date.today.year
+        elsif validation_criteria.downcase == "future"
+          return Date.today.year + 100
+        end
+      end
     end
   end
 end
