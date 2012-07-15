@@ -8,16 +8,16 @@
     %li
       = link_to('Professionals management', professionals_path)
     %li
-      %a{:href => '#'}Loggged in as admin: #{current_user.name}
+      %a{:href => '#'}Logged in as admin: #{current_user.name}
   - if user_signed_in?
     - if current_user.professional?
       %li
-        %a{:href => '#'}Loggged in as professional: #{current_user.name}
+        %a{:href => '#'}Logged in as professional: #{current_user.name}
     %li
       = link_to('Logout', destroy_user_session_path, :method=>'delete')
   - elsif patient_signed_in?
     %li
-      %a{:href => '#'}Loggged in as patient: #{current_patient.name }
+      %a{:href => '#'}Logged in as patient: #{current_patient.name }
     %li
       = link_to('Logout', destroy_patient_session_path, :method=>'delete')
   - else

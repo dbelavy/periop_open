@@ -13,7 +13,10 @@ class AssessmentsController < ApplicationController
   # GET /patient/.id/assessments/unassigned.json
   def unassigned
     @assessments = Assessment.where(:patient_id => nil)
-    @patient = Patient.find(params[:patient_id])
+
+    if !params[:patient_id].nil?
+      @patient = Patient.find(params[:patient_id])
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @assessments }
@@ -25,7 +28,9 @@ class AssessmentsController < ApplicationController
   # GET /assessments/1.json
   def show
     #@assessment = Assessment.find(params[:id])
-    @patient = Patient.find(params[:patient_id])
+    if !params[:patient_id].nil?
+      @patient = Patient.find(params[:patient_id])
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @assessment }

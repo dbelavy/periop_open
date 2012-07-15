@@ -29,6 +29,7 @@
 @import "bootstrap";
 
 .question_details, textarea.question{
-  @include makeColumn(10);
+  //@include makeColumn(10);
+  width: 90%;
   margin-left: 0;
 }

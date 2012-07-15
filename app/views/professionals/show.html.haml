@@ -7,7 +7,7 @@
   Speciality #{@professional.speciality}
 -#  professional personal part
 - if (!current_user.nil? && (current_user.eql? @professional.user))
-  TODO Start new or edit preoperative assessments
+  #{link_to 'View list of unassigned assessments', unassigned_assessments_path}
   %br
   %br
   #{link_to 'Patients', patients_path}

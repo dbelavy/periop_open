@@ -12,7 +12,10 @@
   %tbody
     - @assessments.each do |assessment|
       %tr
-        %td= link_to assessment.status, patient_assessment_path(@patient,assessment)
+        -if !@patient.nil?
+          %td= link_to assessment.status, patient_assessment_path(@patient,assessment)
+        -else
+          %td= link_to assessment.status, assessment_path(assessment)
         %td= assessment.name
         %td= assessment.date_started.to_s
         %td= answer_for 'Family name', assessment
@@ -20,4 +23,4 @@
         %td= answer_for 'What is your gender', assessment
 %br
 
-= link_to 'Back' ,@patient
+= link_to 'Back' ,root_path

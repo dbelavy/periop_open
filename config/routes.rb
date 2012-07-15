@@ -17,10 +17,14 @@ Periop::Application.routes.draw do
     end
   end
 
+  resources :assessments ,:only => [:show]
+
   get "patient_assessment_form" => "assessments#patient_assessment_form",
       :as => "patient_assessment_form"
   post "patient_assessment_form" => "assessments#update_patient_assessment",
       :as => "patient_assessment_form"
+  get "unassigned_assessments" => "assessments#unassigned",
+      :as => "unassigned_assessments"
 
   resources :questions
 

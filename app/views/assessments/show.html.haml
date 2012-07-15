@@ -1,8 +1,12 @@
 %p#notice= notice
-= render('patients/short_info')
-= render 'assign_form'
+-if !@patient.nil?
+  = render('patients/short_info')
+  = render 'assign_form'
 = render 'form', :form_disabled => true
 
-= link_to 'Edit', edit_patient_assessment_path
-\|
-= link_to 'Back', patient_path(@patient)
+-if !@patient.nil?
+  = link_to 'Edit', edit_patient_assessment_path
+  \|
+  = link_to 'Back', patient_path(@patient)
+-else
+  = link_to 'Back', unassigned_assessments_path
