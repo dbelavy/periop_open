@@ -9,6 +9,7 @@
       %th Patient
       %th DOB
       %th Gender
+      %th Delete
   %tbody
     - @assessments.each do |assessment|
       %tr
@@ -21,6 +22,7 @@
         %td= answer_for 'Family name', assessment
         %td= answer_for 'Date of birth', assessment
         %td= answer_for 'What is your gender', assessment
+        %td= link_to 'Delete assessment', assessment, :confirm => 'Are you sure?', :method => :delete,:class=> "btn btn-danger"
 %br
 
 = link_to 'Back' ,root_path

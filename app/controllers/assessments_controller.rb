@@ -1,14 +1,6 @@
 class AssessmentsController < ApplicationController
-  load_and_authorize_resource
-  # GET /assessments
-  # GET /assessments.json
-  def index
-    @assessments = Assessment.all
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @assessments }
-    end
-  end
+  load_and_authorize_resource :assessment
+  load_and_authorize_resource :patient
 
   # GET /patient/.id/assessments/unassigned.json
   def unassigned
@@ -142,8 +134,13 @@ class AssessmentsController < ApplicationController
     @assessment.destroy
 
     respond_to do |format|
-      format.html { redirect_to assessments_url }
-      format.json { head :no_content }
+      if @patient.nil?
+        format.html {redirect_to root_path , notice: 'Assessment was successfully created.' }
+        format.json { head :no_content }
+      else
+        format.html {redirect_to @patient, notice: 'Assessment was successfully created.' }
+        format.json { head :no_content }
+      end
     end
   end
 end
