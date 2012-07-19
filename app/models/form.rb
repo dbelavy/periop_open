@@ -7,9 +7,19 @@ class Form
   PATIENT_ASSESSMENT = "Patient assessment"
   TELEPHONE_ASSESSMENT = "Telephone assessment"
   CLINIC_ASSESSMENT = "Clinic assessment"
+  NEW_PATIENT = "New patient"
 
-  def self.patientForm
-    Form.where(name: PATIENT_ASSESSMENT ).first
+  def self.patient_form
+    self.find_by_name PATIENT_ASSESSMENT
   end
+
+  def self.new_patient_form
+    self.find_by_name NEW_PATIENT
+  end
+
+  def self.find_by_name name
+    self.where(name: name).first
+  end
+
 
 end

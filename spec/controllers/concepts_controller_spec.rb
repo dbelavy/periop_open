@@ -111,18 +111,18 @@ describe ConceptsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Concept.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => concept.to_param, :concept => {'these' => 'params'}}, valid_session
+        put :update_answer, {:id => concept.to_param, :concept => {'these' => 'params'}}, valid_session
       end
 
       it "assigns the requested concept as @concept" do
         concept = Concept.create! valid_attributes
-        put :update, {:id => concept.to_param, :concept => valid_attributes}, valid_session
+        put :update_answer, {:id => concept.to_param, :concept => valid_attributes}, valid_session
         assigns(:concept).should eq(concept)
       end
 
       it "redirects to the concept" do
         concept = Concept.create! valid_attributes
-        put :update, {:id => concept.to_param, :concept => valid_attributes}, valid_session
+        put :update_answer, {:id => concept.to_param, :concept => valid_attributes}, valid_session
         response.should redirect_to(concept)
       end
     end
@@ -132,7 +132,7 @@ describe ConceptsController do
         concept = Concept.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Concept.any_instance.stub(:save).and_return(false)
-        put :update, {:id => concept.to_param, :concept => {}}, valid_session
+        put :update_answer, {:id => concept.to_param, :concept => {}}, valid_session
         assigns(:concept).should eq(concept)
       end
 
@@ -140,7 +140,7 @@ describe ConceptsController do
         concept = Concept.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Concept.any_instance.stub(:save).and_return(false)
-        put :update, {:id => concept.to_param, :concept => {}}, valid_session
+        put :update_answer, {:id => concept.to_param, :concept => {}}, valid_session
         response.should render_template("edit")
       end
     end

@@ -1,15 +1,14 @@
 = simple_form_for(@patient) do |f|
   = f.error_notification
-
+  - form_disabled =false
   .form-inputs
-    = f.input :name
-    = f.input :email
-    = f.input :ssn
-    = f.input :dob  ,:as => :date, :start_year => Date.today.year - 120,:end_year => Date.today.year , :order => [:day , :month, :year]
-    = f.input :planned_date_of_surgery ,:as => :date, :start_year => Date.today.year,:end_year => Date.today.year + 10 , :order => [:day , :month, :year]
-    = f.input :surgeon
+    = f.simple_fields_for(setup_assessment(@patient.new_patient_assessment),:url => patient_assessment_form_path,
+    :html => {:class => 'assessment' }, :defaults => {:disabled => form_disabled}) do |s|
+      = s.error_notification
+      .form-inputs
+      = s.simple_fields_for :answers do |a|
+        = render "assessments/answer",:a => a
     = f.input :anaesthetist_id ,:collection => Professional.anaesthetists
-    = f.collection_check_boxes :assigned, @patient.assessment_types, :first, :last
   .form-actions
     = f.button :submit
-= debug @patient
+-#= debug @patient

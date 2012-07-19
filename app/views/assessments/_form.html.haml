@@ -5,37 +5,7 @@
   = f.error_notification
   .form-inputs
   = f.simple_fields_for :answers do |a|
-    - question = a.object.question
-    - label = question.display_name if !question.nil?
-    %fieldset{:data => {:short_name => question.concept.name.downcase, :condition => question.condition }}
-      %legend #{label}
-      - label = "Answer"
-      = a.input :question_id, :as => :hidden
-      - if (question.input_type == 'OneOption')
-        = a.input :value,:label => label,:as => :select , :collection => question.option_list,:include_blank => false,
-        :label_method => :label , :value_method => :value,
-        :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition },
-        :class => 'question'}
-        - else if (question.input_type == 'ManyOptions')
-          = a.input :value,:label => label,:as => :check_boxes, :collection => question.option_list,:include_blank => false,
-          :label_method => :label , :value_method => :value,
-          :input_html => {:multiple => "multiple" ,:data => {:short_name => question.concept.name.downcase, :condition => question.condition },
-          :class => 'question'}
-          - else if question.input_type == 'Date'
-            = a.input :dateValue, :label => label,
-            :as => :date, :start_year => question.start_year, :end_year => question.end_year , :order => [:day , :month, :year],
-            :input_html => {:data => {:short_name => question.concept.name.downcase,
-            :condition => question.condition},:class => 'question'}
-          - else if (question.input_type == 'Text_box')
-            =a.input :value,:as => :text,:label => label,
-            :input_html => {:rows => 5,:cols => 60,:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
-            - else
-              = a.input :value,:label => label ,
-              :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
-      - if (question.ask_details == "Y")
-        =a.input :details,:label => "Please provide more information",:as => :text,
-        :input_html => {:data => {:short_name => question.concept.name.downcase + "_details", :condition => question.details_criteria},
-         :class => 'question question_details', :rows => 5}
+    = render "assessments/answer",:a => a
   - if user_signed_in?
     - if current_user.professional?
       = f.input :status, :collection => Assessment.status_list

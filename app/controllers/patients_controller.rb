@@ -15,6 +15,7 @@ class PatientsController < ApplicationController
 
   def new
     @patient = Patient.new
+    @assessment = @patient.new_patient_assessment
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @patient }
@@ -46,9 +47,7 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     @patient = Patient.new(params[:patient])
-    password = @patient.dob.to_s
-  # @patient.password= password
-  # @patient.password_confirmation= password
+    @patient.new_patient_assessment.update_attributes(params[:patient][:assessment])
     logger.debug 'created patient ' + @patient.to_yaml
     respond_to do |format|
       if @patient.save
@@ -60,5 +59,4 @@ class PatientsController < ApplicationController
       end
     end
   end
-
 end

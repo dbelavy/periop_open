@@ -1,12 +1,12 @@
 require Rails.root.join('spec','helpers.rb')
 require 'rubygems'           #so it can load gems
 
-
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
   require 'factory_girl_rails' #so it can run in development
-   Rake::Task['db:seed'].invoke
+  Rake::Task['db:seed'].invoke
+  Rake::Task['db:parse'].invoke
   #if ENV["RAILS_ENV"] == 'production'
     create_professional(Professional::ANAESTHETIST,"david@belavy.com","David Belavy")
   #end
@@ -16,7 +16,7 @@ namespace :db do
   FactoryGirl.create( :patient , :name => 'Viktor Navorski',ssn: "1234567")
   FactoryGirl.create(:patient,:name => 'Forrest Gump',ssn: "555555")
 
-  Rake::Task['db:parse'].invoke
+
   end
 
   def setup_patients

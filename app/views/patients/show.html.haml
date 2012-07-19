@@ -1,20 +1,20 @@
 %h2 Patient screen
 
 - if !patient_signed_in?
+  -#%p
+  -#  Name: #{@patient.name}
+  -#%p
+  -#  Date of birth: #{ @patient.dob}
+  -#%p
+  -#  SSN: #{@patient.ssn}
+  -#%p
+  -#  Planned date of surgery: #{ @patient.planned_date_of_surgery}
+  -#%p
+  -#  Surgeon: #{ @patient.surgeon}
+  -#%p
+  -#  Anaesthetist: #{ @patient.anaesthetist.name if !@patient.anaesthetist.nil?}
   %p
-    Name: #{@patient.name}
-  %p
-    Date of birth: #{ @patient.dob}
-  %p
-    SSN: #{@patient.ssn}
-  %p
-    Planned date of surgery: #{ @patient.planned_date_of_surgery}
-  %p
-    Surgeon: #{ @patient.surgeon}
-  %p
-    Anaesthetist: #{ @patient.anaesthetist.name if !@patient.anaesthetist.nil?}
-  %p
-    - @patient.assessments.each do |a|
+    - @patient.assessments_to_display.each do |a|
       %li #{link_to a.name, patient_assessment_path(@patient, a) } status : #{a.status}
   %p
     - if (can? :edit, @patient) && !@patient.patient_assessment_assigned?

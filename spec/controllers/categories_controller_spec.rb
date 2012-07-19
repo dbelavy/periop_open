@@ -111,18 +111,18 @@ describe CategoriesController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Category.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => category.to_param, :category => {'these' => 'params'}}, valid_session
+        put :update_answer, {:id => category.to_param, :category => {'these' => 'params'}}, valid_session
       end
 
       it "assigns the requested category as @category" do
         category = Category.create! valid_attributes
-        put :update, {:id => category.to_param, :category => valid_attributes}, valid_session
+        put :update_answer, {:id => category.to_param, :category => valid_attributes}, valid_session
         assigns(:category).should eq(category)
       end
 
       it "redirects to the category" do
         category = Category.create! valid_attributes
-        put :update, {:id => category.to_param, :category => valid_attributes}, valid_session
+        put :update_answer, {:id => category.to_param, :category => valid_attributes}, valid_session
         response.should redirect_to(category)
       end
     end
@@ -132,7 +132,7 @@ describe CategoriesController do
         category = Category.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Category.any_instance.stub(:save).and_return(false)
-        put :update, {:id => category.to_param, :category => {}}, valid_session
+        put :update_answer, {:id => category.to_param, :category => {}}, valid_session
         assigns(:category).should eq(category)
       end
 
@@ -140,7 +140,7 @@ describe CategoriesController do
         category = Category.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Category.any_instance.stub(:save).and_return(false)
-        put :update, {:id => category.to_param, :category => {}}, valid_session
+        put :update_answer, {:id => category.to_param, :category => {}}, valid_session
         response.should render_template("edit")
       end
     end

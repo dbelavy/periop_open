@@ -48,6 +48,7 @@ end
 
 def create_forms
   Form.delete_all
+  Form.create!(name: Form::NEW_PATIENT, person_role: [Question::PROFESSIONAL])
   Form.create!(name: Form::PATIENT_ASSESSMENT, person_role: [Question::PATIENT])
   Form.create!(name: Form::TELEPHONE_ASSESSMENT, person_role: [Question::PROFESSIONAL])
   Form.create!(name: Form::CLINIC_ASSESSMENT, person_role: [Question::PROFESSIONAL])
@@ -64,16 +65,15 @@ end
 def parse_questions doc
   Question.delete_all
   doc.default_sheet = doc.sheets[3]
+  new_patient_form =Form.where(name: Form::NEW_PATIENT).first
   patient_form =Form.where(name: Form::PATIENT_ASSESSMENT).first
   telephone_form =Form.where(name: Form::TELEPHONE_ASSESSMENT).first
   clinic_form =Form.where(name: Form::CLINIC_ASSESSMENT).first
-  used_in_patient_assesment_col = column_for(doc,"Question used in patient assessment")
-  puts "used_in_patient_assesment_col " + doc.cell(1,used_in_patient_assesment_col)
-  used_in_professional_assesment_col = column_for(doc,"Question used in clinic or bedside assessment by professional")
-  puts "used_in_professional_assesment_col  " + doc.cell(1,used_in_professional_assesment_col)
-  used_in_telephone_assesment_col = column_for(doc,"Question used in telephone assessment by professional")
-  puts "used_in_telephone_assesment_col " + doc.cell(1,used_in_telephone_assesment_col)
 
+  used_in_new_patient_col = column_for(doc,"New_Patient_Form")
+  used_in_patient_assesment_col = column_for(doc,"Question used in patient assessment")
+  used_in_professional_assesment_col = column_for(doc,"Question used in clinic or bedside assessment by professional")
+  used_in_telephone_assesment_col = column_for(doc,"Question used in telephone assessment by professional")
 
   validation_col = column_for(doc,"Validation_criteria")
 
@@ -120,6 +120,9 @@ def parse_questions doc
     # used in patient assessment
     if doc.cell(line, used_in_patient_assesment_col)
       patient_form.questions.push question
+    end
+    if doc.cell(line, used_in_new_patient_col)
+      new_patient_form.questions.push question
     end
     if doc.cell(line, used_in_telephone_assesment_col)
       #  add to form

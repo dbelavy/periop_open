@@ -1,6 +1,6 @@
 class AssessmentsController < ApplicationController
   load_and_authorize_resource :assessment
-  load_and_authorize_resource :patient
+  load_and_authorize_resource :patient,:except => [:patient_assessment_form,:update_patient_assessment]
 
   # GET /patient/.id/assessments/unassigned.json
   def unassigned
@@ -61,7 +61,7 @@ class AssessmentsController < ApplicationController
   # GET /patient_assessment_form
   def patient_assessment_form
     @assessment = Assessment.new
-    @assessment.form= Form.patientForm
+    @assessment.form= Form.patient_form
     @questions = @assessment.form.questions
   end
 
@@ -114,7 +114,7 @@ class AssessmentsController < ApplicationController
 
   def update_patient_assessment
     @assessment = Assessment.new(params[:assessment])
-    @assessment.form= Form.patientForm
+    @assessment.form= Form.patient_form
     @assessment.start_and_complete_assessment
     respond_to do |format|
       if @assessment.save

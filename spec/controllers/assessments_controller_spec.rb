@@ -111,18 +111,18 @@ describe AssessmentsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Assessment.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => assessment.to_param, :assessment => {'these' => 'params'}}, valid_session
+        put :update_answer, {:id => assessment.to_param, :assessment => {'these' => 'params'}}, valid_session
       end
 
       it "assigns the requested assessment as @assessment" do
         assessment = Assessment.create! valid_attributes
-        put :update, {:id => assessment.to_param, :assessment => valid_attributes}, valid_session
+        put :update_answer, {:id => assessment.to_param, :assessment => valid_attributes}, valid_session
         assigns(:assessment).should eq(assessment)
       end
 
       it "redirects to the assessment" do
         assessment = Assessment.create! valid_attributes
-        put :update, {:id => assessment.to_param, :assessment => valid_attributes}, valid_session
+        put :update_answer, {:id => assessment.to_param, :assessment => valid_attributes}, valid_session
         response.should redirect_to(assessment)
       end
     end
@@ -132,7 +132,7 @@ describe AssessmentsController do
         assessment = Assessment.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Assessment.any_instance.stub(:save).and_return(false)
-        put :update, {:id => assessment.to_param, :assessment => {}}, valid_session
+        put :update_answer, {:id => assessment.to_param, :assessment => {}}, valid_session
         assigns(:assessment).should eq(assessment)
       end
 
@@ -140,7 +140,7 @@ describe AssessmentsController do
         assessment = Assessment.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Assessment.any_instance.stub(:save).and_return(false)
-        put :update, {:id => assessment.to_param, :assessment => {}}, valid_session
+        put :update_answer, {:id => assessment.to_param, :assessment => {}}, valid_session
         response.should render_template("edit")
       end
     end

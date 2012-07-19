@@ -16,15 +16,19 @@ class Assessment
 
 
   def self.create_for_patient(form, patient)
-    assessment = self.create!
+    assessment = self.new
     assessment.form= form
     assessment.patient= patient
-    assessment.save!
+    #assessment.save!
     assessment
   end
 
   def answer question
     result = answers.where(:question_id => question._id).first
+  end
+
+  def find_or_create_answer question
+    result = answers.find_or_create_by(:question_id => question._id)
   end
 
   def self.status_list

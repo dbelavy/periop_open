@@ -9,24 +9,6 @@ class Patient
   #:recoverable,
 
 
-  ## Database authenticatable
-  field :email, :type => String, :null => false
-  field :encrypted_password, :type => String, :null => false, :default => ""
-
-  ## Recoverable
-  field :reset_password_token, :type => String
-  field :reset_password_sent_at, :type => Time
-
-  ## Rememberable
-  field :remember_created_at, :type => Time
-
-  ## Trackable
-  field :sign_in_count, :type => Integer, :default => 0
-  field :current_sign_in_at, :type => Time
-  field :last_sign_in_at, :type => Time
-  field :current_sign_in_ip, :type => String
-  field :last_sign_in_ip, :type => String
-
   ## Confirmable
   # field :confirmation_token,   :type => String
   # field :confirmed_at,         :type => Time
@@ -41,20 +23,82 @@ class Patient
   ## Token authenticatable
   # field :authentication_token, :type => String
 
-  field :name, :type => String
-  field :ssn, :type => String
-  field :dob, :type => Date
+  field :email, :type => String
+  #field :name, :type => String
+  #field :ssn, :type => String
+  #field :dob, :type => Date
+
   field :ready_to_surgery, :type => Boolean,:default => false
   field :planned_date_of_surgery, :type => Date
 
-
-
-  validates_presence_of :name, :ssn
-  belongs_to :user
-
   field :surgeon, :type => String
+
   belongs_to :anaesthetist, :class_name=> 'Professional',:inverse_of => :anaesthetist_patients
   has_many :assessments
+  #accepts_nested_attributes_for :assessments, reject_if: :all_blank
+  #
+
+  def find_answer_by_concept_name name
+    concept = Concept.where(name: name).first
+    self.new_patient_assessment.answer(Question.where(concept_id: concept._id).first)
+  end
+
+  def get_answer_value_by_concept name
+    answer = self.find_answer_by_concept_name name
+    if answer.nil?
+      return ""
+    else
+      return answer.value_to_s
+    end
+  end
+
+
+  def find_or_create_answer_by_concept_name name
+    concept = Concept.where(name: name).first
+    self.new_patient_assessment.find_or_create_answer(Question.where(concept_id: concept._id).first)
+  end
+
+  def name
+    self.get_answer_value_by_concept "patient_surname"
+  end
+
+  def name= value
+    self.set_answer_value_by_concept( "patient_surname",value)
+  end
+
+  def set_answer_value_by_concept(concept_name, value)
+    answer = self.find_or_create_answer_by_concept_name concept_name
+    answer.update_answer value
+  end
+
+  def assessments_to_display
+      result = []
+    assessments.each{|a|
+      if a.name != Form::NEW_PATIENT
+         result << a
+      end
+    }
+    result
+  end
+
+
+  #field :ssn, :type => String
+  #field :dob, :type => Date
+  def ssn
+    self.get_answer_value_by_concept "social_security_number"
+  end
+
+  def ssn= value
+    set_answer_value_by_concept  "social_security_number",value
+  end
+
+  def dob
+    self.get_answer_value_by_concept "patient_dob"
+  end
+
+  def dob= value
+    set_answer_value_by_concept  "patient_dob",value
+  end
 
   def assigned
     assessments.map{|a| a.name}
@@ -76,6 +120,14 @@ class Patient
     !assigned.find_index(Form::PATIENT_ASSESSMENT).nil?
   end
 
+  def new_patient_assessment
+    assessments.each { |a|
+      if a.name == Form::NEW_PATIENT
+        return a
+      end
+    }
+    Assessment.create_for_patient(Form.new_patient_form,self)
+  end
 
   def assessment_types
     assigned_types = assigned
@@ -85,5 +137,4 @@ class Patient
       end
     result
   end
-
 end

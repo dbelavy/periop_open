@@ -111,18 +111,18 @@ describe FormsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Form.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => form.to_param, :form => {'these' => 'params'}}, valid_session
+        put :update_answer, {:id => form.to_param, :form => {'these' => 'params'}}, valid_session
       end
 
       it "assigns the requested form as @form" do
         form = Form.create! valid_attributes
-        put :update, {:id => form.to_param, :form => valid_attributes}, valid_session
+        put :update_answer, {:id => form.to_param, :form => valid_attributes}, valid_session
         assigns(:form).should eq(form)
       end
 
       it "redirects to the form" do
         form = Form.create! valid_attributes
-        put :update, {:id => form.to_param, :form => valid_attributes}, valid_session
+        put :update_answer, {:id => form.to_param, :form => valid_attributes}, valid_session
         response.should redirect_to(form)
       end
     end
@@ -132,7 +132,7 @@ describe FormsController do
         form = Form.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Form.any_instance.stub(:save).and_return(false)
-        put :update, {:id => form.to_param, :form => {}}, valid_session
+        put :update_answer, {:id => form.to_param, :form => {}}, valid_session
         assigns(:form).should eq(form)
       end
 
@@ -140,7 +140,7 @@ describe FormsController do
         form = Form.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Form.any_instance.stub(:save).and_return(false)
-        put :update, {:id => form.to_param, :form => {}}, valid_session
+        put :update_answer, {:id => form.to_param, :form => {}}, valid_session
         response.should render_template("edit")
       end
     end
