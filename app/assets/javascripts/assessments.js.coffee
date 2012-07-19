@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(document).ready ->
-
+  dob_name = "patient_dob"
   formSelector = 'form.assessment'
   questionsSelector = formSelector  + ' .question'
 
@@ -12,16 +12,16 @@ $(document).ready ->
   ->
     shortname = $(this).data("short-name")
     newValue = $(this).val()
-    if shortname == "dob"
-      shortname = "age"
+    if shortname == dob_name
+      shortname = "patient_age"
     event = $.Event('question.' + shortname)
     $(formSelector).trigger(event,[newValue])
   )
 
   calculateAge = () ->
-    day = $('[data-short-name="dob"]').eq(0).val()
-    month = $('[data-short-name="dob"]').eq(1).val() - 1
-    year = $('[data-short-name="dob"]').eq(2).val()
+    day = $('[data-short-name=' + dob_name + ']').eq(0).val()
+    month = $('[data-short-name='+ dob_name+ ']').eq(1).val() - 1
+    year = $('[data-short-name=' + dob_name + ']').eq(2).val()
     today=new Date();
     age = today.getFullYear()-year;
     if(today.getMonth()<month || (today.getMonth()==month && today.getDate()<day))
@@ -67,7 +67,7 @@ $(document).ready ->
       return null
     checkAtomic: (conditionHash) ->
       if conditionHash != null
-        if conditionHash.shortname == 'age'
+        if conditionHash.shortname == 'patient_age'
           value =  calculateAge()
         else
           value = $('[data-short-name=\"' +conditionHash.shortname + '\"]').val()
