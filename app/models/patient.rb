@@ -35,27 +35,15 @@ class Patient
 
   belongs_to :anaesthetist, :class_name=> 'Professional',:inverse_of => :anaesthetist_patients
   has_many :assessments
-  #accepts_nested_attributes_for :assessments, reject_if: :all_blank
-  #
 
-  def find_answer_by_concept_name name
-    concept = Concept.where(name: name).first
-    self.new_patient_assessment.answer(Question.where(concept_id: concept._id).first)
-  end
 
   def get_answer_value_by_concept name
-    answer = self.find_answer_by_concept_name name
-    if answer.nil?
-      return ""
-    else
-      return answer.value_to_s
-    end
+    answer = self.new_patient_assessment.find_answer_by_concept_name name
   end
 
 
   def find_or_create_answer_by_concept_name name
-    concept = Concept.where(name: name).first
-    self.new_patient_assessment.find_or_create_answer(Question.where(concept_id: concept._id).first)
+    self.new_patient_assessment.find_or_create_answer_by_concept_name name
   end
 
   def name

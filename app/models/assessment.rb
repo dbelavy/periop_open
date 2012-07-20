@@ -24,11 +24,11 @@ class Assessment
   end
 
   def answer question
-    result = answers.where(:question_id => question._id).first
+    answers.where(:question_id => question._id).first
   end
 
   def find_or_create_answer question
-    result = answers.find_or_create_by(:question_id => question._id)
+    answers.find_or_create_by(:question_id => question._id)
   end
 
   def self.status_list
@@ -42,6 +42,27 @@ class Assessment
     end
   end
 
+  def find_or_create_answer_by_concept_name name
+    self.find_or_create_answer(find_question_by_concept_name name)
+  end
+
+  def find_answer_by_concept_name name
+    answer = self.answer(find_question_by_concept_name name)
+    if answer.nil?
+      return ""
+    end
+    answer.value_to_s
+  end
+
+
+  def find_question_by_concept_name name
+    concept = Concept.find_by_name(name)
+    if concept.nil?
+      puts name
+    end
+    self.form.questions.where(concept_id: concept._id).first
+  end
+
   def start_and_complete_assessment
     self.date_started = Time.now
     self.status= COMPLETE
@@ -50,4 +71,5 @@ class Assessment
   def name
     form.name if !form.nil?
   end
+
 end

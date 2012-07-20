@@ -75,6 +75,8 @@ def parse_questions doc
   used_in_professional_assesment_col = column_for(doc,"Question used in clinic or bedside assessment by professional")
   used_in_telephone_assesment_col = column_for(doc,"Question used in telephone assessment by professional")
 
+  required_col = column_for(doc,"Required_field")
+
   validation_col = column_for(doc,"Validation_criteria")
 
 
@@ -98,6 +100,7 @@ def parse_questions doc
       end
       condition.gsub!(/\s[\s]*/, " ")
     end
+
     ask_details_criteria = doc.cell(line, "K").downcase if !doc.cell(line, "K").nil?
     ask_details_criteria ="all" if ask_details_criteria == "any answer"
 
@@ -158,7 +161,6 @@ end
     task parse: :environment do
       require 'roo'
 
-
       #workbook = RubyXL::Parser.parse("./spreadsheet/Question_properties.xlsx")
       #workbook.worksheets[0] #returns first worksheet
       #row = workbook[0].sheet_data[0]  #returns first worksheet
@@ -166,7 +168,6 @@ end
 
       #oo = Openoffice.new("./spreadsheet/Question_properties.xlsx")
       doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
-
       create_forms
       parse_categories(doc)
       parse_concepts(doc)

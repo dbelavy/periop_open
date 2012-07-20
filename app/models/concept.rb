@@ -12,4 +12,8 @@ class Concept
   belongs_to :category
   has_many :questions
 
+  def self.find_by_name name
+    self.where(name: name).first
+  end
+
 end

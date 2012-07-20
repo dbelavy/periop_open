@@ -3,26 +3,24 @@
 %table{:class => "table table-striped table-bordered" }
   %thead
     %tr
-      %th Status
       %th Name
-      %th Date
-      %th Patient
-      %th DOB
       %th Gender
+      %th DOB
+      %th Planned date of Procedure
+      %th Status
       %th Delete
   %tbody
-    - @assessments.each do |assessment|
+    - @assessments.each do |a|
       %tr
+        %td= a.find_answer_by_concept_name 'patient_surname'
+        %td= a.find_answer_by_concept_name 'patient_gender'
+        %td= a.find_answer_by_concept_name 'patient_dob'
+        %td= a.find_answer_by_concept_name 'procedure_date'
         -if !@patient.nil?
-          %td= link_to assessment.status, patient_assessment_path(@patient,assessment)
+          %td= link_to a.status, patient_assessment_path(@patient,a)
         -else
-          %td= link_to assessment.status, assessment_path(assessment)
-        %td= assessment.name
-        %td= assessment.date_started.to_s
-        %td= answer_for 'Family name', assessment
-        %td= answer_for 'Date of birth', assessment
-        %td= answer_for 'What is your gender', assessment
-        %td= link_to 'Delete assessment', assessment, :confirm => 'Are you sure?', :method => :delete,:class=> "btn btn-danger"
+          %td= link_to a.status, assessment_path(a)
+        %td= link_to 'Delete assessment', a, :confirm => 'Are you sure?', :method => :delete,:class=> "btn btn-danger"
 %br
 
 = link_to 'Back' ,root_path
