@@ -59,4 +59,19 @@ class PatientsController < ApplicationController
       end
     end
   end
+
+  def summary
+    @summary = {}
+    @concepts = Concept.all
+    @patient.assessments.each{|assessment|
+       assessment.answers {|ans|
+         concept_id = ans.question.concept._id
+         if @summary[concept_id].nil?
+           @summary[concept_id] = Array.new
+         else
+           @summary[concept_id] << ans
+         end
+       }
+    }
+  end
 end

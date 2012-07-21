@@ -13,9 +13,12 @@ Periop::Application.routes.draw do
       put 'unassigned', :on => :collection
       put 'assign'
       put 'unassign'
-      get 'summary'
+
     end
+    resource :summary, :only => [:show]
   end
+
+
 
   resources :assessments ,:only => [:show,:destroy,:patient_assessment_form] do
     get "unassigned" => "assessments#unassigned",:on => :collection

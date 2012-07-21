@@ -32,7 +32,9 @@ private
         h(patient.anaesthetist.nil? ? '' : patient.anaesthetist.name),
         h(patient.surgeon),
         h(patient.planned_date_of_surgery),
-        h('no')
+        h('no'),
+        h('TODO')
+      #link_to(patient.name, Rails.application.routes.url_helpers.patient_summary_path(patient))
       ]
     end
   end

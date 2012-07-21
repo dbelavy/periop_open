@@ -1,0 +1,10 @@
+%h2 Preoperative summary
+  - form_disabled = true
+  = simple_form_for(setup_assessment(@concepts),:url => patient_assessment_form_path ,:html => {:class => 'summary' },
+ :defaults => {:disabled => form_disabled}) do |c|
+    = c.error_notification
+    .form-inputs
+      = c.name
+      -#= @summary.
+
+= link_to 'Back', patients_path
