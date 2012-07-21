@@ -2,14 +2,16 @@
 %table#patients{:data => {:source => [patients_url(format: "json") ]}, :class => "table table-striped table-bordered" }
   %thead
     %tr
-      %th Name
+      %th Surname
+      %th First Name
       %th Date of birth
-      %th  Anaesthetist
-      %th  Surgeon
-      %th  Planned date of Procedure
-      -#%th  assesment workflow flag
-      %th  Ready for surgery flag
-      %th  Summary
+      %th Anaesthetist
+      %th Surgeon
+      %th Planned date of Procedure
+      %th Ready for surgery flag
+      %th Show Summary
+      %th Show Assessments
+      %th Edit Details
     %tbody
       -#- @patients.each do |patient|
       -#  %tr
@@ -19,7 +21,6 @@
       -#    %td #{patient.surgeon}
       -#    %td #{patient.planned_date_of_surgery}
       -#    %td no
-
 -#= will_paginate
 %br
 = link_to 'New Patient', new_patient_path

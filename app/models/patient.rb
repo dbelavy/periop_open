@@ -46,8 +46,12 @@ class Patient
     self.new_patient_assessment.find_or_create_answer_by_concept_name name
   end
 
-  def name
+  def surname
     self.get_answer_value_by_concept "patient_surname"
+  end
+
+  def name
+    self.get_answer_value_by_concept "patient_first_name"
   end
 
   def name= value

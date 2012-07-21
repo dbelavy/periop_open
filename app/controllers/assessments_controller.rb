@@ -15,6 +15,19 @@ class AssessmentsController < ApplicationController
     end
   end
 
+  def index
+    if !params[:patient_id].nil?
+      @patient = Patient.find(params[:patient_id])
+    end
+    puts "found patient" + @patient.name
+    @assessments = Assessment.where(:patient_id => @patient._id)
+    puts "found assesments" + @assesments.to_s
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @assessments }
+    end
+  end
+
 
   # GET /assessments/1
   # GET /assessments/1.json
