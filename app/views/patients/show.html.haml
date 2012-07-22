@@ -1,19 +1,17 @@
-%h2 Patient screen
+=render 'detailed_info'
+- if can? :edit, @patient
+  = link_to 'Edit patient information', edit_patient_path(@patient)
+%h3 Preoperative information
+=link_to('Show Preoperative Summary ',patient_summary_path(@patient))
+TODO Start new assessment [link] - link to a list of available assessments
+- if (can? :edit, @patient) && !@patient.patient_assessment_assigned?
+  =link_to('Find patient assessment', unassigned_patient_assessments_path(@patient))
 
-- if !patient_signed_in?
-  =render 'short_info'
-  %p
-    - @patient.assessments_to_display.each do |a|
-      %li #{link_to a.name, patient_assessment_path(@patient, a) } status : #{a.status}
-  %p
-    - if (can? :edit, @patient) && !@patient.patient_assessment_assigned?
-      %li #{link_to 'New Patient Assessments', unassigned_patient_assessments_path(@patient)}
+%h3 Available Assessments
+%p
+  - @patient.assessments_to_display.each do |a|
+    %li #{link_to a.name, patient_assessment_path(@patient, a) } status : #{a.status}
 
-  - if can? :edit, @patient
-    = link_to 'Edit', edit_patient_path(@patient)
-    \|
-    = link_to 'Back', patients_path
-  - else
-    = link_to 'Back', patients_path
-- else
-  %p TODO proceed patient to assessment
+
+= link_to 'Back', patients_path
+

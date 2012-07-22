@@ -1,0 +1,17 @@
+%h3 Patient information
+%p
+  Surname: #{@patient.surname}
+%p
+  First name: #{@patient.firstname}
+%p
+  Middle name: #{@patient.middlename}
+%p
+  Date of birth: #{ @patient.dob}
+%p
+  Medicare number: #{@patient.get_answer_value_by_concept "medicare_card_number"}
+%p
+  Medicare card patient identifier: #{@patient.get_answer_value_by_concept "medicare_card_number_identifier"}
+%p
+  Individual healthcare identifier: #{@patient.get_answer_value_by_concept "individual_healthcare_identifier"}
+%p
+  Social security number: #{@patient.ssn}

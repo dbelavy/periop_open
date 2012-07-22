@@ -31,7 +31,7 @@ class PatientsController < ApplicationController
   # PUT /patients/1.json
   def update
     @patient = Patient.find(params[:id])
-
+    @patient.new_patient_assessment.update_attributes(params[:patient][:assessment])
     respond_to do |format|
       if @patient.update_attributes(params[:patient])
         format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
