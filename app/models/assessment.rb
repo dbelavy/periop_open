@@ -72,4 +72,8 @@ class Assessment
     form.name if !form.nil?
   end
 
+  def summary
+    self.name + self.date_started.strftime(" %m/%d/%Y") + ' status: ' + self.status
+  end
+
 end
