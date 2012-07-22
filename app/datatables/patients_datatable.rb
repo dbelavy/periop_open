@@ -27,8 +27,8 @@ private
   def data
     patients.map do |patient|
       [
-        h(patient.get_answer_value_by_concept('patient_surname')),
-        h(patient.name),
+        link_to(patient.surname,patient),
+        h(patient.firstname),
         h(patient.dob),
         h(patient.anaesthetist.nil? ? '' : patient.anaesthetist.name),
         h(patient.surgeon),

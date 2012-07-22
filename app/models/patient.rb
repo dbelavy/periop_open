@@ -50,11 +50,15 @@ class Patient
     self.get_answer_value_by_concept "patient_surname"
   end
 
-  def name
+  def firstname
     self.get_answer_value_by_concept "patient_first_name"
   end
 
-  def name= value
+  def middlename
+    self.get_answer_value_by_concept "patient_middle_name"
+  end
+
+  def firstname= value
     self.set_answer_value_by_concept( "patient_surname",value)
   end
 
