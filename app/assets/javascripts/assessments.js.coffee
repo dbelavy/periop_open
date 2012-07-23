@@ -86,6 +86,7 @@ $(document).ready ->
 
     checkAndApply: ($input) ->
       condObj = condition.getConditions($input)
+      formDisabled = $input.parents('form').attr('disabled') == 'disabled'
       if condObj != null
         if (condObj.op == "or")
           result = false
@@ -99,14 +100,16 @@ $(document).ready ->
         if $input.hasClass("question_details")
           if (result)
             $input.parents('.control-group').show("slow")
-            $input.removeAttr("disabled")
+            if !formDisabled
+              $input.removeAttr("disabled")
           else
             $input.parents('.control-group').hide("slow")
             $input.attr("disabled","disabled")
         else if $input.hasClass("question")
           if (result)
             $input.parents('fieldset').show("slow")
-            $input.removeAttr("disabled")
+            if !formDisabled
+              $input.removeAttr("disabled")
           else
             $input.parents('fieldset').hide("slow")
             $input.attr("disabled","disabled")

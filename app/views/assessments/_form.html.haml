@@ -1,6 +1,7 @@
 %h3 #{@assessment.name}
 - form_disabled ||= false
-= simple_form_for(setup_assessment(@assessment),:url => patient_assessment_form_path ,:html => {:class => 'assessment' },
+= simple_form_for(setup_assessment(@assessment),:url => patient_assessment_form_path ,
+:html => {:class => 'assessment' ,:disabled => form_disabled },
 :defaults => {:disabled => form_disabled}) do |f|
   = f.error_notification
   .form-inputs

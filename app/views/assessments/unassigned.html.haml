@@ -1,5 +1,6 @@
 %h1 Unassigned assessments
-=render 'patients/short_info'
+- if !@patient.nil?
+  =render 'patients/short_info'
 %table{:class => "table table-striped table-bordered" }
   %thead
     %tr
