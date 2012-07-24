@@ -82,8 +82,8 @@ def parse_questions doc
   validation_col = column_for(doc,"Validation_criteria")
 
 
-  3.upto(doc.last_row) do |line|
-    if doc.cell(line, "C").nil?
+  2.upto(doc.last_row) do |line|
+    if doc.cell(line, "D").nil?
       next
     end
 
