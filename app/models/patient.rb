@@ -59,6 +59,10 @@ class Patient
   end
 
   def firstname= value
+    self.set_answer_value_by_concept( "patient_first_name",value)
+  end
+
+  def surname= value
     self.set_answer_value_by_concept( "patient_surname",value)
   end
 

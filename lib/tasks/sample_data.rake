@@ -13,17 +13,15 @@ namespace :db do
    10.times do |n|
      create_professional_dev(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
    end
-  FactoryGirl.create( :patient , :name => 'Viktor Navorski',ssn: "1234567")
-  FactoryGirl.create(:patient,:name => 'Forrest Gump',ssn: "555555")
+  FactoryGirl.create( :patient , firstname: 'Viktor',surname: 'Navorski',ssn: "1234567")
+  FactoryGirl.create(:patient,firstname: 'Forrest',surname:  'Gump',ssn: "555")
 
 
   end
 
   def setup_patients
-      FactoryGirl.create( :patient , :name => 'Viktor Navorski',ssn: "1234567")
-      FactoryGirl.create(:patient,:name => 'Forrest Gump',ssn: "555")
       #10.times do
-      #  FactoryGirl.create(:patient)
+      #  FactoryrzsGirl.create(:patient)
       #end
       Patient.first.surgeon = Professional.surgeons.first
       11.times do |n|
