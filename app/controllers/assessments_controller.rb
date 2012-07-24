@@ -43,8 +43,7 @@ class AssessmentsController < ApplicationController
   def summary
     @patient = Patient.find(params[:patient_id])
     @concepts = Concept.all
-    @assesments = @patient.assesments
-
+    @assessments = @patient.assessments
     respond_to do |format|
       format.html
       format.json { render json: @assessment }
@@ -55,7 +54,6 @@ class AssessmentsController < ApplicationController
   # GET /assessments/new.json
   def new
     @assessment = Assessment.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @assessment }
@@ -81,9 +79,13 @@ class AssessmentsController < ApplicationController
   # PUT /assessments/1.json
   def update
     @assessment = Assessment.find(params[:id])
-
+    is_updated = @assessment.update_assessment (params[:assessment])
+    if is_updated
+      professional_name = current_user.professional.name.to_s
+      @assessment.updated_by = professional_name
+    end
     respond_to do |format|
-      if @assessment.update_assessment (params[:assessment])
+      if is_updated
         format.html { redirect_to patient_assessment_path, notice: 'Assessment was successfully updated.' }
         format.json { head :no_content }
       else

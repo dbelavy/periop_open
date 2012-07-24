@@ -2,19 +2,13 @@ new patient form
 http://stackoverflow.com/questions/5999870/rails-simple-form-two-models
 +devise customization (no reset password for users, separate login\signup screens)
 
-
 human readible url's
 
 custom exceptions pages + email to developer?
 
-
-
 integration tests for roles access
 
 therubyracer - the use of this gem in production is strongly discouraged as it uses a very large amount of memory.| investigate
-
-
-
 
 questions functionality
 
@@ -68,4 +62,6 @@ Assesment
 
 MONGOHQ_URL=mongodb://localhost/periop_production
 
-heroku run rake
+heroku run rake ADMIN_PASSWORD=secret db:populate
+
+heroku run rake db:parse

@@ -1,10 +1,28 @@
 %h2 Preoperative summary
-  - form_disabled = true
-  = simple_form_for(setup_assessment(@concepts),:url => patient_assessment_form_path ,:html => {:class => 'summary' },
- :defaults => {:disabled => form_disabled}) do |c|
-    = c.error_notification
-    .form-inputs
-      = c.name
-      -#= @summary.
-
+%table#summary{:class => "table table-striped table-bordered" }
+  %thead
+    %tr
+      %th Concept
+      %th Answer
+      %th Details
+      %th Author
+      %th Date
+      %th Assessment name
+    %tbody
+    - @concepts.each do |c|
+      - if !@summary[c._id].nil?
+        - @summary[c._id].each do |sum|
+          %tr
+            %td
+              =c.display_name
+            %td
+              =sum[:answer].to_s
+            %td
+              =sum[:details]
+            %td
+              =sum[:author]
+            %td
+              =sum[:date]
+            %td
+              =sum[:assessment_name]
 = link_to 'Back', patients_path

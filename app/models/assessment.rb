@@ -8,6 +8,7 @@ class Assessment
 
   field :status, :type => String, :default => NOT_STARTED
   field :date_started, :type => DateTime
+  field :updated_by, :type => String
   belongs_to :patient
   belongs_to :form
 
@@ -19,7 +20,6 @@ class Assessment
     assessment = self.new
     assessment.form= form
     assessment.patient= patient
-    #assessment.save!
     assessment
   end
 
@@ -66,14 +66,18 @@ class Assessment
   def start_and_complete_assessment
     self.date_started = Time.now
     self.status= COMPLETE
+    self.updated_by = 'Patient'
   end
 
   def name
     form.name if !form.nil?
   end
 
-  def summary
-    self.name + self.date_started.strftime(" %m/%d/%Y") + ' status: ' + self.status
+  def date_str
+    self.date_started.nil? ? " " : self.date_started.strftime(" %m/%d/%Y")
   end
 
+  def summary
+    self.name + date_str  + ' status: ' + self.status
+  end
 end
