@@ -128,6 +128,7 @@ class Patient
     }
     assessment = Assessment.create_for_patient(Form.new_patient_form,self)
     assessment.updated_by = "Patient"
+    assessment
   end
 
   def assessment_types
