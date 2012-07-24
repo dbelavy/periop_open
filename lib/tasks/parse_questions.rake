@@ -4,7 +4,7 @@ require 'rubygems' #so it can load gems
 
 def parse_concepts(doc)
   Concept.delete_all
-  doc.default_sheet = doc.sheets[2]
+  doc.default_sheet = 'Concept heirarchy position'
   3.upto(360) do |line|
     concept = Concept.create!(
         name: doc.cell(line, 'A').downcase,
@@ -31,7 +31,9 @@ end
 
 def parse_categories doc
   Category.delete_all
-  doc.default_sheet = doc.sheets[1]
+  #doc.default_sheet = doc.sheets['Data_Classification for Summary']
+  doc.default_sheet = 'Data_Classification for Summary'
+
   2.upto(doc.last_row) do |line|
     level_1_name = doc.cell(line, 'B')
     level_1_order= doc.cell(line, 'C')
@@ -64,11 +66,11 @@ end
 
 def parse_questions doc
   Question.delete_all
-  doc.default_sheet = doc.sheets[3]
-  new_patient_form =Form.where(name: Form::NEW_PATIENT).first
-  patient_form =Form.where(name: Form::PATIENT_ASSESSMENT).first
-  telephone_form =Form.where(name: Form::TELEPHONE_ASSESSMENT).first
-  clinic_form =Form.where(name: Form::CLINIC_ASSESSMENT).first
+  doc.default_sheet = 'Questions'
+  new_patient_form = Form.where(name: Form::NEW_PATIENT).first
+  patient_form = Form.where(name: Form::PATIENT_ASSESSMENT).first
+  telephone_form = Form.where(name: Form::TELEPHONE_ASSESSMENT).first
+  clinic_form = Form.where(name: Form::CLINIC_ASSESSMENT).first
 
   used_in_new_patient_col = column_for(doc,"New_Patient_Form")
   used_in_patient_assesment_col = column_for(doc,"Question used in patient assessment")
@@ -80,7 +82,10 @@ def parse_questions doc
   validation_col = column_for(doc,"Validation_criteria")
 
 
-  2.upto(doc.last_row) do |line|
+  3.upto(doc.last_row) do |line|
+    if doc.cell(line, "C").nil?
+      next
+    end
 
     condition = doc.cell(line, "F")
     if !condition.nil?
@@ -141,7 +146,7 @@ end
 
 def parse_option_lists doc
   OptionList.delete_all
-  doc.default_sheet = doc.sheets[4]
+  doc.default_sheet = 'Option_List'
   2.upto(doc.last_row) do |line|
     value = doc.cell(line, "D")
     if value.nil?
@@ -166,7 +171,6 @@ end
       #row = workbook[0].sheet_data[0]  #returns first worksheet
       #puts row
 
-      #oo = Openoffice.new("./spreadsheet/Question_properties.xlsx")
       doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
       create_forms
       parse_categories(doc)
