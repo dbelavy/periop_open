@@ -30,8 +30,7 @@ class PatientsController < ApplicationController
   # PUT /patients/1
   # PUT /patients/1.json
   def update
-    @patient = Patient.find(params[:id])
-    @patient.new_patient_assessment.update_attributes(params[:patient][:assessment])
+    @patient.new_patient_assessment.update_assessment(params[:patient][:assessment],current_user)
     respond_to do |format|
       if @patient.update_attributes(params[:patient])
         format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
@@ -46,8 +45,7 @@ class PatientsController < ApplicationController
   # POST /patients
   # POST /patients.json
   def create
-    @patient = Patient.new(params[:patient])
-    @patient.new_patient_assessment.update_attributes(params[:patient][:assessment])
+    @patient.new_patient_assessment.update_assessment(params[:patient][:assessment],current_user)
     logger.debug 'created patient ' + @patient.to_yaml
     respond_to do |format|
       if @patient.save

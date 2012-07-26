@@ -127,7 +127,7 @@ class Patient
       end
     }
     assessment = Assessment.create_for_patient(Form.new_patient_form,self)
-    assessment.updated_by = "Patient"
+    assessment.start_and_complete_assessment
     assessment
   end
 

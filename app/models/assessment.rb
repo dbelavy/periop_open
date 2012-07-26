@@ -35,8 +35,10 @@ class Assessment
     [NOT_STARTED, STARTED_BUT_INCOMPLETE, COMPLETE]
   end
 
-  def update_assessment params
+  def update_assessment params,current_user
     result = true
+      professional_name = current_user.professional.name.to_s
+      self.updated_by= professional_name
     if result
       result = update_attributes(params)
     end

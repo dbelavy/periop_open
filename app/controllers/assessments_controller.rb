@@ -79,11 +79,7 @@ class AssessmentsController < ApplicationController
   # PUT /assessments/1.json
   def update
     @assessment = Assessment.find(params[:id])
-    is_updated = @assessment.update_assessment (params[:assessment])
-    if is_updated
-      professional_name = current_user.professional.name.to_s
-      @assessment.updated_by = professional_name
-    end
+    is_updated = @assessment.update_assessment(params[:assessment],current_user)
     respond_to do |format|
       if is_updated
         format.html { redirect_to patient_assessment_path, notice: 'Assessment was successfully updated.' }
@@ -148,10 +144,10 @@ class AssessmentsController < ApplicationController
 
     respond_to do |format|
       if @patient.nil?
-        format.html {redirect_to root_path , notice: 'Assessment was successfully created.' }
+        format.html {redirect_to root_path , notice: 'Assessment was successfully deleted.' }
         format.json { head :no_content }
       else
-        format.html {redirect_to @patient, notice: 'Assessment was successfully created.' }
+        format.html {redirect_to @patient, notice: 'Assessment was successfully deleted.' }
         format.json { head :no_content }
       end
     end

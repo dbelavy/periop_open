@@ -7,22 +7,26 @@
       %th Details
       %th Author
       %th Date
-      %th Assessment name
-    %tbody
-    - @concepts.each do |c|
-      - if !@summary[c._id].nil?
-        - @summary[c._id].each do |sum|
-          %tr
-            %td
+      %th Source
+  %tbody
+  - @concepts.each do |c|
+    - if !@summary[c._id].nil?
+      - rowspan = @summary[c._id].size
+      - first_row = true
+      - @summary[c._id].each do |sum|
+        %tr
+          -if first_row
+            -first_row = false
+            %td{:rowspan => rowspan}
               =c.display_name
-            %td
-              =sum[:answer].to_s
-            %td
-              =sum[:details]
-            %td
-              =sum[:author]
-            %td
-              =sum[:date]
-            %td
-              =sum[:assessment_name]
+          %td
+            =sum[:answer].to_s
+          %td
+            =sum[:details]
+          %td
+            =sum[:author]
+          %td
+            =sum[:date]
+          %td
+            =sum[:assessment_name]
 = link_to 'Back', patients_path

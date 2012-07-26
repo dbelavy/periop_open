@@ -26,4 +26,3 @@ class SummariesController < ApplicationController
     }
   end
 end
-
