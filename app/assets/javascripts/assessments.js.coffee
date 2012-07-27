@@ -78,7 +78,7 @@ $(document).ready ->
         else if conditionHash.operation == "<"
           return value < conditionHash.value
         else if conditionHash.operation == ">"
-          return value < conditionHash.value
+          return value > conditionHash.value
         else if conditionHash.operation == "!="
           return value != conditionHash.value
         else
