@@ -3,11 +3,10 @@ require 'rubygems' #so it can load gems
 
 
 def parse_concepts(doc)
-  Concept.delete_all
   doc.default_sheet = 'Concept heirarchy position'
   3.upto(360) do |line|
-    concept = Concept.create!(
-        name: doc.cell(line, 'A').downcase,
+    concept = Concept.find_or_create_by(name: doc.cell(line, 'A').downcase)
+    concept.update_attributes!(
         display_name: doc.cell(line, 'B'),
         order_in_category: doc.cell(line, 'I'),
         mpog_code: doc.cell(line, 'J'),
@@ -30,8 +29,7 @@ def parse_concepts(doc)
 end
 
 def parse_categories doc
-  Category.delete_all
-  #doc.default_sheet = doc.sheets['Data_Classification for Summary']
+
   doc.default_sheet = 'Data_Classification for Summary'
 
   2.upto(doc.last_row) do |line|
@@ -40,20 +38,30 @@ def parse_categories doc
     level_2_name = doc.cell(line, 'D')
     level_2_order= doc.cell(line, 'E')
     summary_display= doc.cell(line, 'J')
-    category = Category.create!(level_1_name: level_1_name,
-                                level_1_order: level_1_order,
-                                level_2_name: level_2_name,
-                                level_2_order: level_2_order)
+    category = Category.find_or_create_by(level_1_name: level_1_name,
+                                          level_2_name: level_2_name)
+
+    category.update_attributes(level_1_order: level_1_order,
+                               level_2_order: level_2_order,
+                               summary_display: summary_display)
+
     puts 'created category : ' + category.to_s
   end
 end
 
-def create_forms
+
+def delete_data
   Form.delete_all
-  Form.create!(name: Form::NEW_PATIENT, person_role: [Question::PROFESSIONAL])
-  Form.create!(name: Form::PATIENT_ASSESSMENT, person_role: [Question::PATIENT])
-  Form.create!(name: Form::TELEPHONE_ASSESSMENT, person_role: [Question::PROFESSIONAL])
-  Form.create!(name: Form::CLINIC_ASSESSMENT, person_role: [Question::PROFESSIONAL])
+  Category.delete_all
+  Concept.delete_all
+  Question.delete_all
+end
+
+def create_forms
+  Form.find_or_create_by(name: Form::NEW_PATIENT).update_attributes(person_role: [Question::PROFESSIONAL])
+  Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT).update_attributes(person_role: [Question::PATIENT])
+  Form.find_or_create_by(name: Form::TELEPHONE_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
+  Form.find_or_create_by(name: Form::CLINIC_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
 end
 
 def column_for doc,name
@@ -65,7 +73,7 @@ def column_for doc,name
 end
 
 def parse_questions doc
-  Question.delete_all
+
   doc.default_sheet = 'Questions'
   new_patient_form = Form.where(name: Form::NEW_PATIENT).first
   patient_form = Form.where(name: Form::PATIENT_ASSESSMENT).first
@@ -109,8 +117,8 @@ def parse_questions doc
     ask_details_criteria = doc.cell(line, "K").downcase if !doc.cell(line, "K").nil?
     ask_details_criteria ="all" if ask_details_criteria == "any answer"
 
-    question = Question.create!(
-                                question_id: doc.cell(line, "C"),
+    question = Question.find_or_create_by(question_id: doc.cell(line, "C"))
+    question.update_attributes!(question_id: doc.cell(line, "C"),
                                 display_name: doc.cell(line, "E"),
                                 condition: condition,
                                 input_type: doc.cell(line, "G"),
@@ -172,10 +180,27 @@ end
       #puts row
 
       doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
+      delete_data
       create_forms
       parse_categories(doc)
       parse_concepts(doc)
       parse_questions doc
       parse_option_lists doc
     end
-  end
+
+    desc "Update data from questions spreadsheet"
+    task update_questions: :environment do
+      require 'roo'
+        #workbook = RubyXL::Parser.parse("./spreadsheet/Question_properties.xlsx")
+        #workbook.worksheets[0] #returns first worksheet
+        #row = workbook[0].sheet_data[0]  #returns first worksheet
+        #puts row
+        doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
+        create_forms
+        parse_categories(doc)
+        parse_concepts(doc)
+        parse_questions doc
+        parse_option_lists doc
+
+    end
+end

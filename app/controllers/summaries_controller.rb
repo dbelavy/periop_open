@@ -3,7 +3,7 @@ class SummariesController < ApplicationController
 
   def show
     @summary = {}
-    @concepts = Concept.all
+    @categories = Category.all
     @patient.assessments.each{|assessment|
       #puts 'assessment ' + assessment.to_s
       assessment.answers.each {|ans|
