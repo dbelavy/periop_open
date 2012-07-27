@@ -5,12 +5,12 @@
 %p
   =link_to('Show Preoperative Summary ',patient_summary_path(@patient))
 %p
-  TODO Start new assessment [link] - link to a list of available assessments
-%p
 - if (can? :edit, @patient) && !@patient.patient_assessment_assigned?
   =link_to('Find patient assessment', unassigned_patient_assessments_path(@patient))
 
 %h3 Available Assessments
+%p
+  TODO Start new assessment [link] - link to a list of available assessments
 %p
   - @patient.assessments_to_display.each do |a|
     %li #{link_to (a.summary), patient_assessment_path(@patient, a)}
