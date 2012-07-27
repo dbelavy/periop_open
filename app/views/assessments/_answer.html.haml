@@ -10,7 +10,7 @@
     :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition },
     :class => 'question'}
     - else if (question.input_type == 'ManyOptions')
-      = a.input :value,:label => label,:as => :check_boxes, :collection => question.option_list,:include_blank => false,
+      = a.input :array_value,:label => label,:as => :check_boxes, :collection => question.option_list,:include_blank => false,
       :label_method => :label , :value_method => :value,
       :input_html => {:multiple => "multiple" ,:data => {:short_name => question.concept.name.downcase, :condition => question.condition },
       :class => 'question'}
