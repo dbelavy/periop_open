@@ -96,7 +96,7 @@ class AssessmentsController < ApplicationController
     @patient = Patient.find(params[:patient_id])
     @assessment.patient= @patient
     respond_to do |format|
-      if @assessment.update_assessment (params[:assessment])
+      if @assessment.update_assessment(params[:assessment],current_user)
         format.html { redirect_to patient_assessment_path(@patient, @assessment), notice: 'Assessment assigned.'}
         format.json { head :no_content }
       else
@@ -111,7 +111,7 @@ class AssessmentsController < ApplicationController
     @patient = Patient.find(params[:patient_id])
     @assessment.patient= nil
     respond_to do |format|
-      if @assessment.update_assessment (params[:assessment])
+      if @assessment.update_assessment(params[:assessment],current_user)
         format.html { redirect_to patient_assessment_path(@patient, @assessment), notice: 'Assessment unassigned.'}
         format.json { head :no_content }
       else

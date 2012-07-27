@@ -109,7 +109,7 @@ def parse_questions doc
     ask_details_criteria = doc.cell(line, "K").downcase if !doc.cell(line, "K").nil?
     ask_details_criteria ="all" if ask_details_criteria == "any answer"
 
-    question = Question.create!(_id: doc.cell(line, "C"),
+    question = Question.create!(
                                 question_id: doc.cell(line, "C"),
                                 display_name: doc.cell(line, "E"),
                                 condition: condition,
