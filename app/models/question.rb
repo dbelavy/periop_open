@@ -56,7 +56,7 @@ class Question
   end
 
   def option_list
-    OptionList.where(:name => self[:option_list_name])
+    OptionList.where(:name => self[:option_list_name]).asc(:order_number)
   end
 
   def details_criteria
