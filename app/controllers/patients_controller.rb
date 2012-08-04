@@ -30,9 +30,10 @@ class PatientsController < ApplicationController
   # PUT /patients/1
   # PUT /patients/1.json
   def update
-    @patient.new_patient_assessment.update_assessment(params[:patient][:assessment],current_user)
+    is_updated = @patient.new_patient_assessment.update_assessment(params[:patient][:assessment],current_user)
+    is_updated = is_updated && @patient.update_attributes(params[:patient])
     respond_to do |format|
-      if @patient.update_attributes(params[:patient])
+      if
         format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
         format.json { head :no_content }
       else
