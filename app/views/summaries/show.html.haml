@@ -10,28 +10,31 @@
       %th Date
       %th Source
   %tbody
-    - @categories.each do |cat|
-      %tr
-        %td{:colspan => 6,:class => "category"}
-          %h3=cat.summary_display
-      - cat.concepts.each do |c|
-        - if !@summary[c._id].nil?
-          - rowspan = @summary[c._id].size
-          - first_row = true
-          - @summary[c._id].each do |sum|
-            %tr
-              -if first_row
-                -first_row = false
-                %td{:rowspan => rowspan}
-                  =c.display_name
-              %td
-                =sum[:answer].to_s
-              %td
-                =sum[:details]
-              %td
-                =sum[:author]
-              %td
-                =sum[:date]
-              %td
-                =sum[:assessment_name]
+    - @categories.each do |category|
+      - if !@summary[category._id].nil? && @summary[category._id].size > 0
+        %tr
+          %td{:colspan => 6,:class => "category"}
+            %h3=category.summary_display
+        - concept_hash = @summary[category._id]
+        - category.concepts.each do |concept|
+          - if !concept_hash[concept._id].nil?
+            - rowspan = concept_hash[concept._id].size
+            - first_row = true
+            - concept_hash[concept._id].each do |sum|
+              %tr
+                -if !sum[:answer].to_s.blank?
+                  -if first_row
+                    -first_row = false
+                    %td{:rowspan => rowspan}
+                      =concept.display_name
+                  %td
+                    =sum[:answer].to_s
+                  %td
+                    =sum[:details]
+                  %td
+                    =sum[:author]
+                  %td
+                    =sum[:date]
+                  %td
+                    =sum[:assessment_name]
 = link_to 'Back', patients_path

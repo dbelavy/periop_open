@@ -7,12 +7,21 @@ class SummariesController < ApplicationController
     @patient.assessments.each{|assessment|
       #puts 'assessment ' + assessment.to_s
       assessment.answers.each {|ans|
+        if ans.value_to_s.blank?
+          next
+        end
         #puts 'answer ' + ans.value_to_s
         concept_id = ans.question.concept._id
-        if @summary[concept_id].nil?
-          @summary[concept_id] = Array.new
+        category =  ans.question.concept.category
+        if @summary[category._id].nil?
+          @summary[category._id] = {}
         end
-          @summary[concept_id] << summary_row(assessment,ans)
+        concept_hash = @summary[category._id]
+        if concept_hash[concept_id].nil?
+          concept_hash[concept_id] = Array.new
+        end
+          concept_hash[concept_id] << summary_row(assessment,ans)
+        logger.debug @summary.as_json
       }
     }
   end
