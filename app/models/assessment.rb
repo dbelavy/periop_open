@@ -13,8 +13,15 @@ class Assessment
   belongs_to :form
 
   embeds_many :answers
-  accepts_nested_attributes_for :answers, reject_if: :all_blank
+  accepts_nested_attributes_for :answers
 
+  validate :answers_empty
+
+   def answers_empty
+     if answers.all?{|answer| answer.value_to_s.blank? }
+       errors.add(:base, 'All answers can\'t be blank')
+     end
+   end
 
   def self.create_for_patient(form, patient)
     assessment = self.new
@@ -35,10 +42,10 @@ class Assessment
     [NOT_STARTED, STARTED_BUT_INCOMPLETE, COMPLETE]
   end
 
-  def update_assessment params,current_user
+  def update_assessment params, current_user
     result = true
-      professional_name = current_user.professional.name.to_s
-      self.updated_by= professional_name
+    professional_name = current_user.professional.name.to_s
+    self.updated_by= professional_name
     if result
       result = update_attributes(params)
     end
@@ -80,6 +87,6 @@ class Assessment
   end
 
   def summary
-    self.name + date_str  + ' status: ' + self.status
+    self.name + date_str + ' status: ' + self.status
   end
 end
