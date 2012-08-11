@@ -21,5 +21,9 @@ class Form
     self.where(name: name).first
   end
 
+  def sorted_questions
+    self.questions
+  end
+
 
 end

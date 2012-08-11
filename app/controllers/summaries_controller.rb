@@ -3,7 +3,7 @@ class SummariesController < ApplicationController
 
   def show
     @summary = {}
-    @categories = Category.all
+    @categories = Category.sorted
     @patient.assessments.each{|assessment|
       #puts 'assessment ' + assessment.to_s
       assessment.answers.each {|ans|
@@ -21,7 +21,6 @@ class SummariesController < ApplicationController
           concept_hash[concept_id] = Array.new
         end
           concept_hash[concept_id] << summary_row(assessment,ans)
-        logger.debug @summary.as_json
       }
     }
   end

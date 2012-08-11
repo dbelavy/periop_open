@@ -1,4 +1,4 @@
-class Concept
+  class Concept
   include Mongoid::Document
   field :name, :type => String
   field :display_name, :type => String
@@ -14,6 +14,11 @@ class Concept
 
   def self.find_by_name name
     self.where(name: name).first
+  end
+
+
+  def self.sorted
+    self.asc(:order_in_category)
   end
 
 end

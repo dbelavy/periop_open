@@ -16,7 +16,7 @@
           %td{:colspan => 6,:class => "category"}
             %h3=category.summary_display
         - concept_hash = @summary[category._id]
-        - category.concepts.each do |concept|
+        - category.concepts.sorted.each do |concept|
           - if !concept_hash[concept._id].nil?
             - rowspan = concept_hash[concept._id].size
             - first_row = true

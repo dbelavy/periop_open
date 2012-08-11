@@ -7,4 +7,9 @@ class Category
   field :summary_display, :type => String
 
   has_many :concepts
+
+  def self.sorted
+    self.all.asc(:level_1_order).asc(:level_2_order)
+  end
+
 end
