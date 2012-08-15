@@ -92,4 +92,8 @@ class Question
       end
     end
   end
+
+  def self.sorted
+    asc(:sort_order)
+  end
 end
