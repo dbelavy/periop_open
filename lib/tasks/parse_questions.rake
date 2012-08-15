@@ -4,7 +4,10 @@ require 'rubygems' #so it can load gems
 
 def parse_concepts(doc)
   doc.default_sheet = 'Concept heirarchy position'
-  3.upto(360) do |line|
+  3.upto(370) do |line|
+    if doc.cell(line, 'B').blank?
+      next
+    end
     concept = Concept.find_or_create_by(name: doc.cell(line, 'A').downcase)
     concept.update_attributes!(
         display_name: doc.cell(line, 'B'),
@@ -24,7 +27,7 @@ def parse_concepts(doc)
     end
     concept.category = category
     concept.save!
-    puts 'created concept: ' + concept.to_s
+    #puts 'created concept: ' + concept.to_s
   end
 end
 
@@ -45,7 +48,7 @@ def parse_categories doc
                                level_2_order: level_2_order,
                                summary_display: summary_display)
 
-    puts 'created category : ' + category.to_s
+    #puts 'created category : ' + category.to_s
   end
 end
 
@@ -130,8 +133,10 @@ def parse_questions doc
                                 )
     concept_name = doc.cell(line, "D").downcase
     question.concept = Concept.where(name: concept_name).first
+    question.save!
     if question.concept.nil?
       raise "Not found concept " + concept_name
+      puts "Not found concept " + concept_name
     end
     # used in patient assessment
     if doc.cell(line, used_in_patient_assesment_col)
@@ -151,6 +156,33 @@ def parse_questions doc
     #puts 'created question: ' + question.to_s
   end
 end
+
+def setup_question_order
+  Question.all.each do |question|
+    concept = question.concept
+    if concept.nil?
+      puts 'question ' + question.display_name + ' has no related concept '
+      question.delete
+      next
+    end
+    category = concept.category
+    # 1 - category level 1 0-999
+    # 2 - category level 2 0-999
+    # O - concept order within category 0-99 999
+    # 111 22 2OO OOO
+    order = 0
+    if !category.level_1_order.nil?
+      order += category.level_1_order * 100000000
+    end
+    if !category.level_2_order.nil?
+      order += category.level_2_order * 100000
+    end
+    order += concept.order_in_category
+
+    question.update_attribute(:sort_order,order)
+  end
+end
+
 
 def parse_option_lists doc
   OptionList.delete_all
@@ -201,6 +233,6 @@ end
         parse_concepts(doc)
         parse_questions doc
         parse_option_lists doc
-
+        setup_question_order
     end
 end

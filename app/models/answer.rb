@@ -31,4 +31,8 @@ class Answer
       self.update_attribute(:value, value)
     end
   end
+
+  def sorted
+
+  end
 end
