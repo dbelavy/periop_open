@@ -4,6 +4,7 @@
 :html => {:class => 'assessment' ,:disabled => form_disabled },
 :defaults => {:disabled => form_disabled}) do |f|
   = f.error_notification
+  = f.error :base, {:class => "alert alert-error"}
   .form-inputs
   = f.simple_fields_for :answers do |a|
     = render "assessments/answer",:a => a
