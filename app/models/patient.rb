@@ -107,7 +107,6 @@ class Patient
 
   def assigned= new_types
     assigned_types = assigned
-    puts 'create assessments' + new_types.to_s
     (new_types - assigned_types).each{|n|
       if !n.to_s.empty?
         form = Form.where(:name => n).first
@@ -117,7 +116,7 @@ class Patient
   end
 
   def patient_assessment_assigned?
-    !assigned.find_index(Form::PATIENT_ASSESSMENT).nil?
+    false
   end
 
   def new_patient_assessment

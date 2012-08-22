@@ -6,7 +6,7 @@
 = render 'form', :form_disabled => true
 
 -if !@patient.nil?
-  = link_to 'Edit', edit_patient_assessment_path
+  = link_to 'Edit', edit_patient_assessment_path( @patient,@assessment)
   \|
   = link_to 'Back', patient_path(@patient)
 -else

@@ -4,8 +4,8 @@ require 'rubygems' #so it can load gems
 
 def parse_concepts(doc)
   doc.default_sheet = 'Concept heirarchy position'
-  3.upto(370) do |line|
-    if doc.cell(line, 'B').blank?
+  3.upto(doc.last_row) do |line|
+    if doc.cell(line, 'A').blank?
       next
     end
     concept = Concept.find_or_create_by(name: doc.cell(line, 'A').downcase)
