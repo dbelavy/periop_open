@@ -72,7 +72,7 @@ class Question
     if input_type == "Date"
       if !validation_criteria.nil?
         if validation_criteria.downcase == "past"
-          return Date.today.year - 120
+          return Date.today.year
         elsif validation_criteria.downcase == "future"
           return Date.today.year
         end
@@ -85,7 +85,7 @@ class Question
     if input_type == "Date"
       if !validation_criteria.nil?
         if validation_criteria.downcase == "past"
-          return Date.today.year
+          return Date.today.year - 120
         elsif validation_criteria.downcase == "future"
           return Date.today.year + 100
         end
