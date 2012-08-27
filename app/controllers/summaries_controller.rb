@@ -1,7 +1,8 @@
 class SummariesController < ApplicationController
   load_and_authorize_resource :patient
 
-  def show
+
+  def populate_summary
     @summary = {}
     @categories = Category.sorted
     @patient.assessments.each{|assessment|
@@ -20,9 +21,17 @@ class SummariesController < ApplicationController
         if concept_hash[concept_id].nil?
           concept_hash[concept_id] = Array.new
         end
-          concept_hash[concept_id] << summary_row(assessment,ans)
+        concept_hash[concept_id] << summary_row(assessment,ans)
       }
     }
+  end
+
+  def show
+     populate_summary
+  end
+
+  def show_printable
+    populate_summary
   end
 
   def summary_row assessment,answer

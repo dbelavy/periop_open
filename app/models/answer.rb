@@ -10,7 +10,7 @@ class Answer
   embedded_in :assessment
 
   def value_to_s
-    if !value.nil?
+    if !value.blank?
       return value
     end
     if !array_value.nil?

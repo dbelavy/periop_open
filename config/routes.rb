@@ -15,7 +15,10 @@ Periop::Application.routes.draw do
       put 'unassign'
 
     end
-    resource :summary, :only => [:show]
+    resource :summary, :only => [:show,:show_printable] do
+      get 'show_printable'
+    end
+
   end
 
 
