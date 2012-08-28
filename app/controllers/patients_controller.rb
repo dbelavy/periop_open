@@ -1,8 +1,9 @@
 class PatientsController < ApplicationController
+
+  before_filter :create_patient_from_params, :only => :create
   load_and_authorize_resource
 
   def show
-    #@patient = Patient.find(params[:id])
   end
 
   def index
@@ -13,9 +14,19 @@ class PatientsController < ApplicationController
     end
   end
 
+  def setup_assessment assesment
+    assesment.form.questions.sorted.each do |q|
+      if !q.nil?
+        if assesment.answer(q).nil?
+          assesment.answers_attributes= [{:question => q}]
+        end
+      end
+    end
+    return assesment
+  end
+
   def new
     @patient = Patient.new
-    @assessment = @patient.new_patient_assessment
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @patient }
@@ -30,10 +41,12 @@ class PatientsController < ApplicationController
   # PUT /patients/1
   # PUT /patients/1.json
   def update
-    is_updated = @patient.new_patient_assessment.update_assessment(params[:patient][:assessment],current_user)
-    is_updated = is_updated && @patient.update_attributes(params[:patient])
+    patient_params = params[:patient]
+    assessment_params = params[:patient].delete(:assessment)
+    is_updated = @patient.new_patient_assessment.update_assessment(assessment_params,current_user)
+    is_updated = is_updated && @patient.update_attributes(patient_params)
     respond_to do |format|
-      if
+      if is_updated
         format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
         format.json { head :no_content }
       else
@@ -43,10 +56,18 @@ class PatientsController < ApplicationController
     end
   end
 
+
+  def create_patient_from_params
+    patient_params = params[:patient].clone
+    patient_params.delete(:assessment)
+    @patient = Patient.new(patient_params)
+  end
+
   # POST /patients
   # POST /patients.json
   def create
-    @patient.new_patient_assessment.update_assessment(params[:patient][:assessment],current_user)
+    assessment_params = params[:patient].delete(:assessment)
+    @patient.new_patient_assessment.update_assessment(assessment_params,current_user)
     logger.debug 'created patient ' + @patient.to_yaml
     respond_to do |format|
       if @patient.save
@@ -58,5 +79,4 @@ class PatientsController < ApplicationController
       end
     end
   end
-
 end

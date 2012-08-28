@@ -36,6 +36,8 @@ class Patient
   belongs_to :anaesthetist, :class_name=> 'Professional',:inverse_of => :anaesthetist_patients
   has_many :assessments
 
+  accepts_nested_attributes_for :assessments
+
 
   def get_answer_value_by_concept name
     answer = self.new_patient_assessment.find_answer_by_concept_name name

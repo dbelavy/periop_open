@@ -50,7 +50,7 @@ private
     #paginate(:page => params[:page])
     patients = patients.paginate(:page => page,:per_page => per_page)
     if params[:sSearch].present?
-      #TODO patients = patients.where("name like :search or category like :search", search: "%#{params[:sSearch]}%")
+      #patients = patients.where("name like :search or category like :search", search: "%#{params[:sSearch]}%")
     end
     patients
   end
@@ -64,7 +64,7 @@ private
   end
 
   def sort_column
-    columns = %w[name dob anaesthetist surgeon planned_date_of_surgery]
+    columns = %w[name dob anaesthetist surgeon  planned_date_of_surgery]
     columns[params[:iSortCol_0].to_i]
   end
 
