@@ -24,9 +24,17 @@ class Patient
   # field :authentication_token, :type => String
 
   field :email, :type => String
-  #field :name, :type => String
-  #field :ssn, :type => String
-  #field :dob, :type => Date
+  field :firstname, :type => String
+  field :middlename, :type => String
+  field :surname, :type => String
+  field :medicare_card_number, :type => String
+  field :medicare_card_number_identifier, :type => String
+  field :individual_healthcare_identifier, :type => String
+  field :anaesthetist_name, :type => String
+
+
+  field :ssn, :type => String
+  field :dob, :type => Date
 
   field :ready_to_surgery, :type => Boolean,:default => false
   field :planned_date_of_surgery, :type => Date
@@ -48,58 +56,34 @@ class Patient
     self.new_patient_assessment.find_or_create_answer_by_concept_name name
   end
 
-  def surname
-    self.get_answer_value_by_concept "patient_surname"
-  end
-
-  def firstname
-    self.get_answer_value_by_concept "patient_first_name"
-  end
-
-  def middlename
-    self.get_answer_value_by_concept "patient_middle_name"
-  end
-
-  def firstname= value
-    self.set_answer_value_by_concept( "patient_first_name",value)
-  end
-
-  def surname= value
-    self.set_answer_value_by_concept( "patient_surname",value)
-  end
-
   def set_answer_value_by_concept(concept_name, value)
     answer = self.find_or_create_answer_by_concept_name concept_name
     answer.update_answer value
   end
 
   def assessments_to_display
-      result = []
+    result = []
     assessments.each{|a|
       if a.name != Form::NEW_PATIENT
-         result << a
+        result << a
       end
     }
     result
   end
 
+  def update_values
+    # denormalized values for sorting
 
-  #field :ssn, :type => String
-  #field :dob, :type => Date
-  def ssn
-    self.get_answer_value_by_concept "social_security_number"
-  end
-
-  def ssn= value
-    set_answer_value_by_concept  "social_security_number",value
-  end
-
-  def dob
-    self.get_answer_value_by_concept "patient_dob"
-  end
-
-  def dob= value
-    set_answer_value_by_concept  "patient_dob",value
+    self.firstname=  self.get_answer_value_by_concept "patient_first_name"
+    self.middlename= self.get_answer_value_by_concept "patient_middle_name"
+    self.surname= self.get_answer_value_by_concept"patient_surname"
+    self.ssn= self.get_answer_value_by_concept "social_security_number"
+    self.dob= self.get_answer_value_by_concept "patient_dob"
+    self.medicare_card_number= self.get_answer_value_by_concept "medicare_card_number"
+    self.medicare_card_number_identifier= self.get_answer_value_by_concept "medicare_card_number_identifier"
+    self.individual_healthcare_identifier= self.get_answer_value_by_concept "individual_healthcare_identifier"
+    self[:anaesthetist_name]= self.anaesthetist.nil? ? '' : self.anaesthetist.name
+    self.save
   end
 
   def assigned

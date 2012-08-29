@@ -45,6 +45,9 @@ class PatientsController < ApplicationController
     assessment_params = params[:patient].delete(:assessment)
     is_updated = @patient.new_patient_assessment.update_assessment(assessment_params,current_user)
     is_updated = is_updated && @patient.update_attributes(patient_params)
+    if is_updated
+      @patient.update_values
+    end
     respond_to do |format|
       if is_updated
         format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
@@ -67,8 +70,10 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     assessment_params = params[:patient].delete(:assessment)
-    @patient.new_patient_assessment.update_assessment(assessment_params,current_user)
-    logger.debug 'created patient ' + @patient.to_yaml
+    is_updated = @patient.new_patient_assessment.update_assessment(assessment_params,current_user)
+    if is_updated
+      @patient.update_values
+    end
     respond_to do |format|
       if @patient.save
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
