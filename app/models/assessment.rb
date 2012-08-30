@@ -9,6 +9,8 @@ class Assessment
   field :status, :type => String, :default => NOT_STARTED
   field :date_started, :type => DateTime
   field :updated_by, :type => String
+  field :name, :type => String
+
   belongs_to :patient
   belongs_to :form
 
@@ -49,6 +51,7 @@ class Assessment
     if result
       result = update_attributes(params)
     end
+    result
   end
 
   def find_or_create_answer_by_concept_name name

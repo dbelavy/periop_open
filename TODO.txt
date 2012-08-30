@@ -65,3 +65,5 @@ MONGOHQ_URL=mongodb://localhost/periop_production
 heroku run rake ADMIN_PASSWORD=secret db:populate
 
 heroku run rake db:parse
+
+http://bigtrapeze.com/2012/05/16/enabling-wildcard-ssl-on-a-heroku-rails-app/

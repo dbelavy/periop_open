@@ -30,6 +30,7 @@ private
         link_to(patient.surname,patient),
         h(patient.firstname),
         h(patient.dob),
+        #h(patient.anaesthetist_name),
         h(patient.anaesthetist.nil? ? '' : patient.anaesthetist.name),
         h(patient.surgeon),
         h(patient.planned_date_of_surgery),
@@ -47,11 +48,11 @@ private
 
   def fetch_patients
     patients = Patient.all.send("#{sort_direction}","#{sort_column}")
-    #paginate(:page => params[:page])
-    patients = patients.paginate(:page => page,:per_page => per_page)
     if params[:sSearch].present?
-      #TODO patients = patients.where("name like :search or category like :search", search: "%#{params[:sSearch]}%")
+      regex = /#{params[:sSearch]}/i
+      patients = patients.any_of({firstname: regex},{surname: regex},{anaesthetist_name: regex},{surgeon: regex})
     end
+    patients = patients.paginate(:page => page,:per_page => per_page)
     patients
   end
 
@@ -64,7 +65,7 @@ private
   end
 
   def sort_column
-    columns = %w[name dob anaesthetist surgeon planned_date_of_surgery]
+    columns = %w[surname firstname dob anaesthetist_name surgeon planned_date_of_surgery ready_to_surgery]
     columns[params[:iSortCol_0].to_i]
   end
 
