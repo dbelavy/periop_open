@@ -48,10 +48,11 @@ private
 
   def fetch_patients
     patients = Patient.all.send("#{sort_direction}","#{sort_column}")
-    patients = patients.paginate(:page => page,:per_page => per_page)
     if params[:sSearch].present?
-      #patients = patients.where("name like :search or category like :search", search: "%#{params[:sSearch]}%")
+      regex = /#{params[:sSearch]}/i
+      patients = patients.any_of({firstname: regex},{surname: regex},{anaesthetist_name: regex},{surgeon: regex})
     end
+    patients = patients.paginate(:page => page,:per_page => per_page)
     patients
   end
 
