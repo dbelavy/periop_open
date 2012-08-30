@@ -6,17 +6,11 @@
       %th Status
       %th Type
       %th
-      - if !@patient.nil?
-        %th
-      %th
   %tbody
     - @assessments.each do |assessment|
       %tr
         %td= assessment.status
         %td= assessment.name
         %td= link_to 'Show', assessment
-        - if !@patient.nil?
-          %td= link_to 'Edit', edit_patient_assessment_path(@patient,assessment)
-        %td= link_to 'Destroy', assessment, :confirm => 'Are you sure?', :method => :delete
 
 %br
