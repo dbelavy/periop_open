@@ -34,9 +34,12 @@
   margin-left: 0;
 }
 
-.summary-printed{
+table#summary_printed td{
   width: 30%;
 }
+ li {
+   list-style: none ;
+ }
 
 //td.category h3{
 //  text-align: center

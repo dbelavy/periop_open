@@ -1,37 +1,40 @@
 %h2 Preoperative summary
-Printed by #{current_user.professional.name}
-%table#summary{:class => "table table-striped table-bordered" }
-  %thead
-    %tr
-      %th.summary-printed
-      %th.summary-printed
-      %th.summary-printed
+Printed by #{current_user.professional.name} on #{Date.current.to_s}
+%table#summary_printed{:class => "table table-bordered" }
+  -#%thead
+  -#  %tr
+  -#    %th.summary-printed
+  -#    %th.summary-printed
+  -#    %th.summary-printed
   %tbody
     - @categories.each do |category|
       - if !@summary[category._id].nil? && @summary[category._id].size > 0
         %tr
           %td{:colspan => 3,:class => "category"}
             %h3=category.summary_display
-        - concept_hash = @summary[category._id]
-        - index = 0
-        - category.concepts.sorted.each do |concept|
-          - if !concept_hash[concept._id].nil?
-            - index = index + 1
-            - if (index % 3) == 1
-              %tr
-            %td
-              %h4=concept.display_name
-              - concept_hash[concept._id].each do |sum|
-                -if !sum[:answer].to_s.blank?
-                  %br
-                  =sum[:answer].to_s
-                  -if !sum[:details].to_s.blank?
-                    %br
-                    =sum[:details]
-        -# adding empty cells
-        - if (index % 3) != 0
-          - (3 -(index % 3)).times do
-            %td
+          - concept_arr = @summary[category._id][:array]
+          - rownum = @summary[category._id][:row_number]
+          - for row in 1 .. rownum
+            %tr
+            -for col in 0 .. 2
+              - index = col * rownum + row - 1
+              - concept_composite = concept_arr[index]
+              - if !concept_composite.nil?
+                %td
+                  %h4=concept_composite[0][:concept_display_name]
+                  %ul.unstyled
+                  - concept_composite.each do |sum|
+                    -if !sum[:answer].to_s.blank?
+                      %li #{sum[:answer].to_s}
+                    -if !sum[:details].to_s.blank?
+                      %li #{sum[:details]}
+              -else
+                %td
+    %tr
+      %td{:colspan =>3}
+        %h4 Summary preparation
+        %ul.unstyled
+          - @patient.assessments.each do |a|
+            %li #{a.name} #{a.updated_by} #{a.date_str}
 
-= link_to 'Back', patients_path
-= link_to 'Full version', patient_summary_path(@patient)
+= link_to 'Back', patient_summary_path(@patient)

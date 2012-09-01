@@ -26,12 +26,34 @@ class SummariesController < ApplicationController
     }
   end
 
+  def populate_printable_summary
+    populate_summary
+    answer_array = []
+    @categories.each do |category|
+      if !@summary[category._id].nil? && @summary[category._id].size > 0
+        concept_hash = @summary[category._id]
+        puts " concept_hash.size " + concept_hash.size.to_s
+        concept_hash[:row_number] =  concept_hash.size / 3 + ((concept_hash.size % 3 > 0 ) ? 1 : 0)
+        concept_arr =[]
+        category.concepts.sorted.each do |concept|
+          if !concept_hash[concept._id].nil?
+            concept_arr << concept_hash[concept._id]
+          end
+        end
+        concept_hash[:array] = concept_arr
+      end
+    end
+  end
+
+
+
   def show
      populate_summary
   end
 
   def show_printable
-    populate_summary
+    populate_printable_summary
+    render :show_printable,:layout => 'printer'
   end
 
   def summary_row assessment,answer
@@ -39,7 +61,8 @@ class SummariesController < ApplicationController
              details: answer.details,
              author: assessment.updated_by,
              date: assessment.date_str,
-             assessment_name: assessment.name
+             assessment_name: assessment.name,
+             concept_display_name: answer.question.concept.display_name
     }
   end
 end
