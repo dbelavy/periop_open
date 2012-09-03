@@ -38,5 +38,5 @@ Printed by #{current_user.professional.name} on #{Date.current.to_s}
           - @patient.assessments.each do |a|
             %li #{a.name} #{a.updated_by} #{a.date_str}
 
-= link_to 'Back', patients_path
-= link_to 'Full version', patient_summary_path(@patient)
+= link_to 'Back', patients_path, {class: "no-print"}
+= link_to 'Full version', patient_summary_path(@patient), {class: "no-print"}

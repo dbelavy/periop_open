@@ -53,6 +53,13 @@ table#summary_printed td{
   }
 }
 
+@media print{
+  .no-print{
+     display: none;
+  }
+
+}
+
 //td.category h3{
 //  text-align: center
 //}
