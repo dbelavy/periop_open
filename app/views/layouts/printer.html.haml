@@ -9,6 +9,8 @@
     %meta{:content => "", :name => "author"}
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
+    -#%script
+    -#  window.onload = function() { window.print(); }
     = csrf_meta_tags
     = yield(:head)
   %body
@@ -16,12 +18,11 @@
     -#  %nav.navbar-inner
     -#    .container
     -#      = render 'layouts/navigation'
-    #main{:role => "main"}
+    #main{:role => "main",:class => "print"}
       .container
-        .content
-          .row
-            .span12
-              = render 'layouts/messages'
-              = yield
-              = debug(params) if Rails.env.development?
+        .row
+          .span12
+            = render 'layouts/messages'
+            = yield
+            = debug(params) if Rails.env.development?
           -#%footer

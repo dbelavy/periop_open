@@ -34,12 +34,24 @@
   margin-left: 0;
 }
 
-table#summary_printed td{
-  width: 30%;
-}
  li {
    list-style: none ;
  }
+
+// print features
+table#summary_printed td{
+  width: 30%;
+}
+
+#main.print {
+  table {
+    border-width: 0px;
+    td{
+      padding: 0px;
+      border-width: 0px;
+    }
+  }
+}
 
 //td.category h3{
 //  text-align: center
