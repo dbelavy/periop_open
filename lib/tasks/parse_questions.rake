@@ -3,6 +3,7 @@ require 'rubygems' #so it can load gems
 
 
 def parse_concepts(doc)
+  puts "parse_concepts"
   doc.default_sheet = 'Concept heirarchy position'
   3.upto(doc.last_row) do |line|
     if doc.cell(line, 'A').blank?
@@ -12,9 +13,10 @@ def parse_concepts(doc)
     concept.update_attributes!(
         display_name: doc.cell(line, 'B'),
         order_in_category: doc.cell(line, 'I'),
-        mpog_code: doc.cell(line, 'J'),
-        mpog_name: doc.cell(line, 'K'),
-        snomed_code: doc.cell(line, 'L')
+        mpog_code: doc.cell(line, 'K'),
+        mpog_name: doc.cell(line, 'L'),
+        snomed_code: doc.cell(line, 'M'),
+        conflict_resolution:doc.cell(line, 'J')
     )
 
     category_name = doc.cell(line, 'D').to_s
@@ -32,7 +34,7 @@ def parse_concepts(doc)
 end
 
 def parse_categories doc
-
+  puts "parse_categories "
   doc.default_sheet = 'Data_Classification for Summary'
 
   2.upto(doc.last_row) do |line|
@@ -54,6 +56,7 @@ end
 
 
 def delete_data
+  puts 'delete_data'
   Form.delete_all
   Category.delete_all
   Concept.delete_all
@@ -61,6 +64,7 @@ def delete_data
 end
 
 def create_forms
+  puts 'create_forms'
   Form.find_or_create_by(name: Form::NEW_PATIENT).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT).update_attributes(person_role: [Question::PATIENT])
   Form.find_or_create_by(name: Form::TELEPHONE_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
@@ -76,7 +80,7 @@ def column_for doc,name
 end
 
 def parse_questions doc
-
+  puts 'parse_questions'
   doc.default_sheet = 'Questions'
   new_patient_form = Form.where(name: Form::NEW_PATIENT).first
   patient_form = Form.where(name: Form::PATIENT_ASSESSMENT).first
@@ -158,6 +162,7 @@ def parse_questions doc
 end
 
 def setup_question_order
+  puts "setup_question_order"
   Question.all.each do |question|
     concept = question.concept
     if concept.nil?
@@ -185,6 +190,7 @@ end
 
 
 def parse_option_lists doc
+  puts "parse_option_lists"
   OptionList.delete_all
   doc.default_sheet = 'Option_List'
   2.upto(doc.last_row) do |line|

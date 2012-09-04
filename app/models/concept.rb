@@ -5,6 +5,13 @@
   field :order_in_category, :type => Integer
   field :position, :type => Integer
 
+  field :conflict_resolution, :type => String
+
+  ALL = "All"
+  RECENT ="Recent"
+  PROFESSIONAL = "Professional"
+  PATIENT = "Patient"
+
   field :mpog_code, :type => String
   field :mpog_name, :type => String
   field :snomed_code, :type => String

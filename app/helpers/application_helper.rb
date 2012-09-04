@@ -16,4 +16,18 @@ def patient_signed_in?
   false
 end
 
+
+  def printed_answer concept_composite
+    puts "concept_composite " + concept_composite.to_s
+    concept_composite.map {|sum|
+      result = ""
+    if !sum[:answer].to_s.blank?
+       result += sum[:answer].to_s
+     end
+    if !sum[:details].to_s.blank?
+       result +=   " (" + sum[:details] +' )'
+    end
+      result
+    }.join(" | ")
+   end
 end

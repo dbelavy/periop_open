@@ -12,40 +12,63 @@ class SummariesController < ApplicationController
           next
         end
         #puts 'answer ' + ans.value_to_s
-        concept_id = ans.question.concept._id
+        concept = ans.question.concept
+        concept_id = concept._id
         category =  ans.question.concept.category
+
         if @summary[category._id].nil?
           @summary[category._id] = {}
         end
-        concept_hash = @summary[category._id]
-        if concept_hash[concept_id].nil?
-          concept_hash[concept_id] = Array.new
+
+        concepts_hash = @summary[category._id]
+        if concepts_hash[concept_id].nil?
+          concepts_hash[concept_id] = Array.new
         end
-        concept_hash[concept_id] << summary_row(assessment,ans)
+        concepts_array = concepts_hash[concept_id]
+        # resolving conflicts
+        if concept.conflict_resolution == Concept::ALL
+          concepts_array << summary_row(assessment,ans)
+        elsif concept.conflict_resolution == Concept::RECENT
+          if concepts_array.size == 0 ||
+            (concepts_array.size > 0 && assessment.date_started.to_time > (concepts_array[0][:datetime].to_time))
+            concepts_array[0] = summary_row(assessment,ans)
+          end
+        elsif concept.conflict_resolution == Concept::PROFESSIONAL
+          if assessment.updated_by != "Patient"
+            concepts_array << summary_row(assessment,ans)
+          end
+        elsif concept.conflict_resolution == Concept::PATIENT
+          if assessment.updated_by == "Patient"
+            concepts_array << summary_row(assessment,ans)
+          end
+        end
       }
     }
   end
+
 
   def populate_printable_summary
     populate_summary
     answer_array = []
     @categories.each do |category|
       if !@summary[category._id].nil? && @summary[category._id].size > 0
-        concept_hash = @summary[category._id]
-        puts " concept_hash.size " + concept_hash.size.to_s
-        concept_hash[:row_number] =  concept_hash.size / 3 + ((concept_hash.size % 3 > 0 ) ? 1 : 0)
-        concept_arr =[]
-        category.concepts.sorted.each do |concept|
-          if !concept_hash[concept._id].nil?
-            concept_arr << concept_hash[concept._id]
-          end
-        end
-        concept_hash[:array] = concept_arr
+        concepts_hash = @summary[category._id]
+        concepts_hash[:row_number] =  concepts_hash.size / 3 + ((concepts_hash.size % 3 > 0 ) ? 1 : 0)
+        concepts_hash[:array] = get_concepts_sorted(category, concepts_hash)
       end
     end
   end
 
 
+  def get_concepts_sorted(category, concepts_hash)
+    concept_arr =[]
+    category.concepts.sorted.each do |concept|
+      if !concepts_hash[concept._id].nil?
+        concept_arr << concepts_hash[concept._id]
+      end
+    end
+    concept_arr
+  end
 
   def show
      populate_summary
@@ -61,6 +84,7 @@ class SummariesController < ApplicationController
              details: answer.details,
              author: assessment.updated_by,
              date: assessment.date_str,
+             datetime: assessment.date_started,
              assessment_name: assessment.name,
              concept_display_name: answer.question.concept.display_name
     }

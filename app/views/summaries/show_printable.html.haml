@@ -24,11 +24,7 @@ Printed by #{current_user.professional.name} on #{Date.current.to_s}
                   %strong
                     =concept_composite[0][:concept_display_name]
                   \:
-                  - concept_composite.each do |sum|
-                    -if !sum[:answer].to_s.blank?
-                      #{sum[:answer].to_s}
-                    -if !sum[:details].to_s.blank?
-                      (#{sum[:details]})
+                  =printed_answer concept_composite
               -else
                 %td
     %tr
