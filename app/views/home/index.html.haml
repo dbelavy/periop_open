@@ -1,9 +1,13 @@
-%h3 Home
-%br
-= link_to('Professional entry',new_user_session_path)
-%br
-= link_to('Patient entry',patient_assessment_form_path)
-%br
+#welcome.hero-unit.centered
+  %h1 Pre-op.net
+  %br
+  %p
+    We help patients, anesthesiologists and surgeons to manage information for perioperative care.
+    %br
+    If your doctor has asked you to come here, please fill out a Pre-op assessment.
+  %br
+  %p
+    = link_to('Pre-op assessment',patient_assessment_form_path,:class=> "btn btn-success btn-large")
 
 - if user_signed_in?
   %p Logged in as: #{current_user.name + ' Role: ' +  current_user.user_role}
