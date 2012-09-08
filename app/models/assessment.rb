@@ -81,6 +81,10 @@ class Assessment
     self.updated_by = 'Patient'
   end
 
+  def completed?
+    !self.date_started.nil? && self.status == COMPLETE
+  end
+
   def name
     form.name if !form.nil?
   end

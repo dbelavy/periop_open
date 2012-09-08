@@ -6,6 +6,9 @@ class SummariesController < ApplicationController
     @summary = {}
     @categories = Category.sorted
     @patient.assessments.each{|assessment|
+      if !assessment.completed?
+        next
+      end
       #puts 'assessment ' + assessment.to_s
       assessment.answers.each {|ans|
         if ans.value_to_s.blank?
