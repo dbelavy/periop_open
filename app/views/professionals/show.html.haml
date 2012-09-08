@@ -1,20 +1,16 @@
-%h2 Professional screen
+%h2 Professional
 %p
   User: #{@professional.name}
 %p
   Email: #{@professional.user.email if @professional.user.email}
 %p
-  Speciality #{@professional.speciality}
+  Speciality: #{@professional.speciality}
 -#  professional personal part
 - if (!current_user.nil? && (current_user.eql? @professional.user))
   #{link_to 'View list of unassigned assessments', unassigned_assessments_path}
   %br
   %br
   #{link_to 'Patients', patients_path}
-  %br
-  TODO Review assessments
-  %br
-  TODO Edit settings
 - if !current_user.nil? && (current_user.admin?)
   = link_to 'Reset password', reset_password_professional_path(@professional),:method => :post
   \|
