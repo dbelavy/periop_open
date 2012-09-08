@@ -1,9 +1,9 @@
 =render 'detailed_info'
 - if can? :edit, @patient
   = link_to 'Edit patient information', edit_patient_path(@patient)
-%h3 Preoperative information
+%h3 Pre-op information
 %p
-  =link_to('Show Preoperative Summary ',patient_summary_path(@patient))
+  =link_to('Show Pre-op Summary ',patient_summary_path(@patient))
 %p
 - if (can? :edit, @patient) && !@patient.patient_assessment_assigned?
   =link_to('Find patient assessment', unassigned_patient_assessments_path(@patient))
