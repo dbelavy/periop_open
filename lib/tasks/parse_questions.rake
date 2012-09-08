@@ -125,6 +125,7 @@ def parse_questions doc
     ask_details_criteria ="all" if ask_details_criteria == "any answer"
 
     question = Question.find_or_create_by(question_id: doc.cell(line, "C"))
+    #puts "overall pos: " + doc.cell(line, "A").to_s
     question.update_attributes!(question_id: doc.cell(line, "C"),
                                 display_name: doc.cell(line, "E"),
                                 condition: condition,
@@ -133,7 +134,8 @@ def parse_questions doc
                                 ask_details: doc.cell(line, "J"),
                                 ask_details_criteria: ask_details_criteria,
                                 option_list_name: doc.cell(line, "H"),
-                                validation_criteria: doc.cell(line, validation_col)
+                                validation_criteria: doc.cell(line, validation_col),
+                                sort_order: doc.cell(line, "A").to_i
                                 )
     concept_name = doc.cell(line, "D").downcase
     question.concept = Concept.where(name: concept_name).first
@@ -239,6 +241,6 @@ end
         parse_concepts(doc)
         parse_questions doc
         parse_option_lists doc
-        setup_question_order
+        #setup_question_order
     end
 end

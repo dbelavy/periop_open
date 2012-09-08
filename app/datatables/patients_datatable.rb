@@ -49,8 +49,15 @@ private
   def fetch_patients
     patients = Patient.all.send("#{sort_direction}","#{sort_column}")
     if params[:sSearch].present?
-      regex = /#{params[:sSearch]}/i
-      patients = patients.any_of({firstname: regex},{surname: regex},{anaesthetist_name: regex},{surgeon: regex})
+      search = params[:sSearch]
+      if /\d*/.match(search)
+        if /\d{4}-\d{2}-\d{2}/.match(search)
+        patients = patients.where(dob: Date.parse(search))
+        end
+      else
+        regex = /#{params[:sSearch]}/i
+        patients = patients.any_of({firstname: regex},{surname: regex},{anaesthetist_name: regex},{surgeon: regex})
+      end
     end
     patients = patients.paginate(:page => page,:per_page => per_page)
     patients
