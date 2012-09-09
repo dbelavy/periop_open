@@ -28,6 +28,7 @@ class Assessment
   def self.create_for_patient(form, patient)
     assessment = self.new
     assessment.form= form
+    assessment.name = form.name
     assessment.patient= patient
     assessment
   end

@@ -65,7 +65,6 @@ end
 
 def create_forms
   puts 'create_forms'
-  Form.delete_all
   Form.find_or_create_by(name: Form::NEW_PATIENT).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT).update_attributes(person_role: [Question::PATIENT])
   Form.find_or_create_by(name: Form::TELEPHONE_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
@@ -84,9 +83,16 @@ def parse_questions doc
   puts 'parse_questions'
   doc.default_sheet = 'Questions'
   new_patient_form = Form.where(name: Form::NEW_PATIENT).first
+  new_patient_form.questions.delete_all
+
   patient_form = Form.where(name: Form::PATIENT_ASSESSMENT).first
+  patient_form.questions.delete_all
+
   telephone_form = Form.where(name: Form::TELEPHONE_ASSESSMENT).first
+  telephone_form .questions.delete_all
+
   clinic_form = Form.where(name: Form::CLINIC_ASSESSMENT).first
+  clinic_form.questions.delete_all
 
   used_in_new_patient_col = column_for(doc,"New_Patient_Form")
   used_in_patient_assesment_col = column_for(doc,"Question used in patient assessment")
@@ -244,4 +250,5 @@ end
         parse_option_lists doc
         #setup_question_order
     end
+
 end
