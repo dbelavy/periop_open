@@ -50,11 +50,14 @@ private
     patients = Patient.all.send("#{sort_direction}","#{sort_column}")
     if params[:sSearch].present?
       search = params[:sSearch]
-      if /\d*/.match(search)
-        if /\d{4}-\d{2}-\d{2}/.match(search)
+      #TODO extract regexp & make tests
+      if /\d{4}-\d{2}-\d{2}/.match(search)
         patients = patients.where(dob: Date.parse(search))
-        end
-      else
+      elsif /\d{4}/.match(search)
+        start_of_year = Date.ordinal(search.to_i)
+        end_of_year = Date.ordinal(search.to_i,-1)
+        patients = patients.where(:dob.gte => start_of_year,:dob.lte => end_of_year)
+      elsif /^\D*$/.match(search)
         regex = /#{params[:sSearch]}/i
         patients = patients.any_of({firstname: regex},{surname: regex},{anaesthetist_name: regex},{surgeon: regex})
       end
