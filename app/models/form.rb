@@ -25,5 +25,10 @@ class Form
     self.questions
   end
 
+  def clear_questions
+    self.question_ids =[]
+    self.save!
+  end
+
 
 end

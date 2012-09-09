@@ -83,16 +83,16 @@ def parse_questions doc
   puts 'parse_questions'
   doc.default_sheet = 'Questions'
   new_patient_form = Form.where(name: Form::NEW_PATIENT).first
-  new_patient_form.questions.delete_all
+  new_patient_form.clear_questions
 
   patient_form = Form.where(name: Form::PATIENT_ASSESSMENT).first
-  patient_form.questions.delete_all
+  patient_form.clear_questions
 
   telephone_form = Form.where(name: Form::TELEPHONE_ASSESSMENT).first
-  telephone_form .questions.delete_all
+  telephone_form.clear_questions
 
   clinic_form = Form.where(name: Form::CLINIC_ASSESSMENT).first
-  clinic_form.questions.delete_all
+  clinic_form.clear_questions
 
   used_in_new_patient_col = column_for(doc,"New_Patient_Form")
   used_in_patient_assesment_col = column_for(doc,"Question used in patient assessment")
@@ -251,4 +251,9 @@ end
         #setup_question_order
     end
 
+    desc "Update data from questions spreadsheet"
+    task repair_data: :environment do
+
+
+    end
 end
