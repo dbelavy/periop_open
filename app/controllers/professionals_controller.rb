@@ -30,7 +30,7 @@ class ProfessionalsController < ApplicationController
     logger.debug 'created professional ' + @professional.to_yaml
 
     respond_to do |format|
-      if @professional.create_professional_dev
+      if @professional.create_professional
         format.html { redirect_to @professional, notice: 'Professional was successfully created.' }
         format.json { render json: @professional, status: :created, location: @professional }
       else

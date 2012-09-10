@@ -18,3 +18,4 @@ pickle-email-*.html
 /spreadsheet/.~lock*
 /dump/*
 export_env.sh
+run_guard.sh

@@ -23,7 +23,7 @@ if ENV["RAILS_ENV"] == 'production'
   user = User.create! :email => admin_email, :password => ENV["ADMIN_PASSWORD"], :password_confirmation => ENV["ADMIN_PASSWORD"], :confirmed_at => Time.now.utc
   user.assign_role 'admin'
 else
-  user = User.create! :email => dev_email('admin'), :password => '123456', :password_confirmation => '123456', :confirmed_at => Time.now.utc
+  user = User.create! :email => dev_email('admin'), :password => default_password, :password_confirmation => default_password, :confirmed_at => Time.now.utc
   user.assign_role 'admin'
 end
 puts 'admin created: ' <<  user.email

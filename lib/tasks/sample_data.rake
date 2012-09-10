@@ -8,13 +8,14 @@ namespace :db do
   Rake::Task['db:seed'].invoke
   Rake::Task['db:parse'].invoke
   #if ENV["RAILS_ENV"] == 'production'
-    create_professional(Professional::ANAESTHETIST,"david@belavy.com","David Belavy")
+  create_professional(Professional::ANAESTHETIST,"david@belavy.com","David Belavy")
+  create_professional(Professional::ANAESTHETIST,"alexander.khitev@gmail.com","Alexander Khitev")
   #end
-   10.times do |n|
-     create_professional_dev(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
-   end
-  FactoryGirl.create( :patient , firstname: 'Viktor',surname: 'Navorski',ssn: "1234567")
-  FactoryGirl.create(:patient,firstname: 'Forrest',surname:  'Gump',ssn: "555")
+  # 10.times do |n|
+  #   create_professional_dev(Professional::ANAESTHETIST,'a'+n.to_s ,Faker::Name.name)
+  # end
+  #FactoryGirl.create( :patient , firstname: 'Viktor',surname: 'Navorski',ssn: "1234567")
+  #FactoryGirl.create(:patient,firstname: 'Forrest',surname:  'Gump',ssn: "555")
 
 
   end
