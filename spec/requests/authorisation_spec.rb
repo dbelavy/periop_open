@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'capybara/rspec'
 
 include Warden::Test::Helpers
 Warden.test_mode!
@@ -27,10 +28,6 @@ describe "authorisation checks" do
       response.status.should be(302)
       visit patient_path user2.patient
       response.status.should be(302)
-    end
-
-    it "should not see patients" do
-
     end
 
 

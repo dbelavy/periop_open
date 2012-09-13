@@ -23,10 +23,6 @@ def create_professional(speciality, email, name)
 end
 
 
-def create_patient(name)
-  #create(:patient,:name => name)
-end
-
 def default_password
-  "123456"
+  "secret"
 end

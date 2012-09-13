@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(document).ready ->
+  animation_speed = 'fast'
   dob_name = "patient_dob"
   formSelector = 'form.assessment'
   questionsSelector = formSelector  + ' .question'
@@ -99,19 +100,19 @@ $(document).ready ->
             result = result && condition.checkAtomic(condHash)
         if $input.hasClass("question_details")
           if (result)
-            $input.parents('.control-group').show("slow")
+            $input.parents('.control-group').show(animation_speed)
             if !formDisabled
               $input.removeAttr("disabled")
           else
-            $input.parents('.control-group').hide("slow")
+            $input.parents('.control-group').hide(animation_speed)
             $input.attr("disabled","disabled")
         else if $input.hasClass("question")
           if (result)
-            $input.parents('fieldset').show("slow")
+            $input.parents('fieldset').show(animation_speed)
             if !formDisabled
               $input.removeAttr("disabled")
           else
-            $input.parents('fieldset').hide("slow")
+            $input.parents('fieldset').hide(animation_speed)
             $input.attr("disabled","disabled")
 
 

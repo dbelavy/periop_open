@@ -1,0 +1,30 @@
+:professionals:
+  -
+    email: "alexander.khitev@gmail.com"
+    password: "secret"
+:patients:
+  -
+    :answers:
+      patient_surname: "Dow"
+      patient_first_name: "John"
+      patient_gender: "Male"
+      patient_dob: "13-09-2001"
+      carer: "Yes"
+      carer_name: "Carer name"
+      surgery_previous: "Yes"
+      surgery_previous_list: "surgery previous list"
+      illicit_drugs: "Yes"
+      illicit_drugs_details: " illicit_drugs_details"
+      exercise_tolerance: "Participate in strenuous sports like swimming, football, basketball, skiing"
+  -
+    :answers:
+          patient_surname: "Dow"
+          patient_first_name: "John"
+          patient_gender: "Male"
+          patient_dob: "13-09-2001"
+          carer: "Yes"
+          carer_name: "Carer name"
+          surgery_previous: "Yes"
+          surgery_previous_list: "surgery previous list"
+          illicit_drugs: "Yes"
+          illicit_drugs_details: " illicit_drugs_details"
