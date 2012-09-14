@@ -14,3 +14,6 @@
         %td= link_to 'Show', assessment
 
 %br
+%p
+  - if (can? :edit, @patient) && !@patient.patient_assessment_assigned?
+    =link_to('Find patient assessment', unassigned_patient_assessments_path(@patient))
