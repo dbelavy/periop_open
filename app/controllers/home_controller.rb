@@ -17,4 +17,8 @@ class HomeController < ApplicationController
       redirect_to professional_path current_user.professional
     end
   end
+
+  def privacy
+    render 'privacy'
+  end
 end
