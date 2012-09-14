@@ -28,6 +28,6 @@ end
        result +=   " (" + sum[:details] +' )'
     end
       result
-    }.join(" | ")
+    }.uniq.join(" | ")
    end
 end
