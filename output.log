@@ -1,0 +1,97 @@
+Run options: include {:full_description=>/(?-mix:patient_create)/}
+should create patient javascript_driver  :webkit
+{"email"=>"alexander.khitev@gmail.com", "password"=>"secret"}
+create patients {:answers=>{"patient_surname"=>"Dow", "patient_first_name"=>"John", "patient_middle_name"=>"", "patient_dob"=>"12-09-1998", "medicare_card_number"=>"123123123132", "medicare_card_number_identifier"=>"1443343", "individual_healthcare_identifier"=>"53453345", "social_security_number"=>"2772726363"}}
+ fill_answer patient_surname : Dow
+find_answer : patient_surname
+ fill_answer patient_first_name : John
+find_answer : patient_first_name
+ skip filling concept patient_middle_name
+ fill_answer patient_dob : 12-09-1998
+find_answer : patient_dob
+set date : year : 1998 month : 9 day : 12
+ fill_answer medicare_card_number : 123123123132
+find_answer : medicare_card_number
+ fill_answer medicare_card_number_identifier : 1443343
+find_answer : medicare_card_number_identifier
+ fill_answer individual_healthcare_identifier : 53453345
+find_answer : individual_healthcare_identifier
+ fill_answer social_security_number : 2772726363
+find_answer : social_security_number
+populating patient[anaesthetist_id]
+select_random_option patient_anaesthetist_id
+selecting  David Belavy
+node[value] 
+create patients {:answers=>{"patient_surname"=>"Davidson", "patient_first_name"=>"David", "patient_middle_name"=>"", "patient_dob"=>"1989-03-29", "medicare_card_number"=>"9878780732", "medicare_card_number_identifier"=>"142356756", "individual_healthcare_identifier"=>"438734987", "social_security_number"=>"3489398389"}}
+ fill_answer patient_surname : Davidson
+find_answer : patient_surname
+ fill_answer patient_first_name : David
+find_answer : patient_first_name
+ skip filling concept patient_middle_name
+ fill_answer patient_dob : 1989-03-29
+find_answer : patient_dob
+set date : year : 1989 month : 3 day : 29
+ fill_answer medicare_card_number : 9878780732
+find_answer : medicare_card_number
+ fill_answer medicare_card_number_identifier : 142356756
+find_answer : medicare_card_number_identifier
+ fill_answer individual_healthcare_identifier : 438734987
+find_answer : individual_healthcare_identifier
+ fill_answer social_security_number : 3489398389
+find_answer : social_security_number
+populating patient[anaesthetist_id]
+select_random_option patient_anaesthetist_id
+selecting  Alexander Khitev
+node[value] 
+create patients {:answers=>{"patient_surname"=>"Elephant", "patient_first_name"=>"Ellie", "patient_middle_name"=>"", "patient_dob"=>"2012-07-28", "medicare_card_number"=>"", "medicare_card_number_identifier"=>"", "individual_healthcare_identifier"=>"", "social_security_number"=>""}}
+ fill_answer patient_surname : Elephant
+find_answer : patient_surname
+ fill_answer patient_first_name : Ellie
+find_answer : patient_first_name
+ skip filling concept patient_middle_name
+ fill_answer patient_dob : 2012-07-28
+find_answer : patient_dob
+set date : year : 2012 month : 7 day : 28
+ skip filling concept medicare_card_number
+ skip filling concept medicare_card_number_identifier
+ skip filling concept individual_healthcare_identifier
+ skip filling concept social_security_number
+populating patient[anaesthetist_id]
+select_random_option patient_anaesthetist_id
+selecting  David Belavy
+node[value] 
+create patients {:answers=>{"patient_surname"=>"Fly", "patient_first_name"=>"Frankie", "patient_middle_name"=>nil, "patient_dob"=>"2012-07-28", "medicare_card_number"=>"", "medicare_card_number_identifier"=>"", "individual_healthcare_identifier"=>"", "social_security_number"=>""}}
+ fill_answer patient_surname : Fly
+find_answer : patient_surname
+ fill_answer patient_first_name : Frankie
+find_answer : patient_first_name
+ skip filling concept patient_middle_name
+ fill_answer patient_dob : 2012-07-28
+find_answer : patient_dob
+set date : year : 2012 month : 7 day : 28
+ skip filling concept medicare_card_number
+ skip filling concept medicare_card_number_identifier
+ skip filling concept individual_healthcare_identifier
+ skip filling concept social_security_number
+populating patient[anaesthetist_id]
+select_random_option patient_anaesthetist_id
+selecting  Alexander Khitev
+node[value] 
+create patients {:answers=>{"patient_surname"=>"Elephant", "patient_first_name"=>"Ellie", "patient_middle_name"=>nil, "patient_dob"=>"2012-07-28", "medicare_card_number"=>"", "medicare_card_number_identifier"=>"", "individual_healthcare_identifier"=>"", "social_security_number"=>""}}
+ fill_answer patient_surname : Elephant
+find_answer : patient_surname
+ fill_answer patient_first_name : Ellie
+find_answer : patient_first_name
+ skip filling concept patient_middle_name
+ fill_answer patient_dob : 2012-07-28
+find_answer : patient_dob
+set date : year : 2012 month : 7 day : 28
+ skip filling concept medicare_card_number
+ skip filling concept medicare_card_number_identifier
+ skip filling concept individual_healthcare_identifier
+ skip filling concept social_security_number
+populating patient[anaesthetist_id]
+select_random_option patient_anaesthetist_id
+selecting  David Belavy
+node[value] 
+create patients {:answers=>{"patient_surname"=>"Garfield", "patient_first_name"=>"Gerald", "patient_middle_name"=>nil, "patient_dob"=>"1979-11-28", "medicare_card_number"=>"", "medicare_card_number_identifier"=>"", "individual_healthcare_identifier"=>"", "social_security_number"=>""}}

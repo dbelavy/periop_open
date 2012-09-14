@@ -14,6 +14,7 @@ Spork.prefork do
   require 'rspec/autorun'
   require 'factory_girl_rails'
   require 'faker'
+  require 'launchy'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -52,7 +53,7 @@ Spork.prefork do
       Capybara.javascript_driver = :webkit
       DatabaseCleaner.strategy = :truncation
       DatabaseCleaner.orm = "mongoid"
-    end
+      end
 
     config.before(:each) do
       DatabaseCleaner.clean

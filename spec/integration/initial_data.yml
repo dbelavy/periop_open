@@ -1,8 +1,93 @@
-:professionals:
+ :professionals:
   -
     email: "alexander.khitev@gmail.com"
+    password: "123456"
+  - 
+    email: "alexander.khitev@gmail.com"
     password: "secret"
-:patients:
+  
+ :patients:
+  -
+    :answers:
+      patient_surname: 'Dow'
+      patient_first_name: 'John'
+      patient_middle_name: ''
+      patient_dob: "12-09-1998"
+      medicare_card_number: '123123123132'
+      medicare_card_number_identifier: '1443343'
+      individual_healthcare_identifier: '53453345'
+      social_security_number: '2772726363'
+  -
+    :answers:
+      patient_surname: 'Davidson'
+      patient_first_name: 'David'
+      patient_middle_name: ''
+      patient_dob: "1989-03-29"
+      medicare_card_number: '9878780732'
+      medicare_card_number_identifier: '142356756'
+      individual_healthcare_identifier: '438734987'
+      social_security_number: '3489398389'
+  -
+    :answers:
+      patient_surname: 'Elephant'
+      patient_first_name: 'Ellie'
+      patient_middle_name: ''
+      patient_dob: "2012-07-28"
+      medicare_card_number: '02934023492093i'
+      medicare_card_number_identifier: '2o023233323'
+      individual_healthcare_identifier: '230932092023'
+      social_security_number: '41398410935433474'
+  -
+    :answers:
+      patient_surname: 'Fly'
+      patient_first_name: 'Frankie'
+      patient_middle_name:
+      patient_dob: "2012-07-28"
+      medicare_card_number: '8293429823423498'
+      medicare_card_number_identifier: '80934234723'
+      individual_healthcare_identifier: '09222222208'
+      social_security_number: ''
+  -
+    :answers:
+      patient_surname: 'Garfield'
+      patient_first_name: 'Gerald'
+      patient_middle_name:
+      patient_dob: "1979-11-28"
+      medicare_card_number: '9918092734912438'
+      medicare_card_number_identifier: '8972934792347'
+      individual_healthcare_identifier: '2342342343243'
+      social_security_number: '23423423423423'
+  -
+    :answers:
+      patient_surname: 'Harvey'
+      patient_first_name: 'Harriet'
+      patient_middle_name:
+      patient_dob: "2012-07-28"
+      medicare_card_number: '2424234234234'
+      medicare_card_number_identifier: '234234234242'
+      individual_healthcare_identifier: '234987980987'
+      social_security_number: '878976655432326658'
+  -
+    :answers:
+      patient_surname: 'Hat'
+      patient_first_name: 'Harriet'
+      patient_middle_name:
+      patient_dob: "2006-09-16"
+      medicare_card_number: '23476323746234'
+      medicare_card_number_identifier: '796238476928346'
+      individual_healthcare_identifier: '29348293479234'
+      social_security_number: '3244234802734'
+  -
+    :answers:
+      patient_surname: 'Indigo'
+      patient_first_name: 'Ivy'
+      patient_middle_name:
+      patient_dob: "2003-03-15"
+      medicare_card_number: '2346928746928346'
+      medicare_card_number_identifier: '34276428742634'
+      individual_healthcare_identifier: '42374628934726'
+      social_security_number: '87632453784239747'
+ :patients_assessments:
   -
     :answers:
       patient_surname: "Dow"
@@ -18,13 +103,14 @@
       exercise_tolerance: "Participate in strenuous sports like swimming, football, basketball, skiing"
   -
     :answers:
-          patient_surname: "Dow"
-          patient_first_name: "John"
-          patient_gender: "Male"
-          patient_dob: "13-09-2001"
-          carer: "Yes"
-          carer_name: "Carer name"
-          surgery_previous: "Yes"
-          surgery_previous_list: "surgery previous list"
-          illicit_drugs: "Yes"
-          illicit_drugs_details: " illicit_drugs_details"
+      patient_surname: 'Davidson'
+      patient_first_name: 'David'
+      patient_middle_name: ''
+      patient_gender: "Male"
+      patient_dob: "13-09-2001"
+      carer: "Yes"
+      carer_name: "Carer name"
+      surgery_previous: "Yes"
+      surgery_previous_list: "surgery previous list"
+      illicit_drugs: "Yes"
+      illicit_drugs_details: " illicit_drugs_details"

@@ -33,3 +33,4 @@ def wait_until_ajax_done(wait_time=Capybara.default_wait_time)
     page.evaluate_script('$.active') == 0
   end
 end
+
