@@ -79,6 +79,6 @@ Periop::Application.configure do
     password: ENV["GMAIL_PASSWORD"]
   }
 
-
+  config.contact_mail_target = "enquiries@pre-op.net"
 
 end
