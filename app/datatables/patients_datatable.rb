@@ -34,7 +34,6 @@ private
         h(patient.anaesthetist.nil? ? '' : patient.anaesthetist.name),
         h(patient.surgeon),
         h(patient.planned_date_of_surgery),
-        h('no'),
         link_to('show summary', Rails.application.routes.url_helpers.patient_summary_path(patient)),
         link_to('show assessments',Rails.application.routes.url_helpers.patient_assessments_path(patient)),
         link_to('edit details', Rails.application.routes.url_helpers.edit_patient_path(patient))
