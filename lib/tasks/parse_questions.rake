@@ -128,6 +128,8 @@ def parse_questions doc
       condition.gsub!(/\s[\s]*/, " ")
     end
 
+    check_conditon condition
+
     ask_details_criteria = doc.cell(line, "K").downcase if !doc.cell(line, "K").nil?
     ask_details_criteria ="all" if ask_details_criteria == "any answer"
 
