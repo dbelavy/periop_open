@@ -45,4 +45,6 @@ Periop::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.contact_mail_target = "alexander.khitev+enquiry@gmail.com"
 end

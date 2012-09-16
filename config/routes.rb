@@ -5,6 +5,9 @@ Periop::Application.routes.draw do
   resources :forms
   resources :concepts
 
+  get 'contact' => "contact_mails#new"
+  post 'contact' => "contact_mails#create"
+
   #devise_for :patients, :path_prefix => 'd'
 
   resources :patients do

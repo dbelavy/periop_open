@@ -15,7 +15,4 @@ describe Professional do
     professional.create_professional.should be_true
     professional.user.should_not be_nil
   end
-
-
-
 end

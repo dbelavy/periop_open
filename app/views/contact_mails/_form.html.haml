@@ -1,0 +1,12 @@
+%h3 #{@contact.name}
+- form_disabled ||= false
+= simple_form_for (@contact),:url => contact_path ,:method => :post do |f|
+  = f.error_notification
+  = f.error :base, {:class => "alert alert-error"}
+  .form-inputs
+    = f.input :name
+    = f.input :email
+    = f.input :contact_telephone
+    = f.input :message,:as => :text
+    .form-actions
+      = f.button :submit,:value => 'Submit'
