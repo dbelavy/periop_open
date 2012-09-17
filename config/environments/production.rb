@@ -80,5 +80,6 @@ Periop::Application.configure do
   }
 
   config.contact_mail_target = "enquiries@pre-op.net"
+  config.mail_sender = "no-reply@pre-op.net"
 
 end

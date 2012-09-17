@@ -47,6 +47,10 @@ class Patient
   accepts_nested_attributes_for :assessments
 
 
+  def get_recent
+
+  end
+
   def get_answer_value_by_concept name
     answer = self.new_patient_assessment.find_answer_by_concept_name name
   end
@@ -83,6 +87,11 @@ class Patient
     self.medicare_card_number_identifier= self.get_answer_value_by_concept "medicare_card_number_identifier"
     self.individual_healthcare_identifier= self.get_answer_value_by_concept "individual_healthcare_identifier"
     self[:anaesthetist_name]= self.anaesthetist.nil? ? '' : self.anaesthetist.name
+
+    # update from recent assessment
+    # Referring_Surgeon
+    # Procedure_Date
+
     self.save
   end
 

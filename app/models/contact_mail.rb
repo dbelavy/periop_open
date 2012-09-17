@@ -15,9 +15,8 @@ class ContactMail
 
   def header
     {:to => Rails.application.config.contact_mail_target,
-     :from => email,
+     :from => Rails.application.config.mail_sender,
      :subject => subject,
-
      :template_path => 'contact', :template_name => 'contact'
     }
   end

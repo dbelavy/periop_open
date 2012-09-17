@@ -52,6 +52,7 @@ class Assessment
     if result
       result = update_attributes(params)
     end
+    self.patient.update_values
     result
   end
 
