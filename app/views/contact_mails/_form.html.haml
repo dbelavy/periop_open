@@ -7,6 +7,6 @@
     = f.input :name
     = f.input :email
     = f.input :contact_telephone
-    = f.input :message,:as => :text
+    = f.input :message,:as => :text,:input_html => {:rows => 8}
     .form-actions
       = f.button :submit,:value => 'Submit'
