@@ -10,7 +10,6 @@
 
 %h3 Available Assessments
 %p
-  TODO Start new assessment [link] - link to a list of available assessments
 %p
   - @patient.assessments_to_display.each do |a|
     %li #{link_to (a.summary), patient_assessment_path(@patient, a)}
