@@ -27,5 +27,11 @@
           %td= link_to 'Show', assessment_path(a),:class=> "btn"
         %td= link_to 'Delete assessment', a, :confirm => 'Are you sure?', :method => :delete,:class=> "btn btn-danger"
 %br
-
-= link_to 'Back' ,root_path
+-if !@patient.nil?
+  = link_to 'Patient information' ,@patient
+  |
+  = link_to 'Patient List' ,patients_path
+  |
+  = link_to 'Home' ,root_path
+-else
+  = link_to 'Back' ,root_path
