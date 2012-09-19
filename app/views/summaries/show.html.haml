@@ -39,6 +39,8 @@
                     =sum[:date]
                   %td
                     =sum[:assessment_name]
-= link_to 'Back', patients_path
+= link_to 'Patient information' ,@patient
+|
+= link_to 'Patient List' ,patients_path
 |
 = link_to 'Printable version', show_printable_patient_summary_path(@patient)
