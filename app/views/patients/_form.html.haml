@@ -1,4 +1,4 @@
-= simple_form_for(@patient) do |f|
+= simple_form_for((@patient),:html => {:class => 'assessment' }) do |f|
   = f.error_notification
   = f.error :base, {:class => "alert alert-error"}
   - form_disabled =false
