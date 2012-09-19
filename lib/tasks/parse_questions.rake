@@ -237,6 +237,16 @@ end
       parse_option_lists doc
     end
 
+    def check_assessments
+      Patient.all.each do |p|
+        puts 'checking patient : ' + p.to_s
+        p.assessments.all.each do |a|
+          a.answers_unique?
+        end
+      end
+    end
+
+
     desc "Update data from questions spreadsheet"
     task update_questions: :environment do
       require 'roo'
@@ -254,8 +264,7 @@ end
     end
 
     desc "Update data from questions spreadsheet"
-    task repair_data: :environment do
-
-
+    task check_data: :environment do
+      check_assessments
     end
 end

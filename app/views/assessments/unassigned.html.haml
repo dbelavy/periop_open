@@ -15,12 +15,12 @@
   %tbody
     - @assessments.each do |a|
       %tr
-        %td= a.find_answer_by_concept_name 'patient_surname'
-        %td= a.find_answer_by_concept_name 'patient_first_name'
-        %td= a.find_answer_by_concept_name 'patient_gender'
-        %td= a.find_answer_by_concept_name 'patient_dob'
-        %td= a.find_answer_by_concept_name 'procedure_date'
-        %td= a.find_answer_by_concept_name 'referring_surgeon'
+        %td= a.find_answer_value_by_concept_name 'patient_surname'
+        %td= a.find_answer_value_by_concept_name 'patient_first_name'
+        %td= a.find_answer_value_by_concept_name 'patient_gender'
+        %td= a.find_answer_value_by_concept_name 'patient_dob'
+        %td= a.find_answer_value_by_concept_name 'procedure_date'
+        %td= a.find_answer_value_by_concept_name 'referring_surgeon'
         -if !@patient.nil?
           %td= link_to 'Show', patient_assessment_path(@patient,a),:class=> "btn"
         -else

@@ -1,5 +1,19 @@
 require 'spec_helper'
 
 describe Patient do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe "#recent answer" do
+    before {
+      @patient = create_patient()
+
+
+    }
+
+    it "should return answer from recent assessment" do
+
+    end
+
+
+  end
+
 end

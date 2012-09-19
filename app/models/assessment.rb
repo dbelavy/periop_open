@@ -37,6 +37,22 @@ class Assessment
     answers.where(:question_id => question._id).first
   end
 
+  def answers_unique?
+    result = true
+    self.form.questions.each do |q|
+      question_answers = self.answers.where(:question_id => q._id)
+      if question_answers.size > 1
+        message = '!!! Patient\'s '  + self.patient.surname + self.patient._id.to_s +  ' assessment  ' + self.to_s + ' is invalid ' + ' question ' +
+            q.to_s + ' have more than one answers:' + question_answers.all.map{|a| a.value_to_s }.to_s
+        logger.error message
+        puts message
+        result = false
+      end
+    end
+    result
+  end
+
+
   def find_or_create_answer question
     answers.find_or_create_by(:question_id => question._id)
   end
@@ -56,12 +72,21 @@ class Assessment
     result
   end
 
-  def find_or_create_answer_by_concept_name name
-    self.find_or_create_answer(find_question_by_concept_name name)
+  def find_or_create_answer_by_concept_name concept_name
+    self.find_or_create_answer(find_question_by_concept_name (concept_name))
   end
 
-  def find_answer_by_concept_name name
-    answer = self.answer(find_question_by_concept_name name)
+  def find_answer_by_concept_name concept_name
+    question = find_question_by_concept_name concept_name
+    if !question
+      return nil
+    end
+    answer = self.answer(question)
+  end
+
+
+  def find_answer_value_by_concept_name concept
+    answer = find_answer_by_concept_name concept
     if answer.nil?
       return ""
     end
@@ -69,11 +94,8 @@ class Assessment
   end
 
 
-  def find_question_by_concept_name name
-    concept = Concept.find_by_name(name)
-    if concept.nil?
-      puts name
-    end
+  def find_question_by_concept_name concept_name
+    concept = Concept.find_by_name(concept_name)
     self.form.questions.where(concept_id: concept._id).first
   end
 

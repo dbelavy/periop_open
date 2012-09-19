@@ -47,12 +47,9 @@ class Patient
   accepts_nested_attributes_for :assessments
 
 
-  def get_recent
-
-  end
-
-  def get_answer_value_by_concept name
-    answer = self.new_patient_assessment.find_answer_by_concept_name name
+  def get_answer_value_by_concept concept_name
+    puts 'get_answer_value_by_concept ' + concept_name
+    answer = self.new_patient_assessment.find_answer_value_by_concept_name concept_name
   end
 
 
@@ -89,10 +86,32 @@ class Patient
     self[:anaesthetist_name]= self.anaesthetist.nil? ? '' : self.anaesthetist.name
 
     # update from recent assessment
-    # Referring_Surgeon
-    # Procedure_Date
+    surgeon_answer = self.get_recent_answer("referring_surgeon")
+    if surgeon_answer
+      self.surgeon = surgeon_answer.value_to_s
+    end
+
+    date_answer = self.get_recent_answer("procedure_date")
+    if date_answer
+      self.planned_date_of_surgery = date_answer.date_value
+    end
 
     self.save
+  end
+
+  def get_recent_answer concept
+    puts ' get_recent_answer ' + concept.to_s
+    recent_answer = nil
+    self.assessments.each do |a|
+      answer =  a.find_answer_by_concept_name concept
+
+      if answer && !answer.blank?
+        if recent_answer.nil? ||(recent_answer.assessment.date_started.to_time < answer.assessment.date_started.to_time)
+          recent_answer = answer
+        end
+      end
+    end
+    recent_answer
   end
 
   def assigned

@@ -95,6 +95,7 @@ class AssessmentsController < ApplicationController
     @assessment = Assessment.find(params[:assessment_id])
     @patient = Patient.find(params[:patient_id])
     @assessment.patient= @patient
+    @patient.update_values
     respond_to do |format|
       if @assessment.save
         format.html { redirect_to patient_assessment_path(@patient, @assessment), notice: 'Assessment assigned.'}
@@ -110,6 +111,7 @@ class AssessmentsController < ApplicationController
     @assessment = Assessment.find(params[:assessment_id])
     @patient = Patient.find(params[:patient_id])
     @assessment.patient= nil
+    @patient.update_values
     respond_to do |format|
       if @assessment.save
         format.html { redirect_to patient_assessment_path(@patient, @assessment), notice: 'Assessment unassigned.'}
@@ -144,7 +146,7 @@ class AssessmentsController < ApplicationController
     @assessment.destroy
 
     respond_to do |format|
-      if @patient.nil?
+      if @assessment.nil?
         format.html {redirect_to root_path , notice: 'Assessment was successfully deleted.' }
         format.json { head :no_content }
       else
