@@ -10,6 +10,7 @@
       %th DOB
       %th Date of surgery
       %th Surgeon
+      %th Anesthetist
       %th Show
       %th Delete
   %tbody
@@ -21,6 +22,7 @@
         %td= a.find_answer_value_by_concept_name 'patient_dob'
         %td= a.find_answer_value_by_concept_name 'procedure_date'
         %td= a.find_answer_value_by_concept_name 'referring_surgeon'
+        %td= a.find_answer_value_by_concept_name 'patient_reported_anesthetist'
         -if !@patient.nil?
           %td= link_to 'Show', patient_assessment_path(@patient,a),:class=> "btn"
         -else
