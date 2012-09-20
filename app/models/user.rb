@@ -43,7 +43,7 @@ class User
   field :user_role, :type => String, :default => 'undefined'
 
   # user related to role specific entity
-  has_one :professional
+  has_one :professional,:autosave => true
 
   validates_presence_of :email
   attr_accessible :email, :password, :password_confirmation, :remember_me, :confirmed_at, :professional_attributes
@@ -80,33 +80,6 @@ class User
         end
     end
   end
-
-  # Update record attributes when :current_password matches, otherwise returns
-  # error on :current_password. It also automatically rejects :password and
-  # :password_confirmation if they are blank.
-  def update_with_password(params, *options)
-    puts 'from model '
-    current_password = params.delete(:current_password)
-
-    if params[:password].blank?
-      params.delete(:password)
-      params.delete(:password_confirmation) if params[:password_confirmation].blank?
-    end
-
-    result = if valid_password?(current_password)
-               update_attributes(params, *options)
-             else
-               self.assign_attributes(params, *options)
-               self.valid?
-               self.errors.add(:current_password, current_password.blank? ? :blank : :invalid)
-               false
-             end
-
-    clean_up_passwords
-    result
-  end
-
-
 
 
   def assign_role( role_name)
