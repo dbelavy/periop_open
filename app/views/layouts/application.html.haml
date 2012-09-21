@@ -18,7 +18,7 @@
           = render 'layouts/navigation'
     #main{:role => "main"}
       .container
-        .content
+        .content{:class => yield(:content_class)}
           .row
             .span12
               = render 'layouts/messages'

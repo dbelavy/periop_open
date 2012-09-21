@@ -10,8 +10,8 @@
       = s.simple_fields_for :answers do |a|
         = render "assessments/answer",:a => a
     %fieldset
-      %legend Anaesthetist
-      = f.input :anaesthetist_id ,:label => "Answer",:collection => Professional.anaesthetists
+      %legend Anesthetist
+      = f.input :anesthetist_id ,:label => "Answer",:collection => Professional.anesthetists
   .form-actions
     = f.button :submit
 -#= debug @patient

@@ -7,7 +7,7 @@ describe Professional do
   it "should create profesional with related user " do
     @attr = {
            :name => "Test ",
-           :speciality => Professional::ANAESTHETIST
+           :speciality => Professional::ANESTHETIST
        }
 
     professional = Professional.new(@attr)

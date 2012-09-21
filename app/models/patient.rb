@@ -30,7 +30,7 @@ class Patient
   field :medicare_card_number, :type => String
   field :medicare_card_number_identifier, :type => String
   field :individual_healthcare_identifier, :type => String
-  field :anaesthetist_name, :type => String
+  field :anesthetist_name, :type => String
 
 
   field :ssn, :type => String
@@ -41,7 +41,7 @@ class Patient
 
   field :surgeon, :type => String
 
-  belongs_to :anaesthetist, :class_name=> 'Professional',:inverse_of => :anaesthetist_patients
+  belongs_to :anesthetist, :class_name=> 'Professional',:inverse_of => :anesthetist_patients
   has_many :assessments
 
   accepts_nested_attributes_for :assessments
@@ -83,7 +83,7 @@ class Patient
     self.medicare_card_number= self.get_answer_value_by_concept "medicare_card_number"
     self.medicare_card_number_identifier= self.get_answer_value_by_concept "medicare_card_number_identifier"
     self.individual_healthcare_identifier= self.get_answer_value_by_concept "individual_healthcare_identifier"
-    self[:anaesthetist_name]= self.anaesthetist.nil? ? '' : self.anaesthetist.name
+    self[:anesthetist_name]= self.anesthetist.nil? ? '' : self.anesthetist.name
 
     # update from recent assessment
     surgeon_answer = self.get_recent_answer("referring_surgeon")

@@ -18,7 +18,7 @@ private
 
   #%td #{link_to patient.name, patient}
   #%td #{patient.dob}
-  #%td #{patient.anaesthetist.name if !patient.anaesthetist.nil?}
+  #%td #{patient.anesthetist.name if !patient.anesthetist.nil?}
   #%td #{patient.surgeon}
   #%td #{patient.planned_date_of_surgery}
   #%td no
@@ -30,8 +30,8 @@ private
         link_to(patient.surname,patient),
         h(patient.firstname),
         h(patient.dob),
-        #h(patient.anaesthetist_name),
-        h(patient.anaesthetist.nil? ? '' : patient.anaesthetist.name),
+        #h(patient.anesthetist_name),
+        h(patient.anesthetist.nil? ? '' : patient.anesthetist.name),
         h(patient.surgeon),
         h(patient.planned_date_of_surgery),
         link_to('show summary', Rails.application.routes.url_helpers.patient_summary_path(patient)),
@@ -58,7 +58,7 @@ private
         patients = patients.where(:dob.gte => start_of_year,:dob.lte => end_of_year)
       elsif /^\D*$/.match(search)
         regex = /#{params[:sSearch]}/i
-        patients = patients.any_of({firstname: regex},{surname: regex},{anaesthetist_name: regex},{surgeon: regex})
+        patients = patients.any_of({firstname: regex},{surname: regex},{anesthetist_name: regex},{surgeon: regex})
       end
     end
     patients = patients.paginate(:page => page,:per_page => per_page)
@@ -74,7 +74,7 @@ private
   end
 
   def sort_column
-    columns = %w[surname firstname dob anaesthetist_name surgeon planned_date_of_surgery ready_to_surgery]
+    columns = %w[surname firstname dob anesthetist_name surgeon planned_date_of_surgery ready_to_surgery]
     columns[params[:iSortCol_0].to_i]
   end
 

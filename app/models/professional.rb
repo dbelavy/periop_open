@@ -2,7 +2,7 @@ class Professional
   include Mongoid::Document
 
   SURGEON = 'Surgeon'
-  ANAESTHETIST = 'Anaesthetist'
+  ANESTHETIST = 'Anesthetist'
 
 
   field :name, :type => String
@@ -10,20 +10,20 @@ class Professional
   belongs_to :user
 
   #has_many :surgeon_patients,:class_name => 'Patient',  inverse_of: :surgeon
-  has_many :anaesthetist_patients,:class_name => 'Patient',  inverse_of: :anaesthetist
+  has_many :anesthetist_patients,:class_name => 'Patient',  inverse_of: :anesthetist
 
   def self.surgeons
     find(:all).where(:speciality => SURGEON)
   end
 
-  def self.anaesthetists
-      find(:all).where(:speciality => ANAESTHETIST)
+  def self.anesthetists
+      find(:all).where(:speciality => ANESTHETIST)
   end
 
 
 
   def self.specialities
-    [SURGEON,ANAESTHETIST ]
+    [SURGEON,ANESTHETIST ]
   end
 
   #def user_attributes=(attributes)
