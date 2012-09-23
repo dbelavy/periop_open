@@ -1,3 +1,5 @@
+Testing git on my computer
+
 new patient form
 http://stackoverflow.com/questions/5999870/rails-simple-form-two-models
 +devise customization (no reset password for users, separate login\signup screens)
