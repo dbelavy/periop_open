@@ -1,5 +1,5 @@
-require Rails.root.join('spec','helpers.rb')
-require 'rubygems'           #so it can load gems
+require Rails.root.join('spec', 'helpers.rb')
+require 'rubygems' #so it can load gems
 
 namespace :db do
   desc "Fill database with sample data"
@@ -7,7 +7,7 @@ namespace :db do
     Patient.all.each do |patient|
 
       patient.update_values
-      puts 'patient updated'  + patient.to_s
+      puts 'patient updated' + patient.to_s
     end
   end
 
@@ -17,21 +17,24 @@ namespace :db do
 
   def fix_anaesthetist
     Patient.all.each do |p|
-      p.keys.each do |k|
-          if k.include? "anaesthetist" ;
-      tmp = doc[k]
-      puts 'found key old : ' + k.to_s + ' store value : ' + tmp.to_s
-      new_key = k.gsub("anaesthetist","anesthetist")
-      puts " new key " + new_key
-      arr << {:new_key => new_key,:value => tmp ,  :key => k}
+      arr = []
+      p.attributes.each do |attr|
+        key = attr[0]
+        if key.include? "anaesthetist";
+          puts 'attribute ' + attr.to_s
+          tmp = [attr][1]
+          puts 'found key old : ' + key.to_s + ' store value : ' + tmp.to_s
+          new_key = key.gsub("anaesthetist", "anesthetist")
+          puts " new key " + new_key
+          arr << {:new_key => new_key, :value => tmp, :key => key}
+        end
+      end
+      arr.each do |hash|
+        p[hash[:key]]=nil
+        p[hash[:new_key]]= hash[:value]
+      end
+      p.update
     end
   end
-  arr.each do |hash|
-    doc[hash[:key]]=nil
-    doc[hash[:new_key]]= hash[:value]
-  end
-  doc.update
-    end
-    end
 
 end
