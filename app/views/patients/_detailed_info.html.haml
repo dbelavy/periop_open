@@ -8,10 +8,10 @@
 %p
   Date of birth: #{ @patient.dob}
 %p
-  Medicare number: #{@patient.get_answer_value_by_concept "medicare_card_number"}
+  Medicare number: #{@patient.get_answer_from_patient_form "medicare_card_number"}
 %p
-  Medicare card patient identifier: #{@patient.get_answer_value_by_concept "medicare_card_number_identifier"}
+  Medicare card patient identifier: #{@patient.get_answer_from_patient_form "medicare_card_number_identifier"}
 %p
-  Individual healthcare identifier: #{@patient.get_answer_value_by_concept "individual_healthcare_identifier"}
+  Individual healthcare identifier: #{@patient.get_answer_from_patient_form "individual_healthcare_identifier"}
 %p
   Social security number: #{@patient.ssn}

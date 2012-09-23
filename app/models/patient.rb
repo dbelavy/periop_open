@@ -47,8 +47,9 @@ class Patient
   accepts_nested_attributes_for :assessments
 
 
-  def get_answer_value_by_concept concept_name
-    puts 'get_answer_value_by_concept ' + concept_name
+
+  def get_answer_from_patient_form concept_name
+    puts 'get_answer_from_patient_form ' + concept_name
     answer = self.new_patient_assessment.find_answer_value_by_concept_name concept_name
   end
 
@@ -75,14 +76,16 @@ class Patient
   def update_values
     # denormalized values for sorting
 
-    self.firstname=  self.get_answer_value_by_concept "patient_first_name"
-    self.middlename= self.get_answer_value_by_concept "patient_middle_name"
-    self.surname= self.get_answer_value_by_concept"patient_surname"
-    self.ssn= self.get_answer_value_by_concept "social_security_number"
-    self.dob= self.get_answer_value_by_concept "patient_dob"
-    self.medicare_card_number= self.get_answer_value_by_concept "medicare_card_number"
-    self.medicare_card_number_identifier= self.get_answer_value_by_concept "medicare_card_number_identifier"
-    self.individual_healthcare_identifier= self.get_answer_value_by_concept "individual_healthcare_identifier"
+    self.firstname=  self.get_answer_from_patient_form "patient_first_name"
+    self.middlename= self.get_answer_from_patient_form "patient_middle_name"
+    self.surname= self.get_answer_from_patient_form"patient_surname"
+    self.ssn= self.get_answer_from_patient_form "social_security_number"
+    self.dob= self.get_answer_from_patient_form "patient_dob"
+    self.medicare_card_number= self.get_answer_from_patient_form "medicare_card_number"
+    self.medicare_card_number_identifier= self.get_answer_from_patient_form "medicare_card_number_identifier"
+    self.individual_healthcare_identifier= self.get_answer_from_patient_form "individual_healthcare_identifier"
+
+    self.anesthetist_id = self.get_answer_from_patient_form "anesthetist"
     self[:anesthetist_name]= self.anesthetist.nil? ? '' : self.anesthetist.name
 
     # update from recent assessment

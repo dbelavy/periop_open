@@ -29,5 +29,14 @@ end
     end
       result
     }.uniq.join(" | ")
-   end
+  end
+
+  def professional_option_list
+    Professional.all
+  end
+
+  def get_anesthetist_name assessment
+    id = assessment.find_answer_value_by_concept_name 'anesthetist'
+    #Professional.find(id).name
+  end
 end
