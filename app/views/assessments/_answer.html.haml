@@ -23,9 +23,14 @@
       - else if (question.input_type == 'Text_box')
         =a.input :value,:as => :text,:label => label,
         :input_html => {:rows => 5,:cols => 60,:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
-        - else
-          = a.input :value,:label => label ,
-          :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
+        - else if (question.input_type == 'Lookup_User_Anesthetist')
+          = a.input :value,:label => label,:as => :select , :collection => professional_option_list,:include_blank => true,
+              :label_method => :name , :value_method => :_id,
+              :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition },
+              :class => 'question'}
+          - else
+            = a.input :value,:label => label ,
+            :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
   - if (question.ask_details == "Y")
     =a.input :details,:label => "Please provide more information",:as => :text,:input_html => {:data => {:short_name => question.concept.name.downcase + "_details", :condition => question.details_criteria},
     :class => 'question question_details', :rows => 5}
