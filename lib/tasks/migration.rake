@@ -32,9 +32,9 @@ namespace :db do
       end
       arr.each do |hash|
         p[hash[:key]]=nil
-        puts "setting "  + hash[:key] + "=>  nil "
+        puts "setting "  + hash[:key].to_s + "=>  nil "
         p[hash[:new_key]]= hash[:value]
-        puts "setting "  + hash[:new_key] + "=>  " + hash[:value]
+        puts "setting "  + hash[:new_key].to_s + "=>  " + hash[:value].to_s
       end
       puts "new object" + p.to_s
       p.update
