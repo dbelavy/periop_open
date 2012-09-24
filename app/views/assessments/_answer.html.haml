@@ -1,7 +1,8 @@
 - question = a.object.question
 - label = question.display_name if !question.nil?
 %fieldset{:data => {:short_name => question.concept.name.downcase, :condition => question.condition }}
-  %legend #{label}
+  %legend
+    !=label
   - label = "Answer"
   = a.input :question_id, :as => :hidden
   - if (question.input_type == 'OneOption')
