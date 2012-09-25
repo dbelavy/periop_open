@@ -15,6 +15,32 @@ namespace :db do
     fix_anaesthetist
   end
 
+  task lookup_field_value: :environment do
+    q_ids = Question.where(input_type: "Lookup_User_Anesthetist").map{|q| q._id}
+    puts q_ids.to_s
+    Assessment.all.each do |a|
+      answers = a.answers.in(question_id: q_ids)
+      if (!answers.nil?)
+        puts 'answers  ' + answers.to_s + ' '+ answers.size.to_s
+        answers.each do |ans|
+          puts " lookup answer found : " + ans._id.to_s + " : "  + ans.value_to_s.to_s
+          professional = Professional.where(name: ans[:value]).first
+          if !professional.nil?
+            puts ' found : '  +Professional.where(name: ans[:value]).size.to_s + ' professionals'
+            ans[:value] = professional._id
+            ans.save!
+          end
+          if (ans[:id_value].nil? || ans[:id_value].blank?)
+          puts 'setting id_value ' + ans[:value].to_s
+          ans[:id_value] = ans[:value]
+          ans[:value] = nil
+          ans.save!
+          end
+        end
+      end
+    end
+  end
+
   def fix_anaesthetist
     Patient.all.each do |p|
       arr = []

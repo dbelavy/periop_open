@@ -4,6 +4,7 @@ class Answer
 
   belongs_to :question , inverse_of: nil
   field :value, type: String
+  field :id_value, type: String
   field :array_value, type: Array
   field :details, type: String
   field :date_value, type: Date
@@ -18,6 +19,9 @@ class Answer
     end
     if !date_value.nil?
       return date_value
+    end
+    if !id_value.nil?
+      return Professional.find(id_value).label
     end
   end
 

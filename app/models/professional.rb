@@ -26,6 +26,10 @@ class Professional
     [SURGEON,ANESTHETIST ]
   end
 
+  def label
+    name
+  end
+
   #def user_attributes=(attributes)
   #  @credit_card = CreditCard.new(attributes)
   #end
