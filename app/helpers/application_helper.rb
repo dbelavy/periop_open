@@ -23,7 +23,8 @@ end
       result = ""
     if !sum[:answer].to_s.blank?
        result += sum[:answer].to_s
-     end
+    end
+
     if !sum[:details].to_s.blank?
        result +=   " (" + sum[:details] +' )'
     end
