@@ -48,5 +48,6 @@ Periop::Application.configure do
 
   config.contact_mail_target = "alexander.khitev+enquiry@gmail.com"
   config.mail_sender = "no-reply@pre-op.net"
+  config.site_url = "https://pre-op.net"
 
 end

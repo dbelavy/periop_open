@@ -37,10 +37,6 @@ end
   end
 
   def get_anesthetist_name assessment
-    id = assessment.find_answer_value_by_concept_name 'patient_reported_anesthetist'
-    puts 'get_anesthetist_name  ' +  id.to_s
-    if ((!id.nil?)&&(!id.blank?))
-      Professional.find(id.to_s).name
-    end
+    assessment.get_anesthetist.value_to_s
   end
 end
