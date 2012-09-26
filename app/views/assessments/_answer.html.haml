@@ -30,7 +30,6 @@
               :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition },
               :class => 'question'}
           - else if (question.input_type == 'Statement')
-            =label
             - else
               = a.input :value,:label => label ,
               :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
