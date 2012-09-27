@@ -7,6 +7,7 @@ $(document).ready ->
   dob_name = "patient_dob"
   formSelector = 'form.assessment'
   questionsSelector = formSelector  + ' .question'
+  questionsSelector = formSelector  + ' [data-condition]'
 
   #onChange fire event with shortname
   $(document).delegate(questionsSelector, 'change',
@@ -71,7 +72,7 @@ $(document).ready ->
         if conditionHash.shortname == 'patient_age'
           value =  calculateAge()
         else
-          value = $('[data-short-name=\"' +conditionHash.shortname + '\"]').val()
+          value = $('[data-short-name=\"' +conditionHash.shortname + '\"].question').val()
           if (value)
             value = value.toLowerCase()
         if conditionHash.operation == "="
@@ -85,9 +86,9 @@ $(document).ready ->
         else
           alert "operation not implemented" + JSON.stringify(conditionHash)
 
-    checkAndApply: ($input) ->
-      condObj = condition.getConditions($input)
-      formDisabled = $input.parents('form').attr('disabled') == 'disabled'
+    checkAndApply: ($el) ->
+      condObj = condition.getConditions($el)
+      formDisabled = $el.parents('form').attr('disabled') == 'disabled'
       if condObj != null
         if (condObj.op == "or")
           result = false
@@ -98,22 +99,30 @@ $(document).ready ->
             result = result || condition.checkAtomic(condHash)
           else
             result = result && condition.checkAtomic(condHash)
-        if $input.hasClass("question_details")
+        if $el.hasClass("question_details")
           if (result)
-            $input.parents('.control-group').show(animation_speed)
+            $el.parents('.control-group').show(animation_speed)
             if !formDisabled
-              $input.removeAttr("disabled")
+              $el.removeAttr("disabled")
           else
-            $input.parents('.control-group').hide(animation_speed)
-            $input.attr("disabled","disabled")
-        else if $input.hasClass("question")
+            $el.parents('.control-group').hide(animation_speed)
+            $el.attr("disabled","disabled")
+        else if $el.hasClass("question")
           if (result)
-            $input.parents('fieldset').show(animation_speed)
+            $el.parents('fieldset').show(animation_speed)
             if !formDisabled
-              $input.removeAttr("disabled")
+              $el.removeAttr("disabled")
           else
-            $input.parents('fieldset').hide(animation_speed)
-            $input.attr("disabled","disabled")
+            $el.parents('fieldset').hide(animation_speed)
+            $el.attr("disabled","disabled")
+        else if $el.is("fieldset")
+          if (result)
+            $el.show(animation_speed)
+            if !formDisabled
+              $el.find('input').removeAttr("disabled")
+          else
+            $el.hide(animation_speed)
+            $el.find('input').attr("disabled","disabled")
 
 
   window.condition =condition
