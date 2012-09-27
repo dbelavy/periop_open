@@ -120,4 +120,12 @@ class Assessment
   def summary
     self.name + date_str + ' status: ' + self.status
   end
+
+  def get_anesthetist
+    answer  = self.find_answer_by_concept_name 'anesthetist'
+    if (!answer.nil?)&&(!answer[:id_value].nil?)
+      Professional.find(answer[:id_value])
+    end
+  end
+
 end

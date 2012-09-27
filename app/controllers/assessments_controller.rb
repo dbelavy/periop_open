@@ -129,6 +129,10 @@ class AssessmentsController < ApplicationController
     @assessment.start_and_complete_assessment
     respond_to do |format|
       if @assessment.save
+        anesthetist = @assessment.get_anesthetist
+        if !anesthetist.nil?
+          AssessmentMailer.patient_assessment_mail(anesthetist).deliver
+        end
         format.html { redirect_to root_path, notice: 'Assessment was successfully created.' }
         format.json { render json: @assessment, status: :created, location: @assessment }
       else

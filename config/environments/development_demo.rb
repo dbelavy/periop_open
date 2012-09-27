@@ -46,8 +46,9 @@ Periop::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.contact_mail_target = "alexander.khitev+enquiry@gmail.com"
+  config.contact_mail_target = "alexander.khitev+demo@gmail.com"
   config.mail_sender = "no-reply@pre-op.net"
-  config.site_url = "Pre-op.net"
+
+  config.environment_type = "demo"
 
 end
