@@ -81,7 +81,7 @@ Periop::Application.configure do
 
   config.contact_mail_target = "enquiries@pre-op.net"
   config.mail_sender = "no-reply@pre-op.net"
-  config.site_url = "https://pre-op.net"
+  config.site_url = "Pre-op.net"
 
   config.environment_type = "live"
 end
