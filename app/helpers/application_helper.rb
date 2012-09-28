@@ -37,6 +37,12 @@ end
   end
 
   def get_anesthetist_name assessment
-    assessment.get_anesthetist.value_to_s
+    anesthetist = assessment.get_anesthetist
+    if !anesthetist.nil?
+      anesthetist.name
+    else
+      ""
+    end
   end
 end
+
