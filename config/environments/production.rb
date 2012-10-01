@@ -61,7 +61,7 @@ Periop::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { :host => 'periop.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'pre-op.net' }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
   config.action_mailer.delivery_method = :smtp
@@ -72,7 +72,7 @@ Periop::Application.configure do
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
-    domain: "periop.herokuapp.com",
+    domain: "pre-op.net",
     authentication: "plain",
     enable_starttls_auto: true,
     user_name: ENV["GMAIL_USERNAME"],
