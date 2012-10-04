@@ -1,65 +1,7 @@
-
-new patient form
-http://stackoverflow.com/questions/5999870/rails-simple-form-two-models
-+devise customization (no reset password for users, separate login\signup screens)
-
-human readible url's
-
-custom exceptions pages + email to developer?
-
-integration tests for roles access
-
-therubyracer - the use of this gem in production is strongly discouraged as it uses a very large amount of memory.| investigate
-
-questions functionality
-
- rails generate scaffold question question_type display_conditions short_name clinical_terms
- question_for_patient compulsory_for_patient_reported_assessment input_type option_list
- used_in_patient_assesment used_in_phone_assesment snomed_concept
-
-rails generate scaffold concept name display_name snomed_code mpog_code position:integer
-rails generate scaffold assessment status
-rails generate scaffold form name person_role
-
-rails generate scaffold category name level_1_name level_1_order level_2_name level_2_order summary_display
-
-Data classification
- type from hierarchy
- sequence in hierarchy
- question_id
-
- Question
-     question_id
-     data_point
-     Conditions for display
-     Short_display_name
-     Clinician terms
-     Question_for_patient
-     Compulsory for Patient reported assessment
-     Input type
-     Option list
-     SNOMED Concept
+mongodb backup from heroku ?
+https://github.com/meskyanichi/backup/issues/213
 
 
-Form
- form_id
- form_name {Patient Form | Patient Update Assessment Form|
-           Telephone Assessment Form | Clinic / ward Assessment Form}
-
- questions {question_id:x1234,
-            ...
-            question_id:x553}
-
-Assesment
- form_id
- state {Not started | Started but incomplete
-        date started | Complete }
- answers {question_id: x123,
-          answer: "yes",
-          details: "chain smoking since 12"}
-          ...
-          {question_id: x2123,
-           answer: 123  }
 
 MONGOHQ_URL=mongodb://localhost/periop_production
 
@@ -68,3 +10,8 @@ heroku run rake ADMIN_PASSWORD=secret db:populate
 heroku run rake db:parse
 
 http://bigtrapeze.com/2012/05/16/enabling-wildcard-ssl-on-a-heroku-rails-app/
+
+
+1 create s3 bucket from aws console
+2 heroku config:add S3_BACKUPS_BUCKET=_value_ S3_KEY_ID=_value_ S3_SECRET_KEY=_value_ MONGO_URL=_value_
+

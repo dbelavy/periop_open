@@ -59,3 +59,6 @@ end
 
 gem "heroku"
 gem "cancan"
+
+gem "heroku-mongo-backup"
+gem "fog"
