@@ -31,6 +31,8 @@ class Answer
       self.update_attribute(:date_value, value)
     elsif input_type == "ManyOptions"
       self.update_attribute(:array_value, value)
+    elsif input_type == "Lookup_User_Anesthetist"
+      self.update_attribute(:id_value, value)
     else
       self.update_attribute(:value, value)
     end
