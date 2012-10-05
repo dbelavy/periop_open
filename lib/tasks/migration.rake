@@ -5,7 +5,6 @@ namespace :db do
   desc "Fill database with sample data"
   task migrate_patient_fields: :environment do
     Patient.all.each do |patient|
-
       patient.update_values
       puts 'patient updated' + patient.to_s
     end
@@ -14,6 +13,23 @@ namespace :db do
   task anesthetist: :environment do
     fix_anaesthetist
   end
+
+  task synchronise_anesthetists: :environment do
+    Patient.all.each do |patient|
+      puts 'Patient: ' + patient.firstname + ' ' + patient.surname + '  ' + patient._id.to_s
+      if patient.get_answer_from_patient_form("anesthetist")
+        puts 'patient form values: ' + patient.get_answer_from_patient_form("anesthetist").id_value
+      else
+        if patient.anesthetist_id
+          puts 'setting patient form values from self field :' + patient.anesthetist_id.to_s
+          patient.set_answer_value_by_concept "anesthetist",patient.anesthetist_id
+        else
+          puts '!!! neither self or patient_form anaesthetist is set, resolve manually'
+        end
+      end
+    end
+  end
+
 
   task lookup_field_value: :environment do
     q_ids = Question.where(input_type: "Lookup_User_Anesthetist").map{|q| q._id}
@@ -42,6 +58,7 @@ namespace :db do
   end
 
   def fix_anaesthetist
+    # change all *anAEsthetist* attributes to *anEsthetist*
     Patient.all.each do |p|
       arr = []
       p.attributes.each do |attr|

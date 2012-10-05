@@ -81,7 +81,7 @@ class Assessment
     if !question
       return nil
     end
-    answer = self.answer(question)
+    self.answer(question)
   end
 
 
