@@ -37,6 +37,19 @@ class Assessment
     answers.where(:question_id => question._id).first
   end
 
+  def answers_exist_in_form?
+    questions_array = self.form.questions.map {|q| q._id}
+    result = true
+    self.answers.each  do |a|
+      if !questions_array.include? a.question_id
+        message = '!!! assessment' + self._id.to_s + ' has answer that not exist in form ' +  a._id.to_s
+        logger.error message
+        puts message
+        result = false
+      end
+    end
+  end
+
   def answers_unique?
     result = true
     self.form.questions.each do |q|
@@ -123,7 +136,8 @@ class Assessment
 
   def get_anesthetist
     answer  = self.find_answer_by_concept_name 'anesthetist'
-    if (!answer.nil?)&&(!answer[:id_value].nil?)
+    if (!answer.nil?)&&(!answer[:id_value].nil?)&&(!answer[:id_value].blank?)
+      puts ' searching for id: ' + answer[:id_value]
       Professional.find(answer[:id_value])
     end
   end

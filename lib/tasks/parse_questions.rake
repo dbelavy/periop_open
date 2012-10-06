@@ -242,6 +242,7 @@ end
         puts 'checking patient : ' + p.to_s
         p.assessments.all.each do |a|
           a.answers_unique?
+          a.answers_exist_in_form?
         end
       end
     end
