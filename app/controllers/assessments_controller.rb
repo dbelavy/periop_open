@@ -1,10 +1,12 @@
 class AssessmentsController < ApplicationController
-  load_and_authorize_resource :assessment
   load_and_authorize_resource :patient,:except => [:patient_assessment_form,:update_patient_assessment]
+  load_and_authorize_resource :assessment
+  #, :through => :patient
+
 
   # GET /patient/.id/assessments/unassigned.json
   def unassigned
-    @assessments = Assessment.where(:patient_id => nil)
+    @assessments = @assessments.where(:patient_id => nil)
 
     if !params[:patient_id].nil?
       @patient = Patient.find(params[:patient_id])
@@ -31,9 +33,9 @@ class AssessmentsController < ApplicationController
   # GET /assessments/1.json
   def show
     #@assessment = Assessment.find(params[:id])
-    if !params[:patient_id].nil?
-      @patient = Patient.find(params[:patient_id])
-    end
+    #if !params[:patient_id].nil?
+    #  @patient = Patient.find(params[:patient_id])
+    #end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @assessment }
@@ -41,7 +43,7 @@ class AssessmentsController < ApplicationController
   end
 
   def summary
-    @patient = Patient.find(params[:patient_id])
+    #@patient = Patient.find(params[:patient_id])
     @concepts = Concept.all
     @assessments = @patient.assessments
     respond_to do |format|
@@ -53,7 +55,7 @@ class AssessmentsController < ApplicationController
   # GET /assessments/new
   # GET /assessments/new.json
   def new
-    @assessment = Assessment.new
+    #@assessment = Assessment.new
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @assessment }
@@ -62,14 +64,14 @@ class AssessmentsController < ApplicationController
 
   # GET /assessments/1/edit
   def edit
-    @assessment = Assessment.find(params[:id])
+    #@assessment = Assessment.find(params[:id])
     @questions = @assessment.form.questions
-    @patient = Patient.find(params[:patient_id])
+    #@patient = Patient.find(params[:patient_id])
   end
 
   # GET /patient_assessment_form
   def patient_assessment_form
-    @assessment = Assessment.new
+    #@assessment = Assessment.new
     @assessment.form= Form.patient_form
     @questions = @assessment.form.questions
   end
@@ -78,7 +80,7 @@ class AssessmentsController < ApplicationController
   # PUT /assessments/1
   # PUT /assessments/1.json
   def update
-    @assessment = Assessment.find(params[:id])
+    #@assessment = Assessment.find(params[:id])
     is_updated = @assessment.update_assessment(params[:assessment],current_user)
     respond_to do |format|
       if is_updated
@@ -92,8 +94,8 @@ class AssessmentsController < ApplicationController
   end
 
   def assign
-    @assessment = Assessment.find(params[:assessment_id])
-    @patient = Patient.find(params[:patient_id])
+    #@assessment = Assessment.find(params[:assessment_id])
+    #@patient = Patient.find(params[:patient_id])
     @assessment.patient= @patient
     @patient.update_values
     respond_to do |format|
@@ -108,8 +110,8 @@ class AssessmentsController < ApplicationController
   end
 
   def unassign
-    @assessment = Assessment.find(params[:assessment_id])
-    @patient = Patient.find(params[:patient_id])
+    #@assessment = Assessment.find(params[:assessment_id])
+    #@patient = Patient.find(params[:patient_id])
     @assessment.patient= nil
     @patient.update_values
     respond_to do |format|
@@ -124,7 +126,7 @@ class AssessmentsController < ApplicationController
   end
 
   def update_patient_assessment
-    @assessment = Assessment.new(params[:assessment])
+    #@assessment = Assessment.new(params[:assessment])
     @assessment.form= Form.patient_form
     @assessment.start_and_complete_assessment
     respond_to do |format|
@@ -146,7 +148,7 @@ class AssessmentsController < ApplicationController
   # DELETE /assessments/1
   # DELETE /assessments/1.json
   def destroy
-    @assessment = Assessment.find(params[:id])
+    #@assessment = Assessment.find(params[:id])
     @assessment.destroy
 
     respond_to do |format|

@@ -10,7 +10,7 @@ class PatientsController < ApplicationController
     @patients = @patients.paginate(:page => params[:page])
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: PatientsDatatable.new(view_context)}
+      format.json { render json: PatientsDatatable.new(view_context,current_ability)}
     end
   end
 

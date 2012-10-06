@@ -10,6 +10,17 @@ namespace :db do
     end
   end
 
+
+  task migrate: :environment do
+    update_assessments
+  end
+
+  def update_assessments
+    Assessment.all.each do |a|
+      a.upsert
+    end
+  end
+
   task anesthetist: :environment do
     fix_anaesthetist
   end

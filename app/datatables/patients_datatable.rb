@@ -1,8 +1,9 @@
 class PatientsDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
 
-  def initialize(view)
+  def initialize(view,ability)
     @view = view
+    @ability= ability
   end
 
   def as_json(options = {})
@@ -46,7 +47,8 @@ private
   end
 
   def fetch_patients
-    patients = Patient.all.send("#{sort_direction}","#{sort_column}")
+    patients = Patient.accessible_by(@ability).send("#{sort_direction}","#{sort_column}")
+    #patients = Patient.send("#{sort_direction}","#{sort_column}")
     if params[:sSearch].present?
       search = params[:sSearch]
       #TODO extract regexp & make tests
