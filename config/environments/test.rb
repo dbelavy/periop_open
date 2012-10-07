@@ -36,4 +36,11 @@ Periop::Application.configure do
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => 'example.com' }
 
+  config.contact_mail_target = "enquiries@pre-op.net"
+  config.mail_sender = "no-reply@pre-op.net"
+  config.site_url = "localhost:3000"
+  config.environment_type = "test"
+
+  config.registerable = true
+
 end

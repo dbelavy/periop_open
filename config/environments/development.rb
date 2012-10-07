@@ -50,6 +50,8 @@ Periop::Application.configure do
   config.mail_sender = "no-reply@pre-op.net"
   config.site_url = "Pre-op.net"
 
+  config.environment_type = "live"
   config.registerable = false
+
 
 end
