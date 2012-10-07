@@ -136,7 +136,7 @@ class AssessmentsController < ApplicationController
         if !anesthetist.nil?
           AssessmentMailer.patient_assessment_mail(anesthetist).deliver
         end
-        format.html { redirect_to root_path, notice: 'Assessment was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Thank you, your assessment has been sent to your doctor.' }
         format.json { render json: @assessment, status: :created, location: @assessment }
       else
         format.html { render action: "patient_assessment_form" }
