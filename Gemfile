@@ -62,3 +62,5 @@ gem "cancan"
 
 gem "heroku-mongo-backup"
 gem "fog"
+
+gem 'newrelic_rpm'
