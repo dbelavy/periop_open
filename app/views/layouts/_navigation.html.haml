@@ -18,6 +18,9 @@
   - else
     %li
       = link_to('Login', new_user_session_path)
+    - if Rails.application.config.registerable
+      %li
+        = link_to "Sign up", new_user_registration_path
   - if user_signed_in?
     %li
       - if Rails.application.config.registerable

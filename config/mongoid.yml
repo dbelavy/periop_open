@@ -2,6 +2,11 @@ development:
   host: localhost
   database: periop_development
 
+
+development_demo:
+  host: localhost
+  database: periop_development
+
 test:
   host: localhost
   database: periop_test

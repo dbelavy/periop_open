@@ -49,6 +49,9 @@ Periop::Application.configure do
   config.contact_mail_target = "alexander.khitev+demo@gmail.com"
   config.mail_sender = "no-reply@pre-op.net"
 
+  config.site_url = "Demo.Pre-op.net"
+
   config.environment_type = "demo"
+  config.registerable = true
 
 end
