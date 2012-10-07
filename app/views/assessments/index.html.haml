@@ -13,9 +13,9 @@
         %td= assessment.name
         %td
           -if @patient
-            = link_to 'Show', patient_assessment_path(@patient,@assessment)
-          - else
-            = link_to 'Show', assessment
+            = link_to( 'Show', patient_assessment_path(@patient,assessment))
+          -#- else
+          -#  = link_to 'Show', assessment
 
 
 %br

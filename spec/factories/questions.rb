@@ -9,8 +9,8 @@ FactoryGirl.define do
     compulsory_for_patient_reported_assessment "MyString"
     input_type "MyString"
     option_list "MyString"
-    used_in_patient_assesment "MyString"
-    used_in_phone_assesment "MyString"
+    used_in_patient_assessment "MyString"
+    used_in_phone_assessment "MyString"
     snomed_concept "MyString"
   end
 end

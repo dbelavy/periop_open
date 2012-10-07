@@ -30,5 +30,9 @@ class Form
     self.save!
   end
 
+  def patient_form?
+    name == PATIENT_ASSESSMENT
+  end
+
 
 end

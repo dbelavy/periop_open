@@ -1,6 +1,6 @@
 class AssessmentsController < ApplicationController
-  load_and_authorize_resource :patient,:except => [:patient_assessment_form,:update_patient_assessment]
-  load_and_authorize_resource :assessment
+  load_resource :patient,:except => [:patient_assessment_form,:update_patient_assessment]
+  load_and_authorize_resource :assessment,:new => [:patient_assessment_form,:update_patient_assessment]
   #, :through => :patient
 
 
@@ -94,7 +94,8 @@ class AssessmentsController < ApplicationController
   end
 
   def assign
-    #@assessment = Assessment.find(params[:assessment_id])
+    # TODO enable load_and_authorize
+    @assessment = Assessment.find(params[:assessment_id])
     #@patient = Patient.find(params[:patient_id])
     @assessment.patient= @patient
     @patient.update_values
@@ -110,7 +111,7 @@ class AssessmentsController < ApplicationController
   end
 
   def unassign
-    #@assessment = Assessment.find(params[:assessment_id])
+    @assessment = Assessment.find(params[:assessment_id])
     #@patient = Patient.find(params[:patient_id])
     @assessment.patient= nil
     @patient.update_values
@@ -152,7 +153,7 @@ class AssessmentsController < ApplicationController
     @assessment.destroy
 
     respond_to do |format|
-      if @assessment.nil?
+      if @patient.nil?
         format.html {redirect_to root_path , notice: 'Assessment was successfully deleted.' }
         format.json { head :no_content }
       else

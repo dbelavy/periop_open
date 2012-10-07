@@ -127,7 +127,7 @@ namespace :db do
     Assessment.delete_all
     #10.times do |n|
     #  p = Patient.find(:all)[n]
-    #  #assign assesments
+    #  #assign assessments
     #  p.assigned= Form.all.map{|f| f.name}
     #  p.save!
     #end

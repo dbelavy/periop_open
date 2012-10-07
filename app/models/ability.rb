@@ -27,10 +27,10 @@ class Ability
         #can :manage, Patient
         can :manage, User, :_id => user._id
         can :manage, Professional, :user => user
-        can [:unassigned], Assessment,:anesthetist_id => professional_id
-        can [:read,:assign,:unassign], Assessment do |assessment|
-          puts 'authorizing assessment '
+        can [:unassigned,:assign,:unassign], Assessment,:anesthetist_id => professional_id
+        can [:read,:destroy], Assessment do |assessment|
           result = (assessment.anesthetist_id.to_s == professional_id.to_s)
+          puts 'authorizing assessment '+ result.to_s
           result
         end
         can :create,Assessment

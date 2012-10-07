@@ -14,15 +14,15 @@ class PatientsController < ApplicationController
     end
   end
 
-  def setup_assessment assesment
-    assesment.form.questions.sorted.each do |q|
+  def setup_assessment assessment
+    assessment.form.questions.sorted.each do |q|
       if !q.nil?
-        if assesment.answer(q).nil?
-          assesment.answers_attributes= [{:question => q}]
+        if assessment.answer(q).nil?
+          assessment.answers_attributes= [{:question => q}]
         end
       end
     end
-    return assesment
+    return assessment
   end
 
   def new
