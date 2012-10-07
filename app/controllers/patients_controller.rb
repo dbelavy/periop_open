@@ -10,19 +10,19 @@ class PatientsController < ApplicationController
     @patients = @patients.paginate(:page => params[:page])
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: PatientsDatatable.new(view_context)}
+      format.json { render json: PatientsDatatable.new(view_context,current_ability)}
     end
   end
 
-  def setup_assessment assesment
-    assesment.form.questions.sorted.each do |q|
+  def setup_assessment assessment
+    assessment.form.questions.sorted.each do |q|
       if !q.nil?
-        if assesment.answer(q).nil?
-          assesment.answers_attributes= [{:question => q}]
+        if assessment.answer(q).nil?
+          assessment.answers_attributes= [{:question => q}]
         end
       end
     end
-    return assesment
+    return assessment
   end
 
   def new

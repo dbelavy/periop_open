@@ -16,6 +16,7 @@ class Assessment
 
   embeds_many :answers
   accepts_nested_attributes_for :answers
+  field :anesthetist_id, :type => String
 
   validate :answers_empty
 
@@ -134,11 +135,17 @@ class Assessment
     self.name + date_str + ' status: ' + self.status
   end
 
+  def get_anesthetist_id
+      answer  = self.find_answer_by_concept_name 'anesthetist'
+      if (!answer.nil?)&&(!answer[:id_value].nil?)&&(!answer[:id_value].blank?)
+        answer[:id_value]
+      end
+    end
+
   def get_anesthetist
-    answer  = self.find_answer_by_concept_name 'anesthetist'
-    if (!answer.nil?)&&(!answer[:id_value].nil?)&&(!answer[:id_value].blank?)
-      puts ' searching for id: ' + answer[:id_value]
-      Professional.find(answer[:id_value])
+    id = get_anesthetist_id
+    if (!id.nil?)
+      Professional.find(id)
     end
   end
 

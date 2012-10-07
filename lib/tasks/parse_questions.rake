@@ -95,9 +95,9 @@ def parse_questions doc
   clinic_form.clear_questions
 
   used_in_new_patient_col = column_for(doc,"New_Patient_Form")
-  used_in_patient_assesment_col = column_for(doc,"Question used in patient assessment")
-  used_in_professional_assesment_col = column_for(doc,"Question used in clinic or bedside assessment by professional")
-  used_in_telephone_assesment_col = column_for(doc,"Question used in telephone assessment by professional")
+  used_in_patient_assessment_col = column_for(doc,"Question used in patient assessment")
+  used_in_professional_assessment_col = column_for(doc,"Question used in clinic or bedside assessment by professional")
+  used_in_telephone_assessment_col = column_for(doc,"Question used in telephone assessment by professional")
 
   required_col = column_for(doc,"Required_field")
 
@@ -154,17 +154,17 @@ def parse_questions doc
       puts "Not found concept " + concept_name
     end
     # used in patient assessment
-    if doc.cell(line, used_in_patient_assesment_col)
+    if doc.cell(line, used_in_patient_assessment_col)
       patient_form.questions.push question
     end
     if doc.cell(line, used_in_new_patient_col)
       new_patient_form.questions.push question
     end
-    if doc.cell(line, used_in_telephone_assesment_col)
+    if doc.cell(line, used_in_telephone_assessment_col)
       #  add to form
       telephone_form.questions.push question
     end
-    if doc.cell(line, used_in_professional_assesment_col)
+    if doc.cell(line, used_in_professional_assessment_col)
       #  add to form
       clinic_form.questions.push question
     end

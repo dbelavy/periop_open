@@ -10,6 +10,20 @@ namespace :db do
     end
   end
 
+
+  task migrate: :environment do
+    Rake::Task['db:synchronise_anesthetists'].invoke
+    update_assessments
+    Rake::Task['db:migrate_patient_fields'].invoke
+    Rake::Task['db:lookup_field_value'].invoke
+  end
+
+  def update_assessments
+    Assessment.all.each do |a|
+      a.upsert
+    end
+  end
+
   task anesthetist: :environment do
     fix_anaesthetist
   end

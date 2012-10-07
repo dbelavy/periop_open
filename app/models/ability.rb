@@ -14,7 +14,7 @@ class Ability
         result
       end
     elsif user.nil? || (user.instance_of? User)
-      user ||= User.new # guest user (not logged in)
+      user ||= User.new # create guest user (not logged in)
       if user.admin?
         Rails.logger.debug 'admin user'
         can :read, Patient
@@ -22,11 +22,24 @@ class Ability
         can :manage, User
         can :manage, Question
       elsif user.professional?
+        professional_id = user.professional._id
         Rails.logger.debug 'professional user'
-        can :manage, Patient
-        can :manage, Assessment
-        can :read, :all
+        #can :manage, Patient
+        can :manage, User, :_id => user._id
+        can :manage, Professional, :user => user
+        can [:unassigned,:assign,:unassign], Assessment,:anesthetist_id => professional_id
+        can [:read,:destroy], Assessment do |assessment|
+          result = (assessment.anesthetist_id.to_s == professional_id.to_s)
+          puts 'authorizing assessment '+ result.to_s
+          result
+        end
+        can :create,Assessment
+        can [:read,:update], Patient, :anesthetist_id => professional_id
+        can :create, Patient
+
+
       else
+        # if guest user
        can [:patient_assessment_form,:update_patient_assessment],Assessment
       end
     end

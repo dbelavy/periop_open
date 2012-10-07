@@ -88,7 +88,10 @@ class Patient
     self.medicare_card_number_identifier= self.get_answer_value_from_patient_form "medicare_card_number_identifier"
     self.individual_healthcare_identifier= self.get_answer_value_from_patient_form "individual_healthcare_identifier"
 
-    self.anesthetist_id = self.get_answer_from_patient_form("anesthetist").id_value
+    anesthetist_answer = self.get_answer_from_patient_form("anesthetist")
+    if !anesthetist_answer.nil?
+      self.anesthetist_id = anesthetist_answer.id_value
+    end
     self[:anesthetist_name]= self.anesthetist.nil? ? '' : self.anesthetist.name
 
     # update from recent assessment

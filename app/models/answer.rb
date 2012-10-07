@@ -20,7 +20,7 @@ class Answer
     if !date_value.nil?
       return date_value
     end
-    if !id_value.nil?
+    if !id_value.nil? && !id_value.blank?
       return Professional.find(id_value).label
     end
   end

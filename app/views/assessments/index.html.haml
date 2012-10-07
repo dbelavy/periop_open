@@ -11,7 +11,12 @@
       %tr
         %td= assessment.status
         %td= assessment.name
-        %td= link_to 'Show', assessment
+        %td
+          -if @patient
+            = link_to( 'Show', patient_assessment_path(@patient,assessment))
+          -#- else
+          -#  = link_to 'Show', assessment
+
 
 %br
 %p
