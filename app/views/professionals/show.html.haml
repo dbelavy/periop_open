@@ -5,6 +5,11 @@
   Email: #{@professional.user.email if @professional.user.email}
 %p
   Speciality: #{@professional.speciality}
+- if !current_user.nil? && (current_user.admin?)
+  %p
+  Discontinued: #{@professional.discontinued}
+  %br
+  %br
 -#  professional personal part
 - if (!current_user.nil? && (current_user.eql? @professional.user))
   #{link_to 'View list of unassigned assessments', unassigned_assessments_path}
@@ -13,5 +18,7 @@
   #{link_to 'Patients', patients_path}
 - if !current_user.nil? && (current_user.admin?)
   = link_to 'Reset password', reset_password_professional_path(@professional),:method => :post
+  \|
+  = link_to 'Edit', edit_professional_path(@professional)
   \|
   = link_to 'Back', professionals_path

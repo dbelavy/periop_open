@@ -32,8 +32,8 @@ end
     }.uniq.join(" | ")
   end
 
-  def professional_option_list
-    Professional.all
+  def anesthetists_option_list
+    Professional.anesthetists
   end
 
   def get_anesthetist_name assessment

@@ -8,6 +8,7 @@ class Professional
   field :name, :type => String
   field :speciality, :type => String
   belongs_to :user
+  field :discontinued, :type => Boolean, :default => false
 
   #has_many :surgeon_patients,:class_name => 'Patient',  inverse_of: :surgeon
   has_many :anesthetist_patients,:class_name => 'Patient',  inverse_of: :anesthetist
@@ -17,7 +18,7 @@ class Professional
   end
 
   def self.anesthetists
-      find(:all).where(:speciality => ANESTHETIST)
+      find(:all).where(:speciality => ANESTHETIST).excludes(discontinued: true)
   end
 
 

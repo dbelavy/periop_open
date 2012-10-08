@@ -96,6 +96,15 @@ namespace :db do
       puts "new object" + p.to_s
       p.update
     end
+
+    Professional.all.each do |p|
+      if p.speciality == "Anaesthetist"
+        p.speciality = "Anesthetist"
+        p.save
+      end
+    end
+
+
   end
 
 end

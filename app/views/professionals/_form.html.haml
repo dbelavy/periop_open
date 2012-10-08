@@ -6,6 +6,7 @@
   .form-inputs
     = f.input :name
     = f.input :speciality,:collection => Professional.specialities
+    = f.input :discontinued,:as => :boolean
   .form-actions
     = f.button :submit
 = @professional.user.nil? ? "" :@professional.user.errors.messages

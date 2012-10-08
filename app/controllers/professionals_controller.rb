@@ -26,7 +26,6 @@ class ProfessionalsController < ApplicationController
   # POST /professionals
   # POST /professionals.json
   def create
-    #@professional = Professional.new(params[:professional])
     logger.debug 'created professional ' + @professional.to_yaml
 
     respond_to do |format|
@@ -39,4 +38,19 @@ class ProfessionalsController < ApplicationController
       end
     end
   end
+
+  # POST /professionals
+    # POST /professionals.json
+    def update
+
+      respond_to do |format|
+        if @professional.update_attributes(params[:professional])
+          format.html { redirect_to @professional, notice: 'Professional was successfully updated.' }
+          format.json { render json: @professional, location: @professional }
+        else
+          format.html { render action: "update" }
+          format.json { render json: @professional.errors, status: :unprocessable_entity }
+        end
+      end
+    end
 end
