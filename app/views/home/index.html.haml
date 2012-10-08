@@ -1,18 +1,21 @@
 #welcome.hero-unit.centered
-  %h1
-    = Rails.application.config.site_url
-  %br
-  %p
-    - if Rails.application.config.environment_type == 'demo'
+  - if (Rails.application.config.environment_type == 'live')
+    %h1
+      = Rails.application.config.site_url
+    %br
+    %p
+      We help patients, anesthetists and surgeons manage information for perioperative care.
+      %br
+      If your doctor has asked you to come here, please fill out a confidential Pre-op assessment.
+  - else
+    %h2
+      = Rails.application.config.site_url
+    %p
       We help patients, anesthetists and surgeons manage information for perioperative care.
       %br
       This is a demonstration site only. Please do not put confidential patient information into the site. All data is regularly deleted.
       %br
       You can fill out a Pre-op assessment, just like the one on the live server.
-    - else
-      We help patients, anesthetists and surgeons manage information for perioperative care.
-      %br
-      If your doctor has asked you to come here, please fill out a confidential Pre-op assessment.
   %br
   %p
     = link_to('Pre-op assessment',patient_assessment_form_path,:class=> "btn btn-success btn-large")
