@@ -41,8 +41,14 @@ class Assessment
   def answers_exist_in_form?
     questions_array = self.form.questions.map {|q| q._id}
     result = true
+
     self.answers.each  do |a|
-      if !questions_array.include? a.question_id
+      if a.question_id.nil?
+        result = false
+        message = '!!! assessment' + self._id.to_s + ' has answer that does not have question id ' +  a._id.to_s
+        logger.error message
+        puts message
+      elsif !questions_array.include? a.question_id
         message = '!!! assessment' + self._id.to_s + ' has answer that not exist in form ' +  a._id.to_s
         logger.error message
         puts message
@@ -148,5 +154,4 @@ class Assessment
       Professional.find(id)
     end
   end
-
 end

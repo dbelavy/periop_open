@@ -7,10 +7,15 @@
   = f.error :base, {:class => "alert alert-error"}
   .form-inputs
   = f.simple_fields_for :answers do |a|
-    = render "assessments/answer",:a => a
+    - question = a.object.question
+    - if question .nil?
+      "!!! null question"
+      = a.object.to_json
+    - else
+      = render "assessments/answer",:a => a
   - if user_signed_in?
     - if current_user.professional?
       = f.input :status, :collection => Assessment.status_list
   - if !form_disabled
     .form-actions
-      = f.button :submit,:value => 'Submit'
+      = f.button :submit,:value => 'Submit',:disable_with => 'Submitting'

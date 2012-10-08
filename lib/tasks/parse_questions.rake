@@ -238,13 +238,10 @@ end
     end
 
     def check_assessments
-      Patient.all.each do |p|
-        puts 'checking patient : ' + p.to_s
-        p.assessments.all.each do |a|
+        Assessment.all.each do |a|
           a.answers_unique?
           a.answers_exist_in_form?
         end
-      end
     end
 
 
