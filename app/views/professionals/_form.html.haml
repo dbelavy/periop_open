@@ -3,15 +3,10 @@
   = f.simple_fields_for :user do |u|
     = u.error_notification
     = u.input :email
-    - if current_user.professional?
-      = u.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false
-      = u.input :password_confirmation, :required => false
-      = u.input :current_password, :hint => "we need your current password to confirm your changes", :required => true
   .form-inputs
     = f.input :name
-    - if current_user.admin?
-      = f.input :speciality,:collection => Professional.specialities
-      = f.input :discontinued,:as => :boolean
+    = f.input :speciality,:collection => Professional.specialities
+    = f.input :discontinued,:as => :boolean
   .form-actions
     = f.button :submit
 = @professional.user.nil? ? "" :@professional.user.errors.messages
