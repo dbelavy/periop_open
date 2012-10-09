@@ -101,6 +101,19 @@ class User
     end
   end
 
+  def discontinued?
+    professional? && (self.professional.discontinued == true)
+  end
+
+  def active_for_authentication?
+    super && !discontinued?
+  end
+
+  def inactive_message
+    discontinued? ? :account_inactive : super
+  end
+
+
   def to_s
     result = 'User : ' + email
     result
