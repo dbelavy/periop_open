@@ -51,7 +51,7 @@ Periop::Application.configure do
   config.site_url = "Pre-op.net"
 
   config.environment_type = "live"
-  config.registerable = false
+  config.registerable = true
 
 
 end
