@@ -25,8 +25,8 @@ class Ability
         professional_id = user.professional._id
         Rails.logger.debug 'professional user'
         #can :manage, Patient
-        can :manage, User, :_id => user._id
-        can :manage, Professional, :user => user
+        can :read, User, :_id => user._id
+        can :read, Professional, :user => user
         can [:unassigned,:assign,:unassign], Assessment,:anesthetist_id => professional_id
         can [:read,:destroy], Assessment do |assessment|
           result = (assessment.anesthetist_id.to_s == professional_id.to_s)

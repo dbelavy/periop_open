@@ -46,7 +46,16 @@ Periop::Application.routes.draw do
 
   get 'privacy' => "home#privacy"
 
-  devise_for :users
+  if (Rails.application.config.registerable)
+    devise_for :users
+  else
+    devise_for :users, :skip => [:registrations]
+        as :user do
+          get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+          put 'users' => 'devise/registrations#update', :as => 'user_registration'
+        end
+  end
+
   resources :users, :only => [:show, :index]
 
 end
