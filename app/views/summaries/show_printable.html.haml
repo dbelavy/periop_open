@@ -1,7 +1,7 @@
 -content_for :title do
   #{@patient.surname} #{@patient.firstname} #{@patient.dob}
 
-%h2 Pre-op summary
+%h1 Pre-op summary
 Printed by #{current_user.professional.name} on #{Date.current.to_s}
 %table#summary_printed{:class => "table table-bordered" }
   -#%thead
