@@ -116,10 +116,24 @@ def populate_patient_assessment options
   should_have_no_errors
   page.should have_content "Please answer these questions"
   fill_answers options[:answers]
-  populate_with_random_answers
+  select_random_values
   click_button "Submit"
   page.should have_content "Assessment was successfully created"
 end
+
+def populate_generated_patient_assessment index,professional
+  visit '/'
+  puts ' populate_generated_patient_assessment ' + index.to_s
+  click_link "Pre-op assessment"
+  should_have_no_errors
+  page.should have_content "All information is Confidential"
+  select_random_values
+  find_and_set_anesthetist professional
+  populate_text_fields index
+  click_button "Submit"
+  page.should have_content "Thank you, your assessment has been sent to your doctor"
+end
+
 
 def login prof
   visit '/'
@@ -140,30 +154,96 @@ def create_patient options
     puts 'create patients ' + pat.to_s
     click_link 'New Patient'
     fill_answers  pat[:answers]
-    populate_with_random_answers
+    select_random_values
     click_button 'Create Patient'
     page.should have_content "Patient was successfully created"
     click_link 'Back'
   end
 end
 
-def populate_with_random_answers
+
+def create_generated_patient number,professional
+    login professional
+    click_link 'Patients'
+    should_have_no_errors
+    puts 'create generated patient ' + number .to_s
+    click_link 'New Patient'
+    select_random_values
+    find_and_set_anesthetist professional
+    populate_text_fields number
+    click_button 'Create Patient'
+    page.should have_content "Patient was successfully created"
+    click_link "Logout"
+end
+
+
+
+def create_generated_patients options
+    professional = options[:professionals][0]
+    login professional
+    click_link 'Patients'
+    should_have_no_errors
+    100.times do |i|
+      number = (10000 * i + rand(10000))
+      puts 'create generated patient ' + number .to_s
+      click_link 'New Patient'
+      select_random_values
+      find_and_set_anesthetist professional
+      populate_text_fields number
+      click_button 'Create Patient'
+      page.should have_content "Patient was successfully created"
+      click_link 'Back'
+    end
+end
+
+def populate_text_fields index=0
+  inputs = page.all(:css,'input.question')
+  inputs.each do |node|
+    #fill_in(node, with:(node["data-short-name"] + "_" + index.to_s))
+    puts ' setting question : ' + node["data-short-name"] + 'with ' + node["data-short-name"] + "_" + index.to_s
+    node.set(node["data-short-name"] + "_" + index.to_s)
+    puts ' question : ' + node["data-short-name"] + 'set value : ' + node[:value]
+  end
+
+  inputs = page.all(:css,'textarea.question_details')
+    inputs.each do |node|
+      #fill_in(node, with:(node["data-short-name"] + "_" + index.to_s))
+      puts ' setting question : ' + node["data-short-name"] + 'with ' + node["data-short-name"] + "_" + index.to_s
+      node.set(node["data-short-name"] + "_" + index.to_s + ' : here are some details.')
+      puts ' question : ' + node["data-short-name"] + 'set value : ' + node[:value]
+    end
+end
+
+def find_and_set_anesthetist professional
+  puts 'select professional ' + professional.to_s
+  xpath = '//select[@data-short-name="anesthetist"]/option[text()="' + professional["name"] + '"]'
+  puts 'xpath : ' + xpath
+  selects = page.find(:xpath,xpath)
+  selects.select_option
+
+end
+
+def select_random_values
   selects = page.all(:xpath,'//select')
   selects.each do |node|
     if (node.value.blank? && node.visible?)
       puts 'populating ' + node[:name]
-      select_random_option(node[:id])
+      select_random_option(node)
       puts 'node[value] ' + node[:value]
     end
   end
 end
 
-def select_random_option(id)
-  puts 'select_random_option ' + id
-  second_options_xpath = "//*[@id='#{id}']/option"
-  options = all(:xpath, second_options_xpath).map{|node| node.text}
+def select_random_option(node)
+  puts 'select_random_option ' + node["value"]
+  options = node.all(:xpath,".//option")
   # we not choosing first option as it is blank
-  index = 1 + rand(options.size-1)
-  puts 'selecting  '  + options[index]
-  select(options[index], :from => id)
+  if node[:name].include? "3i"
+    index = 1 + rand(26)
+  else
+    index = 1 + rand(options.size-1)
+  end
+
+  puts 'selecting  '  + options[index]["value"]
+  options[index].select_option
 end

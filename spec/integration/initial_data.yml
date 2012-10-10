@@ -1,11 +1,12 @@
  :professionals:
   -
+    email: "david@belavy.com"
+    password: "secret"
+    name: "Dr David Belavy"
+  -
     email: "alexander.khitev@gmail.com"
     password: "123456"
-  - 
-    email: "alexander.khitev@gmail.com"
-    password: "secret"
-  
+    name: "Alex Kh"
  :patients:
   -
     :answers:
