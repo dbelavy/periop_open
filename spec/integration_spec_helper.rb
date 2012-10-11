@@ -111,7 +111,6 @@ end
 
 def populate_patient_assessment options
   visit '/'
-  puts ' options[:answers] '  + options[:answers].to_s
   click_link "Pre-op assessment"
   should_have_no_errors
   page.should have_content "Please answer these questions"
@@ -174,6 +173,7 @@ def create_generated_patient number,professional
     click_button 'Create Patient'
     page.should have_content "Patient was successfully created"
     click_link "Logout"
+    page.should have_content "Signed out successfully"
 end
 
 
