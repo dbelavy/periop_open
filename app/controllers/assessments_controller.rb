@@ -6,14 +6,12 @@ class AssessmentsController < ApplicationController
 
   # GET /patient/.id/assessments/unassigned.json
   def unassigned
-    @assessments = @assessments.where(:patient_id => nil)
-
     if !params[:patient_id].nil?
       @patient = Patient.find(params[:patient_id])
     end
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @assessments }
+      format.json { render json: AssessmentsDatatable.new(view_context,current_ability)}
     end
   end
 
@@ -21,7 +19,7 @@ class AssessmentsController < ApplicationController
     if !params[:patient_id].nil?
       @patient = Patient.find(params[:patient_id])
     end
-    @assessments = Assessment.where(:patient_id => @patient._id)
+    @assessments = Assessment.where(:patient_id => @patient._id).paginate(:page => params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @assessments }

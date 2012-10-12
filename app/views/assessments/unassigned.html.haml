@@ -1,7 +1,7 @@
 %h1 Unassigned assessments
 - if !@patient.nil?
   =render 'patients/detailed_info'
-%table{:class => "table table-striped table-bordered" }
+%table#assessments{:data => {:source => [unassigned_assessments_url(format: "json") ]}, :class => "table table-striped table-bordered" }
   %thead
     %tr
       %th Surname
@@ -14,20 +14,6 @@
       %th Show
       %th Delete
   %tbody
-    - @assessments.each do |a|
-      %tr
-        %td= a.find_answer_value_by_concept_name 'patient_surname'
-        %td= a.find_answer_value_by_concept_name 'patient_first_name'
-        %td= a.find_answer_value_by_concept_name 'patient_gender'
-        %td= a.find_answer_value_by_concept_name 'patient_dob'
-        %td= a.find_answer_value_by_concept_name 'procedure_date'
-        %td= a.find_answer_value_by_concept_name 'referring_surgeon'
-        %td= get_anesthetist_name a
-        -if !@patient.nil?
-          %td= link_to 'Show', patient_assessment_path(@patient,a),:class=> "btn"
-        -else
-          %td= link_to 'Show', assessment_path(a),:class=> "btn"
-        %td= link_to 'Delete assessment', a, :confirm => 'Are you sure?', :method => :delete,:class=> "btn btn-danger"
 %br
 -if !@patient.nil?
   = link_to 'Patient information' ,@patient

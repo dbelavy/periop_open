@@ -21,7 +21,6 @@ Periop::Application.routes.draw do
     resource :summary, :only => [:show,:show_printable] do
       get 'show_printable'
     end
-
   end
 
 
