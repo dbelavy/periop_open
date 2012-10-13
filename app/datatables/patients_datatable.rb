@@ -1,5 +1,5 @@
 class PatientsDatatable
-  delegate :params, :h, :link_to, :number_to_currency, to: :@view
+  delegate :params, :h, :link_to, :number_to_currency,:current_user , to: :@view
 
   def initialize(view,ability)
     @view = view
@@ -47,7 +47,7 @@ private
   end
 
   def fetch_patients
-    patients = Patient.accessible_by(@ability).send("#{sort_direction}","#{sort_column}")
+    patients = Patient.accessible_by(@ability)
     #patients = Patient.send("#{sort_direction}","#{sort_column}")
     if params[:sSearch].present?
       search = params[:sSearch]
@@ -58,11 +58,15 @@ private
         start_of_year = Date.ordinal(search.to_i)
         end_of_year = Date.ordinal(search.to_i,-1)
         patients = patients.where(:dob.gte => start_of_year,:dob.lte => end_of_year)
-      elsif /^\D*$/.match(search)
+      else
         regex = /#{params[:sSearch]}/i
-        patients = patients.any_of({firstname: regex},{surname: regex},{anesthetist_name: regex},{surgeon: regex})
+        patients = patients.where({ "$or" => [{firstname: regex},{surname: regex},{surgeon: regex}]})
+        # workaround for issue #133
+        # TODO make ability filter works, probably updating to mongoid 3.0
+        patients = patients.where(anesthetist_id: current_user.professional._id)
       end
     end
+    patients = patients.send("#{sort_direction}","#{sort_column}")
     patients = patients.paginate(:page => page,:per_page => per_page)
     patients
   end
