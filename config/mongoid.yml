@@ -15,6 +15,11 @@ test:
 staging:
   uri: <%= ENV['MONGOHQ_URL'] %>
 
+
+demo:
+    uri: <%= ENV['MONGOHQ_URL'] %>
+
+
 # set these environment variables on your prod server
 production:
   uri: <%= ENV['MONGOHQ_URL'] %>
