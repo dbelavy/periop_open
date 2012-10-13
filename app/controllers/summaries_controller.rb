@@ -3,6 +3,7 @@ class SummariesController < ApplicationController
 
 
   def populate_summary
+    logger.debug 'populate summary'
     @summary = {}
     @categories = Category.sorted
     @patient.assessments.each{|assessment|
@@ -18,7 +19,9 @@ class SummariesController < ApplicationController
         concept = ans.question.concept
         concept_id = concept._id
         category =  ans.question.concept.category
-
+        logger.debug 'concept :' + concept.name
+        logger.debug 'category :' + category.summary_display
+        logger.debug 'answer : ' + ans.value_to_s.to_s
         if @summary[category._id].nil?
           @summary[category._id] = {}
         end
@@ -29,9 +32,7 @@ class SummariesController < ApplicationController
         end
         concepts_array = concepts_hash[concept_id]
         # resolving conflicts
-        if concept.conflict_resolution == Concept::ALL
-          concepts_array << summary_row(assessment,ans)
-        elsif concept.conflict_resolution == Concept::RECENT
+        if concept.conflict_resolution == Concept::RECENT
           if concepts_array.size == 0 ||
             (concepts_array.size > 0 && assessment.date_started.to_time > (concepts_array[0][:datetime].to_time))
             concepts_array[0] = summary_row(assessment,ans)
@@ -44,7 +45,11 @@ class SummariesController < ApplicationController
           if assessment.updated_by == "Patient"
             concepts_array << summary_row(assessment,ans)
           end
+        else
+          #consider "ALL" as default strategy
+          concepts_array << summary_row(assessment,ans)
         end
+        logger.debug 'concepts_array : ' + concepts_array.to_s
       }
     }
   end
@@ -70,6 +75,7 @@ class SummariesController < ApplicationController
         concept_arr << concepts_hash[concept._id]
       end
     end
+    logger.warn 'concept_arr category: ' + category.to_s + ' ' + concept_arr.to_s
     concept_arr
   end
 
