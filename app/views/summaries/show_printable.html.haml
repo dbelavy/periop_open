@@ -24,8 +24,6 @@ Printed by #{current_user.professional.name} on #{Date.current.to_s}
               - concept_composite = concept_arr[index]
               - if !concept_composite.nil? && !concept_composite[0].nil?
                 %td
-                  -#= index
-                  -#= concept_composite
                   %strong
                     =concept_composite[0][:concept_display_name]
                   \:
