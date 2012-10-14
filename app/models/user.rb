@@ -54,7 +54,7 @@ class User
 
   attr_protected :user_role
 
-  accepts_nested_attributes_for :professional,:update_only => true
+  accepts_nested_attributes_for :professional,:update_only => false
 
 
   PROFESSIONAL = 'professional'
