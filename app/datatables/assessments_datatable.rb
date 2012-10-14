@@ -43,6 +43,7 @@ private
 
   def fetch_assessments
     assessments = Assessment.accessible_by(@ability,:unassigned)
+    assessments = assessments.where(patient_id: nil)
     assessments.paginate(:page => page,:per_page => per_page)
   end
 
