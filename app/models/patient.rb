@@ -100,7 +100,7 @@ class Patient
       self.surgeon = surgeon_answer.value_to_s
     end
 
-    date_answer = self.get_recent_answer("procedure_date")
+    date_answer = self.get_recent_answer("planned_procedure_date")
     if date_answer
       self.planned_date_of_surgery = date_answer.date_value
     end

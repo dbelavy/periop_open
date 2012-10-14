@@ -24,7 +24,7 @@ private
       (a.find_answer_value_by_concept_name 'patient_first_name'),
       (a.find_answer_value_by_concept_name 'patient_gender'),
       (a.find_answer_value_by_concept_name 'patient_dob'),
-      (a.find_answer_value_by_concept_name 'procedure_date'),
+      (a.find_answer_value_by_concept_name 'planned_procedure_date'),
       (a.find_answer_value_by_concept_name 'referring_surgeon'),
       (a.find_answer_value_by_concept_name 'anesthetist'),
       (if !@patient.nil?

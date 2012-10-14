@@ -3,13 +3,21 @@ require 'rubygems' #so it can load gems
 
 
 def parse_concepts(doc)
+  all_names = Concept.all.map{|c| c.name}
   puts "parse_concepts"
   doc.default_sheet = 'Concept heirarchy position'
   3.upto(doc.last_row) do |line|
     if doc.cell(line, 'A').blank?
       next
     end
-    concept = Concept.find_or_create_by(name: doc.cell(line, 'A').downcase)
+
+
+    name = doc.cell(line, 'A').downcase
+    if(!Concept.exists?(:conditions => {name: name}))
+       puts 'creating new concept : ' + name
+    end
+    all_names.delete(name)
+    concept = Concept.find_or_create_by(name: name)
     concept.update_attributes!(
         display_name: doc.cell(line, 'B'),
         order_in_category: doc.cell(line, 'I'),
@@ -30,6 +38,21 @@ def parse_concepts(doc)
     concept.category = category
     concept.save!
     #puts 'created concept: ' + concept.to_s
+  end
+
+  if (all_names.size > 0)
+    puts '!!! concepts with following names now not exist :' + all_names.to_s
+    check_concept_by_names all_names
+  end
+
+end
+
+def check_concept_by_names names
+  names.each do |name|
+    concept = Concept.where(name: name).first
+    Question.where(concept_id: concept._id).each do |q|
+      puts "Question related to unexisting concept : " + q.display_name
+    end
   end
 end
 
@@ -103,6 +126,7 @@ def parse_questions doc
 
   validation_col = column_for(doc,"Validation_criteria")
 
+  all_question_ids = Question.all.map{|q| q.question_id}
 
   2.upto(doc.last_row) do |line|
     if doc.cell(line, "D").nil?
@@ -133,9 +157,16 @@ def parse_questions doc
     ask_details_criteria = doc.cell(line, "K").downcase if !doc.cell(line, "K").nil?
     ask_details_criteria ="all" if ask_details_criteria == "any answer"
 
-    question = Question.find_or_create_by(question_id: doc.cell(line, "C"))
+    question_id = doc.cell(line, "C")
+    all_question_ids.delete(question_id)
+
+    if(!Question.exists?(:conditions => {question_id: question_id}))
+      puts 'creating new questions : ' + question_id
+    end
+
+    question = Question.find_or_create_by(question_id: question_id)
     #puts "overall pos: " + doc.cell(line, "A").to_s
-    question.update_attributes!(question_id: doc.cell(line, "C"),
+    question.update_attributes!(question_id: question_id,
                                 display_name: doc.cell(line, "E"),
                                 condition: condition,
                                 input_type: doc.cell(line, "G"),
@@ -170,6 +201,11 @@ def parse_questions doc
     end
     #puts 'created question: ' + question.to_s
   end
+
+  if (all_question_ids.size > 0)
+    puts '!!! question with following ids now not exist : ' + all_question_ids.to_s
+  end
+
 end
 
 def setup_question_order
@@ -261,7 +297,7 @@ end
         #setup_question_order
     end
 
-    desc "Update data from questions spreadsheet"
+    desc "Perfoms some data checks"
     task check_data: :environment do
       check_assessments
     end
