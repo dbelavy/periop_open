@@ -9,9 +9,10 @@ class AssessmentsController < ApplicationController
     if !params[:patient_id].nil?
       @patient = Patient.find(params[:patient_id])
     end
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: AssessmentsDatatable.new(view_context,current_ability)}
+      format.json { render json: AssessmentsDatatable.new(view_context,current_ability,@patient)}
     end
   end
 

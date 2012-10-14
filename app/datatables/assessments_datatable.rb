@@ -1,9 +1,10 @@
 class AssessmentsDatatable
-  delegate :params, :h, :link_to, :number_to_currency, to: :@view
+  delegate :params, :h, :link_to,:patient_assessment_path, :number_to_currency, to: :@view
 
-  def initialize(view,ability)
+  def initialize(view,ability,patient=nil)
     @view = view
     @ability= ability
+    @patient = patient
   end
 
   def as_json(options = {})
@@ -28,7 +29,7 @@ private
       (a.find_answer_value_by_concept_name 'referring_surgeon'),
       (a.find_answer_value_by_concept_name 'anesthetist'),
       (if !@patient.nil?
-        (link_to 'Show', patient_assessment_url(@patient,a),:class=> "btn")
+        (link_to 'Show', patient_assessment_path(@patient,a),:class=> "btn ")
       else
         (link_to 'Show', a,:class=> "btn")
       end),

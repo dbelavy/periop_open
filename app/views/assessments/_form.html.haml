@@ -9,7 +9,6 @@
   = f.simple_fields_for :answers do |a|
     - question = a.object.question
     - if question .nil?
-      "!!! null question"
       = a.object.to_json
     - else
       = render "assessments/answer",:a => a
