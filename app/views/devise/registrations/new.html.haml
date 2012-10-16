@@ -1,9 +1,11 @@
 %h2 Sign up
+-#= @user.professional.name
 = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
   = f.error_notification
   .inputs
     = f.simple_fields_for :professional do |p|
       = p.input :name
+      = p.input :speciality,:collection => Professional.specialities
     = f.input :email, :required => true, :autofocus => true
     = f.input :password, :required => true
     = f.input :password_confirmation, :required => true

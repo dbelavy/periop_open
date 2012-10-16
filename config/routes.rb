@@ -46,7 +46,7 @@ Periop::Application.routes.draw do
   get 'privacy' => "home#privacy"
 
   if (Rails.application.config.registerable)
-    devise_for :users
+    devise_for :users ,:controllers => {:registrations => "registrations"}
   else
     devise_for :users, :skip => [:registrations]
         as :user do
