@@ -38,6 +38,10 @@ class Assessment
     answers.where(:question_id => question._id).first
   end
 
+  def self.unassigned
+    where(patient_id: nil)
+  end
+
   def answers_exist_in_form?
     questions_array = self.form.questions.map {|q| q._id}
     result = true
@@ -116,7 +120,7 @@ class Assessment
 
   def find_question_by_concept_name concept_name
     concept = Concept.find_by_name(concept_name)
-    self.form.questions.where(concept_id: concept._id).first
+    self.form.questions.by_concept(concept)
   end
 
   def start_and_complete_assessment
@@ -154,4 +158,24 @@ class Assessment
       Professional.find(id)
     end
   end
+
+  #
+  #concept = Concept.find_by_name(concept_name)
+  #self.form.questions.where(concept_id: concept._id).first
+
+
+  def self.find_possible_matches_by_patient patient
+    self.find_possible_matches [patient.firstname, patient.surname]
+  end
+
+  def self.find_possible_matches array
+    #also_in({"answers.value" => array})
+    where({"answers.value" => {"$in" => array}})
+  end
+
+  def self.patient_assessment_question_by_concept_name concept_name
+    concept = Concept.find_by_name(concept_name)
+    Form.patient_form.questions.by_concept(concept)
+  end
+
 end

@@ -44,7 +44,16 @@ private
 
   def fetch_assessments
     assessments = Assessment.accessible_by(@ability,:unassigned)
-    assessments = assessments.where(patient_id: nil)
+    assessments = assessments.unassigned
+    if !@patient.nil? && (assessments.find_possible_matches_by_patient(@patient).count > 0)
+      assessments = assessments.find_possible_matches_by_patient @patient
+    else
+      if params[:sSearch].present?
+        regex = /#{params[:sSearch]}/i
+        assessments = assessments.find_possible_matches [regex ]
+      end
+    end
+
     assessments.paginate(:page => page,:per_page => per_page)
   end
 

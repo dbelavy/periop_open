@@ -96,4 +96,9 @@ class Question
   def self.sorted
     asc(:sort_order)
   end
+
+
+  def self.by_concept concept
+    where(concept_id: concept._id).first
+  end
 end
