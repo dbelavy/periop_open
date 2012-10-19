@@ -10,8 +10,8 @@ class RegistrationsController < Devise::RegistrationsController
       if @user.professional.nil?
         @user.professional = Professional.new
         @user.professional.speciality= Professional::ANESTHETIST
-        @user.user_role = User::PROFESSIONAL
       end
+      @user.user_role = User::PROFESSIONAL
     end
 
     def update
