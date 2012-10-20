@@ -43,6 +43,15 @@ table#summary_printed td{
   width: 30%;
 }
 
+table#summary {
+  h3 {
+    font-size: 14px;
+    line-height: 150%;
+  }
+  line-height: 150%;
+  font-size: 12px;
+}
+
 #main.print {
   table {
     border-width: 0px;
