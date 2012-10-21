@@ -29,6 +29,13 @@ namespace :db do
         end
       end
     end
+
+    Patient.all.each do |p|
+      if (!p.dob.nil? ) &&(p.dob < start_date)
+        p.update_values
+        puts ' patient :'  + p.dob.to_s + ().to_s + ' ' + p.firstname + p.surname
+      end
+    end
   end
 
   task migrate: :environment do
