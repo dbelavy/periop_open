@@ -10,6 +10,26 @@ namespace :db do
     end
   end
 
+  task fix_old_dates: :environment do
+    start_date = Date.new(1900)
+    date_q = Question.where(:input_type => "Date")
+    Assessment.where({"answers.date_value" => { "$lt" => start_date.to_time }}).each do |a|
+      date_q.each do |q|
+        answer = a.answer q
+        if !answer.nil?
+          if answer.date_value.nil?
+            puts ' answers date_value is nil :' + answer.to_s + ' ' + answer._id.to_s + q.display_name
+          else
+            if answer.date_value < start_date
+              puts answer.value_to_s
+              answer.date_value = answer.date_value + 100.years
+              answer.save!
+            end
+          end
+        end
+      end
+    end
+  end
 
   task migrate: :environment do
     Rake::Task['db:synchronise_anesthetists'].invoke
