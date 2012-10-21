@@ -62,7 +62,6 @@ gem "cancan"
 
 gem "heroku-mongo-backup"
 gem "fog"
-gem "bootstrap-datepicker-rails"
 
 gem 'newrelic_rpm'
 gem "browser"
