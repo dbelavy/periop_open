@@ -17,10 +17,10 @@
       :class => 'question'}
       - else if question.input_type == 'Date'
         = a.input :date_value, :label => label,
-        :as => :date, :start_year => question.start_year, :end_year => question.end_year , :order => [:day , :month, :year],
+        :start_year => question.start_year, :end_year => question.end_year , :order => [:day , :month, :year],
         :include_blank => true,
         :input_html => {:data => {:short_name => question.concept.name.downcase,
-        :condition => question.condition},:class => 'question'}
+        :condition => question.condition},:class => 'question datepicker'}
       - else if (question.input_type == 'Text_box')
         =a.input :value,:as => :text,:label => label,
         :input_html => {:rows => 5,:cols => 60,:data => {:short_name => question.concept.name.downcase, :condition => question.condition }, :class => 'question'}
