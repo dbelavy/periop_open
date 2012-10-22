@@ -140,9 +140,18 @@ $(document).ready ->
            condition.checkAndApply($(this))
 
     )
+$(document).ready ->
+  $('#assessments').dataTable
+    sPaginationType: "bootstrap"
+    sWrapper: "dataTables_wrapper form-inline"
+    sDom: "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
+    bProcessing: true
+    bSort: false
+    bFilter: true
+    bServerSide: true
+    sAjaxSource: $('#assessments').data('source')
 
-jQuery ->
-        $('.datepicker').datepicker
-          format: "dd-mm-yyyy"
-          autoclose: true
+  $('.datepicker').datepicker
+    format: "dd-mm-yyyy"
+    autoclose: true
 
