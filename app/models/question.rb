@@ -68,26 +68,26 @@ class Question
   end
 
 
-  def start_year
+  def start_date
     if input_type == "Date"
       if !validation_criteria.nil?
         if validation_criteria.downcase == "past"
-          return Date.today.year
+          return Date.new(1900,1,1)
         elsif validation_criteria.downcase == "future"
-          return Date.today.year
+          return Date.today
         end
       end
     end
   end
 
 
-  def end_year
+  def end_date
     if input_type == "Date"
       if !validation_criteria.nil?
         if validation_criteria.downcase == "past"
-          return Date.today.year - 120
+          return Date.today
         elsif validation_criteria.downcase == "future"
-          return Date.today.year + 100
+          return Date.today + 100.years
         end
       end
     end

@@ -153,7 +153,11 @@ jQuery ->
           sAjaxSource: $('#assessments').data('source')
 
 jQuery ->
-        $('.datepicker').datepicker
-          format: "dd-mm-yyyy"
-          autoclose: true
-
+        $('.datepicker').each(
+          ->
+            $(this).datepicker
+              format: "dd-mm-yyyy"
+              autoclose: true
+              startDate: $(this).data('start-date')
+              endDate: $(this).data('end-date')
+        )
