@@ -141,9 +141,6 @@ $(document).ready ->
 
     )
 
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
         $('#assessments').dataTable
           sPaginationType: "bootstrap"
@@ -155,4 +152,8 @@ jQuery ->
           bServerSide: true
           sAjaxSource: $('#assessments').data('source')
 
+jQuery ->
+        $('.datepicker').datepicker
+          format: "dd-mm-yyyy"
+          autoclose: true
 
