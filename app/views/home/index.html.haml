@@ -4,18 +4,22 @@
       = Rails.application.config.site_url
     %br
     %p
-      We help patients, anesthetists and surgeons manage information for perioperative care.
+      We help patients and doctors manage information for perioperative care.
       %br
       If your doctor has asked you to come here, please fill out a confidential Pre-op assessment.
   - else
     %h2
       = Rails.application.config.site_url
     %p
-      We help patients, anesthetists and surgeons manage information for perioperative care.
+      We help patients and doctors manage information for perioperative care.
       %br
-      This is a demonstration site only. Please do not put confidential patient information into the site. All data is regularly deleted.
+      This is a demonstration site only and all data is regularly deleted. Please do not put confidential patient information into the site.
       %br
-      You can fill out a Pre-op assessment, just like the one on the live server.
+      You can fill out a Pre-op assessment, just like the one on the live server.  You can sign up with your email address or log in with 
+      %br
+      Username: demo@pre-op.net
+      %br
+      Password: demopassword
   %br
   %p
     = link_to('Pre-op assessment',patient_assessment_form_path,:class=> "btn btn-success btn-large")
