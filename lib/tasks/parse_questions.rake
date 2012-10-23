@@ -161,7 +161,7 @@ def parse_questions doc
     all_question_ids.delete(question_id)
 
     if(!Question.exists?(:conditions => {question_id: question_id}))
-      puts 'creating new questions : ' + question_id
+      puts 'creating new questions : ' + question_id.to_s
     end
 
     question = Question.find_or_create_by(question_id: question_id)
