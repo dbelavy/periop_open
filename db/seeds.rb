@@ -12,7 +12,7 @@ require 'rubygems'           #so it can load gems
 puts 'EMPTY THE MONGODB DATABASE'
 Mongoid.master.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
 puts 'SETTING UP DEFAULT USER LOGIN'
-if ENV["RAILS_ENV"] == 'production'
+if (ENV["RAILS_ENV"] == 'production' ) ||(ENV["RAILS_ENV"] == 'demo')||(ENV["RAILS_ENV"] == 'staging')
   if ENV["ADMIN_PASSWORD"].nil?
     puts 'ADMIN_PASSWORD env variable should be not empty'
     raise
