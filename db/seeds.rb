@@ -19,7 +19,7 @@ if (ENV["RAILS_ENV"] == 'production' ) ||(ENV["RAILS_ENV"] == 'demo')||(ENV["RAI
   end
 
   # for production to have secure password
-  admin_email = ENV["ADMIN_EMAIL"].nil? ? 'admin@pre-op.net' : ENV["ADMIN_EMAIL"]
+  admin_email = ENV["ADMIN_EMAIL"].nil? ? 'admin@pre-op.net' : ENV["ADMIN_EMAIL"].dup
   user = User.create! :email => admin_email, :password => ENV["ADMIN_PASSWORD"], :password_confirmation => ENV["ADMIN_PASSWORD"], :confirmed_at => Time.now.utc
   user.assign_role 'admin'
 else
