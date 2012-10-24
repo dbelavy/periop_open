@@ -4,11 +4,12 @@
 %h3 Pre-op information
 %p
   =link_to('Show Pre-op Summary ',patient_summary_path(@patient))
+%h3 Add operations or assessments
 %p
 - if (can? :edit, @patient) && !@patient.patient_assessment_assigned?
   =link_to('Find patient assessment', unassigned_patient_assessments_path(@patient))
 
-%h3 Available Assessments
+%h3 Linked Assessments
 %p
 %p
   - @patient.assessments_to_display.each do |a|
