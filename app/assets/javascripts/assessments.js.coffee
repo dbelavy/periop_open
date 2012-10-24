@@ -21,9 +21,11 @@ $(document).ready ->
   )
 
   calculateAge = () ->
-    day = $('[data-short-name=' + dob_name + ']').eq(0).val()
-    month = $('[data-short-name='+ dob_name+ ']').eq(1).val() - 1
-    year = $('[data-short-name=' + dob_name + ']').eq(2).val()
+    dateStr = $('[data-short-name=' + dob_name + ']').val()
+    dateArr = dateStr.split("-")
+    day = dateArr[0]
+    month = dateArr[1] - 1
+    year = dateArr[2]
     today=new Date();
     age = today.getFullYear()-year;
     if(today.getMonth()<month || (today.getMonth()==month && today.getDate()<day))
