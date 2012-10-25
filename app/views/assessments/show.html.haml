@@ -11,5 +11,7 @@
 
 -if !@patient.nil?
   = link_to 'Back', patient_path(@patient)
+  |
+  = link_to 'Edit',edit_patient_assessment_path(@patient,@assessment)
 -else
   = link_to 'Back', unassigned_assessments_path

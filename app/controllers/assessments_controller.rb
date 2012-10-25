@@ -1,6 +1,7 @@
 class AssessmentsController < ApplicationController
   load_resource :patient,:except => [:patient_assessment_form,:update_patient_assessment]
-  load_and_authorize_resource :assessment,:new => [:patient_assessment_form,:update_patient_assessment]
+  load_and_authorize_resource :assessment,:new => [:patient_assessment_form,:operation_assessment_form,
+                                                   :update_patient_assessment]
   #, :through => :patient
 
 
@@ -65,6 +66,7 @@ class AssessmentsController < ApplicationController
   def edit
     #@assessment = Assessment.find(params[:id])
     @questions = @assessment.form.questions
+    @url = patient_assessment_path(@patient,@assessment)
     #@patient = Patient.find(params[:patient_id])
   end
 
@@ -73,6 +75,27 @@ class AssessmentsController < ApplicationController
     #@assessment = Assessment.new
     @assessment.form= Form.patient_form
     @questions = @assessment.form.questions
+  end
+
+  def operation_assessment_form
+      #@assessment = Assessment.new
+      @assessment.form= Form.new_operation_form
+      @questions = @assessment.form.questions
+      @url = patient_assessments_path(@patient)
+      render "new"
+  end
+
+  def create
+    @assessment.patient= @patient
+      respond_to do |format|
+        if @assessment.save
+          format.html { redirect_to patient_assessment_path(@patient,@assessment), notice: 'Assessment was successfully created.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @assessment.errors, status: :unprocessable_entity }
+        end
+      end
   end
 
 

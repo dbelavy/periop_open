@@ -11,13 +11,13 @@ Periop::Application.routes.draw do
   #devise_for :patients, :path_prefix => 'd'
 
   resources :patients do
-    resources :assessments ,:only => [:edit,:update,:show,:unassigned,:index] do
+    resources :assessments ,:only => [:edit,:update,:show,:unassigned,:index,:create] do
       get 'unassigned', :on => :collection
       put 'unassigned', :on => :collection
       put 'assign'
       put 'unassign'
-
     end
+    get 'operation_assessment_form' => 'assessments#operation_assessment_form'
     resource :summary, :only => [:show,:show_printable] do
       get 'show_printable'
     end
@@ -30,6 +30,7 @@ Periop::Application.routes.draw do
   end
   get "patient_assessment_form" => "assessments#patient_assessment_form"
   post "patient_assessment_form" => "assessments#update_patient_assessment"
+  #post "operation_assessment_form" => "assessments#update_operation_assessment"
 
   resources :questions
 

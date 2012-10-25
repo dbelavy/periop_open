@@ -1,11 +1,13 @@
 %h3 #{@assessment.name}
 - form_disabled ||= false
-= simple_form_for(setup_assessment(@assessment),:url => patient_assessment_form_path ,
+- url = @url.nil? ? patient_assessment_form_path : @url
+= simple_form_for(setup_assessment(@assessment),:url => url,
 :html => {:class => 'assessment' ,:disabled => form_disabled },
 :defaults => {:disabled => form_disabled}) do |f|
   = f.error_notification
   = f.error :base, {:class => "alert alert-error"}
   .form-inputs
+  = f.input :name, :as => :hidden
   = f.simple_fields_for :answers do |a|
     - question = a.object.question
     - if question .nil?

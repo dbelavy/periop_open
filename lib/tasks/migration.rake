@@ -39,14 +39,21 @@ namespace :db do
   end
 
   task migrate: :environment do
-    Rake::Task['db:synchronise_anesthetists'].invoke
+    #Rake::Task['db:synchronise_anesthetists'].invoke
     update_assessments
-    Rake::Task['db:migrate_patient_fields'].invoke
-    Rake::Task['db:lookup_field_value'].invoke
+    #Rake::Task['db:migrate_patient_fields'].invoke
+    #Rake::Task['db:lookup_field_value'].invoke
   end
 
   def update_assessments
     Assessment.all.each do |a|
+      if a.name.nil?
+        if !a.form_id.nil?
+          a.name= Form.find(a.form_id).name
+        else
+          puts 'assesment :' + a._id.to_s + 'has no name or form assigned '
+        end
+      end
       a.upsert
     end
   end
