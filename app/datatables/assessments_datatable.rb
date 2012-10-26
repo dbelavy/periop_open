@@ -43,8 +43,8 @@ private
   end
 
   def fetch_assessments
-    assessments = Assessment.accessible_by(@ability,:unassigned)
-    assessments = assessments.unassigned
+    assessments = Assessment.unassigned.accessible_by(@ability,:unassigned)
+    #assessments = assessments.unassigned
     if !@patient.nil? && (assessments.find_possible_matches_by_patient(@patient).count > 0)
       assessments = assessments.find_possible_matches_by_patient @patient
     else

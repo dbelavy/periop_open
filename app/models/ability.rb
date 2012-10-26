@@ -28,7 +28,7 @@ class Ability
         can :read, User, :_id => user._id
         can :read, Professional, :user_id => user._id
         can [:unassigned,:assign,:unassign], Assessment,:anesthetist_id => professional_id
-        can :manage, Assessment do |assessment|
+        can [:read,:edit,:update,:destroy], Assessment do |assessment|
           result = (assessment.anesthetist_id.to_s == professional_id.to_s)
           puts 'authorizing assessment '+ result.to_s
           result
