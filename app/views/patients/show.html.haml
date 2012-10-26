@@ -7,13 +7,18 @@
 %h3 Add operations or assessments
 %p
 - if (can? :edit, @patient) && !@patient.patient_assessment_assigned?
-  =link_to('Find patient assessment', unassigned_patient_assessments_path(@patient))
+  %ul.unstyled
+    %li
+      =link_to('Find patient assessment', unassigned_patient_assessments_path(@patient))
+    %li
+      =link_to('New operation assessment', patient_operation_assessment_form_path(@patient))
 
 %h3 Linked Assessments
 %p
 %p
-  - @patient.assessments_to_display.each do |a|
-    %li #{link_to (a.summary), patient_assessment_path(@patient, a)}
+  %ul.unstyled
+    - @patient.assessments_to_display.each do |a|
+      %li #{link_to (a.summary), patient_assessment_path(@patient, a)}
 
 = link_to 'Back', patients_path
 

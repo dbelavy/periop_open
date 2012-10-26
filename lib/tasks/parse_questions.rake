@@ -92,6 +92,7 @@ def create_forms
   Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT).update_attributes(person_role: [Question::PATIENT])
   Form.find_or_create_by(name: Form::TELEPHONE_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::CLINIC_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
+  Form.find_or_create_by(name: Form::NEW_OPERATION).update_attributes(person_role: [Question::PROFESSIONAL])
 end
 
 def column_for doc,name
@@ -117,10 +118,14 @@ def parse_questions doc
   clinic_form = Form.where(name: Form::CLINIC_ASSESSMENT).first
   clinic_form.clear_questions
 
+  operation_form = Form.where(name: Form::NEW_OPERATION).first
+  operation_form.clear_questions
+
   used_in_new_patient_col = column_for(doc,"New_Patient_Form")
   used_in_patient_assessment_col = column_for(doc,"Question used in patient assessment")
   used_in_professional_assessment_col = column_for(doc,"Question used in clinic or bedside assessment by professional")
   used_in_telephone_assessment_col = column_for(doc,"Question used in telephone assessment by professional")
+  used_in_new_operation_assessment_col = column_for(doc,"New_Operation_Form")
 
   required_col = column_for(doc,"Required_field")
 
@@ -198,6 +203,10 @@ def parse_questions doc
     if doc.cell(line, used_in_professional_assessment_col)
       #  add to form
       clinic_form.questions.push question
+    end
+    if doc.cell(line, used_in_new_operation_assessment_col)
+      #  add to form
+      operation_form.questions.push question
     end
     #puts 'created question: ' + question.to_s
   end

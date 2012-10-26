@@ -12,7 +12,6 @@ class Assessment
   field :name, :type => String
 
   belongs_to :patient
-  belongs_to :form
 
   embeds_many :answers
   accepts_nested_attributes_for :answers
@@ -20,15 +19,14 @@ class Assessment
 
   validate :answers_empty
 
-   def answers_empty
-     if answers.all?{|answer| answer.value_to_s.blank? }
-       errors.add(:base, 'All answers can\'t be blank')
-     end
+ def answers_empty
+   if answers.all?{|answer| answer.value_to_s.blank? }
+     errors.add(:base, 'All answers can\'t be blank')
    end
+ end
 
   def self.create_for_patient(form, patient)
     assessment = self.new
-    assessment.form= form
     assessment.name = form.name
     assessment.patient= patient
     assessment
@@ -92,6 +90,7 @@ class Assessment
     if result
       result = update_attributes(params)
     end
+    #TODO remove?
     self.patient.update_values
     result
   end
@@ -131,10 +130,6 @@ class Assessment
 
   def completed?
     !self.date_started.nil? && self.status == COMPLETE
-  end
-
-  def name
-    form.name if !form.nil?
   end
 
   def date_str
@@ -178,4 +173,16 @@ class Assessment
     Form.patient_form.questions.by_concept(concept)
   end
 
+  def form
+    if self.name
+      puts 'form :' + self.name
+      return Form.find_by_name(self.name)
+    else
+      return Form.find(self.form_id)
+    end
+  end
+
+  def form= form
+    self.name= form.name
+  end
 end
