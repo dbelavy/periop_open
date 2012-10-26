@@ -14,7 +14,7 @@ class HomeController < ApplicationController
     if current_user.admin?
       redirect_to professionals_path
     elsif current_user.professional?
-      redirect_to professional_path current_user.professional
+      redirect_to patients_path
     end
   end
 

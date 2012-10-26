@@ -176,6 +176,46 @@ def create_generated_patient number,professional
     page.should have_content "Signed out successfully"
 end
 
+def last_page?
+  links = page.all(:css,'.pagination li')
+  links[links.size-2][:class].include?"active"
+end
+
+def assign_assessments professional
+  login professional
+  click_link 'Patients'
+  should_have_no_errors
+  # pages loop
+  begin
+    rows = page.all(:xpath,'//table/tbody/tr')
+    rows.each do |row|
+       puts row.text
+       puts row.find(:xpath, ".//td").text
+       link_str = row.find(:xpath, ".//td").text.to_s
+       click_link(link_str )
+       page.should have_content "Patient information"
+       puts 'at patient'
+       click_link("Find patient assessment")
+       puts 'Find patient assessment'
+       assessments = page.all(:xpath,'//table/tbody/tr')
+      if assessments.size == 1
+        puts 'Find patient assessment'
+        click_link "Show"
+        click_link "Assign"
+        page.should have_content "Assessment assigned."
+        click_link "Back"
+      else
+        puts " possible match not found : "  + assessments.size.to_s
+      end
+       screenshot
+       click_link "Patient List"
+    end
+    click_link "Next "
+    puts 'next page'
+  end until last_page?
+end
+
+
 
 
 def create_generated_patients options

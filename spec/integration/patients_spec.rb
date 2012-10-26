@@ -39,3 +39,10 @@ describe "pair_create" ,:js => true do
 
   end
 end
+
+describe "assign" ,:js => true do
+  it "should create patient " do
+    data = YAML::load(File.read('spec/integration/initial_data.yml'))
+    assign_assessments data[:professionals][0]
+  end
+end

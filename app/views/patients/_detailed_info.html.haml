@@ -1,17 +1,23 @@
 %h3 Patient information
-%p
-  Surname: #{@patient.surname}
-%p
-  First name: #{@patient.firstname}
-%p
-  Middle name: #{@patient.middlename}
-%p
-  Date of birth: #{ @patient.dob}
-%p
-  Medicare number: #{@patient.get_answer_value_from_patient_form "medicare_card_number"}
-%p
-  Medicare card patient identifier: #{@patient.get_answer_value_from_patient_form "medicare_card_number_identifier"}
-%p
-  Individual healthcare identifier: #{@patient.get_answer_value_from_patient_form "individual_healthcare_identifier"}
-%p
-  Social security number: #{@patient.ssn}
+%table.patient
+  %tr
+    %td
+      Name: #{@patient.surname} #{@patient.firstname} #{@patient.middlename}
+    %td
+      Date of birth: #{ @patient.dob}
+  %tr
+    %td
+      - medicare_number= @patient.get_answer_value_from_patient_form "medicare_card_number"
+      - if  medicare_number
+        Medicare number: #{medicare_number}
+    %td
+      - medicare_patient_number = @patient.get_answer_value_from_patient_form "medicare_card_number_identifier"
+      - if medicare_patient_number
+        Medicare card patient identifier: #{medicare_patient_number}
+  %tr
+    %td
+      - individual_healthcare_identifier = @patient.get_answer_value_from_patient_form "individual_healthcare_identifier"
+      Individual healthcare identifier: #{individual_healthcare_identifier}
+    %td
+      - if @patient.ssn && !@patient.ssn.blank?
+        Social security number: #{@patient.ssn}
