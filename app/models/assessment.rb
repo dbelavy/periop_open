@@ -174,8 +174,11 @@ class Assessment
   end
 
   def form
-    if name
-    Form.find_by_name(self.name)
+    if self.name
+      puts 'form :' + self.name
+      return Form.find_by_name(self.name)
+    else
+      return Form.find(self.form_id)
     end
   end
 

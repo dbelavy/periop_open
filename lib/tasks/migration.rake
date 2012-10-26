@@ -47,14 +47,17 @@ namespace :db do
 
   def update_assessments
     Assessment.all.each do |a|
+      puts 'assesment :' + a._id.to_s
       if a.name.nil?
+        puts 'assesment name is nil ' + a._id.to_s
         if !a.form_id.nil?
           a.name= Form.find(a.form_id).name
+          a.save!
         else
           puts 'assesment :' + a._id.to_s + 'has no name or form assigned '
         end
       end
-      a.upsert
+      #a.upsert
     end
   end
 
