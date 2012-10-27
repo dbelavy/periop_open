@@ -87,9 +87,12 @@ class AssessmentsController < ApplicationController
 
   def create
     @assessment.patient= @patient
+    is_updated = @assessment.update_assessment(params[:assessment],current_user)
+    @assessment.status= Assessment::COMPLETE
+
       respond_to do |format|
         if @assessment.save
-          format.html { redirect_to patient_assessment_path(@patient,@assessment), notice: 'Assessment was successfully created.' }
+          format.html { redirect_to @patient, notice: 'Assessment was successfully created.' }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }
@@ -106,7 +109,7 @@ class AssessmentsController < ApplicationController
     is_updated = @assessment.update_assessment(params[:assessment],current_user)
     respond_to do |format|
       if is_updated
-        format.html { redirect_to patient_assessment_path, notice: 'Assessment was successfully updated.' }
+        format.html { redirect_to patient_path, notice: 'Assessment was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
