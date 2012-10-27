@@ -1,7 +1,5 @@
 %h2 Pre-op summary
-= link_to 'Back', patients_path
-|
-= link_to 'Printable version', show_printable_patient_summary_path(@patient)
+= render('patients/nav')
 %table#summary{:class => "table table-striped table-bordered" }
   %thead
     %tr
@@ -39,8 +37,4 @@
                     =sum[:date]
                   %td
                     =sum[:assessment_name]
-= link_to 'Patient information' ,@patient
-|
-= link_to 'Patient List' ,patients_path
-|
-= link_to 'Printable version', show_printable_patient_summary_path(@patient)
+= render('patients/nav')

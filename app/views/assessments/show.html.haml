@@ -1,8 +1,4 @@
 -if !@patient.nil?
-  = link_to 'Back', patient_path(@patient)
--else
-  = link_to 'Back', unassigned_assessments_path
--if !@patient.nil?
   = render('patients/short_info')
   -if @assessment.form.patient_form?
     = render 'assign_form'
@@ -10,8 +6,4 @@
 = render 'form', :form_disabled => true
 
 -if !@patient.nil?
-  = link_to 'Back', patient_path(@patient)
-  |
   = link_to 'Edit',edit_patient_assessment_path(@patient,@assessment)
--else
-  = link_to 'Back', unassigned_assessments_path

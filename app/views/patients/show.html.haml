@@ -1,3 +1,5 @@
+= render('patients/nav')
+
 =render 'detailed_info'
 - if can? :edit, @patient
   = link_to 'Edit patient information', edit_patient_path(@patient)
@@ -20,6 +22,5 @@
     - @patient.assessments_to_display.each do |a|
       %li #{link_to (a.summary), patient_assessment_path(@patient, a)}
 
-= link_to 'Back', patients_path
-
+= render('patients/nav')
 

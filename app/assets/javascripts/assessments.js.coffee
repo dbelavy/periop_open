@@ -147,7 +147,7 @@ jQuery ->
         $('#assessments').dataTable
           sPaginationType: "bootstrap"
           sWrapper: "dataTables_wrapper form-inline"
-          sDom: "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
+          sDom: "<'row pull-right'<'span2 pull-right'l><'span4  pull-right'f>r>t<'row'<'span6'i><'span6'p>>"
           bProcessing: true
           bSort: false
           bFilter: true
