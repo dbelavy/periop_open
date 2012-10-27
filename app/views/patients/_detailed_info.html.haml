@@ -2,22 +2,12 @@
 %table.patient
   %tr
     %td
-      Name: #{@patient.surname} #{@patient.firstname} #{@patient.middlename}
+      <b>Name:</b> #{@patient.surname}, #{@patient.firstname} #{@patient.middlename}
     %td
-      Date of birth: #{ @patient.dob}
-  %tr
+      <b>Date of birth:</b> #{ @patient.dob}
+  - arr = patient_info_array @patient
+  - arr.each_with_index do |info,index|
+    - if index % 2 == 0
+      %tr
     %td
-      - medicare_number= @patient.get_answer_value_from_patient_form "medicare_card_number"
-      - if  medicare_number
-        Medicare number: #{medicare_number}
-    %td
-      - medicare_patient_number = @patient.get_answer_value_from_patient_form "medicare_card_number_identifier"
-      - if medicare_patient_number
-        Medicare card patient identifier: #{medicare_patient_number}
-  %tr
-    %td
-      - individual_healthcare_identifier = @patient.get_answer_value_from_patient_form "individual_healthcare_identifier"
-      Individual healthcare identifier: #{individual_healthcare_identifier}
-    %td
-      - if @patient.ssn && !@patient.ssn.blank?
-        Social security number: #{@patient.ssn}
+      <b>#{info[:name]}:</b> #{info[:value]}
