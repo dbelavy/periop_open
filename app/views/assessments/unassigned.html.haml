@@ -5,7 +5,8 @@
   - source = unassigned_patient_assessments_url(@patient,format: "json")
 - else
   - source = unassigned_assessments_url(format: "json")
-
+%br
+%br
 %table#assessments{:data => {:source => source}, :class => "table table-striped table-bordered" }
   %thead
     %tr
