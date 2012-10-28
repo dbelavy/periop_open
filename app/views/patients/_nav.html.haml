@@ -1,5 +1,5 @@
 = link_to 'Patient List' ,patients_path
-- if @patient
+- if @patient && !@patient._id.nil?
   |
   = link_to 'Patient information' ,@patient
   |
