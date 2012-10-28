@@ -1,5 +1,6 @@
+= render 'patients/nav'
 -if !@patient.nil?
-  = render('patients/short_info')
+  = render('patients/detailed_info')
   -if @assessment.form.patient_form?
     = render 'assign_form'
     = link_to 'Delete assessment', @assessment, :confirm => 'Are you sure?', :method => :delete,:class=> "btn btn-danger"

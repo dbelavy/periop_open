@@ -1,6 +1,6 @@
 - question = a.object.question
 - label = question.display_name if !question.nil?
-%fieldset
+%fieldset{:data => {:condition => question.condition }}
   %legend
     !=label
   - label = "Answer"
