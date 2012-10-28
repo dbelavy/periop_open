@@ -1,4 +1,9 @@
 %h2 Patients
+= link_to 'New Patient', new_patient_path
+|
+= link_to 'View unassigned assessments', unassigned_assessments_path
+%br
+%br
 %table#patients{:data => {:source => [patients_url(format: "json") ]}, :class => "table table-striped table-bordered" }
   %thead
     %tr
@@ -19,5 +24,3 @@
       -#    %td #{patient.planned_date_of_surgery}
       -#    %td no
 -#= will_paginate
-%br
-= link_to 'New Patient', new_patient_path
