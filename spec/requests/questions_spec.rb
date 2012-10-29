@@ -1,4 +1,3 @@
-require Rails.root.join('spec', 'helpers.rb')
 require 'spec_helper'
 
 describe "Questions" do
