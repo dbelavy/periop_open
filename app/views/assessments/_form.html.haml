@@ -16,7 +16,7 @@
       = render "assessments/answer",:a => a
   - if user_signed_in?
     - if current_user.professional?
-      = f.input :status, :collection => Assessment.status_list
+      = f.input :status,:as => :hidden, :collection => Assessment.status_list
   - if !form_disabled
     .form-actions
       = f.button :submit,:value => 'Submit',:disable_with => 'Submitting'
