@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/akhitev/heroku-mongo-backup.git
+  revision: 1de7a6e4fceae03cee83014e5549405efa710c27
+  specs:
+    heroku-mongo-backup (0.4.3)
+      mongo
+
+GIT
   remote: git://github.com/rweng/jquery-datatables-rails.git
   revision: be3586b729e778a4b822e07494683387646b2b4b
   specs:
@@ -143,8 +150,6 @@ GEM
       rubyzip
     heroku-api (0.3.5)
       excon (~> 0.16.1)
-    heroku-mongo-backup (0.4.2)
-      mongo
     hike (1.2.1)
     httpauth (0.2.0)
     i18n (0.6.1)
@@ -342,7 +347,7 @@ DEPENDENCIES
   haml (>= 3.1.5)
   haml-rails (>= 0.3.4)
   heroku
-  heroku-mongo-backup
+  heroku-mongo-backup!
   jquery-datatables-rails!
   jquery-rails
   jquery-ui-rails
