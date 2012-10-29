@@ -19,3 +19,4 @@ pickle-email-*.html
 /dump/*
 export_env.sh
 run_guard.sh
+Gemfile.lock
