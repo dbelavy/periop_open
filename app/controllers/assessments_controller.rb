@@ -87,9 +87,8 @@ class AssessmentsController < ApplicationController
 
   def create
     @assessment.patient= @patient
-    is_updated = @assessment.update_assessment(params[:assessment],current_user)
+    @assessment.set_update_by(current_user)
     @assessment.status= Assessment::COMPLETE
-
       respond_to do |format|
         if @assessment.save
           format.html { redirect_to @patient, notice: 'Assessment was successfully created.' }
@@ -106,9 +105,9 @@ class AssessmentsController < ApplicationController
   # PUT /assessments/1.json
   def update
     #@assessment = Assessment.find(params[:id])
-    is_updated = @assessment.update_assessment(params[:assessment],current_user)
+    @assessment.set_update_by(current_user)
     respond_to do |format|
-      if is_updated
+      if @assessment.save
         format.html { redirect_to patient_path, notice: 'Assessment was successfully updated.' }
         format.json { head :no_content }
       else
