@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "Patients" do
   before :each do
-    create_professional(Professional::ANESTHETIST,"alexander.khitev@gmail.com","Alexander Khitev")
-    Patient.create!(firstname: "Firstname")
+    #create_professional(Professional::ANESTHETIST,"alexander.khitev@gmail.com","Alexander Khitev")
+    #Patient.create!(firstname: "Firstname")
 
   end
 
