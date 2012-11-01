@@ -48,7 +48,7 @@ do
 			echo "Update questions"
 			heroku run rake db:update_questions --app pre-op-demo
 			;;
-		"Push to Production)"
+		"Push to Production")
 			echo "You chose to Push to Production"
 			echo "Set account to Production"
 			heroku accounts:set Production
@@ -60,7 +60,7 @@ do
 			heroku run rake db:migrate --app pre-op
 			echo "Update questions"
 			heroku run rake db:update_questions --app pre-op
-			echo "*******Check all the messages to ensure none of it failed *******"
+			echo "*******Check all the messages to ensure none of it failed*******"
 			;;
         "Quit")
             break
