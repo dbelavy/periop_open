@@ -1,6 +1,6 @@
 #!/bin/bash
 PS3='Please enter your choice: '
-options=("Change to Demo user" "Change to Production user" "Update questions Demo" "Update questions Production" "Ad hoc backup Demo" "Ad hoc backup Production" "Keep Demo alive" "Push to Demo" "Quit")
+options=("Change to Demo user" "Change to Production user" "Update questions Demo" "Update questions Production" "Ad hoc backup Demo" "Ad hoc backup Production" "Keep Demo alive" "Push to Demo" "Push to Production" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -47,6 +47,20 @@ do
 			heroku run rake db:migrate --app pre-op-demo
 			echo "Update questions"
 			heroku run rake db:update_questions --app pre-op-demo
+			;;
+		"Push to Production)"
+			echo "You chose to Push to Production"
+			echo "Set account to Production"
+			heroku accounts:set Production
+			echo "Backup Production"
+			heroku run rake mongo:backup --app pre-op
+			echo "Push"
+			git push -v --tags Production master:master
+			echo "Run migration script"
+			heroku run rake db:migrate --app pre-op
+			echo "Update questions"
+			heroku run rake db:update_questions --app pre-op
+			echo "*******Check all the messages to ensure none of it failed *******"
 			;;
         "Quit")
             break
