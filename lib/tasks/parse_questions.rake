@@ -282,11 +282,38 @@ end
       parse_option_lists doc
     end
 
-    def check_assessments
+    def check_and_fix_assessments
+        assessments_with_duplicate_answers = []
         Assessment.all.each do |a|
-          a.answers_unique?
+          if !a.answers_unique?
+            assessments_with_duplicate_answers << a
+          end
           a.answers_exist_in_form?
         end
+      assessments_with_duplicate_answers.each do |a|
+        fix_duplicate_answers a
+      end
+    end
+
+    def fix_duplicate_answers a
+      a.form.questions.each do |q|
+        question_answers = a.answers.where(:question_id => q._id)
+        if question_answers.size > 1
+          answers_ids = []
+          question_answers[0]
+          for i in 1..question_answers.size-1 do
+            if question_answers[0].value_to_s != question_answers[i].value_to_s
+              raise '!!! Duplicate answers in assessment :'  + a._id + '  is not equal '
+              + question_answers[0].value_to_s + '!= ' + question_answers[i].value_to_s
+            end
+            answers_ids << question_answers[i]._id
+          end
+          answers_ids.each do |id|
+            a.answers.find(id).delete!
+            puts 'duplicate answer removed'
+          end
+        end
+      end
     end
 
 
@@ -308,6 +335,6 @@ end
 
     desc "Perfoms some data checks"
     task check_data: :environment do
-      check_assessments
+      check_and_fix_assessments
     end
 end

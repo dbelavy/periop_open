@@ -43,7 +43,6 @@ class Assessment
   def answers_exist_in_form?
     questions_array = self.form.questions.map {|q| q._id}
     result = true
-
     self.answers.each  do |a|
       if a.question_id.nil?
         result = false
@@ -57,6 +56,7 @@ class Assessment
         result = false
       end
     end
+    result
   end
 
   def answers_unique?
