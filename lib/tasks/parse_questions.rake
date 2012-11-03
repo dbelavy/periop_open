@@ -309,7 +309,7 @@ end
             answers_ids << question_answers[i]._id
           end
           answers_ids.each do |id|
-            a.answers.find(id).delete!
+            a.answers.find(id).delete
             puts 'duplicate answer removed'
           end
         end
