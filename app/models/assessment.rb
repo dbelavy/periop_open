@@ -85,14 +85,18 @@ class Assessment
 
   def update_assessment params, current_user
     result = true
-    professional_name = current_user.professional.name.to_s
-    self.updated_by= professional_name
+    set_update_by(current_user)
     if result
       result = update_attributes(params)
     end
     #TODO remove?
     self.patient.update_values
     result
+  end
+
+  def set_update_by(current_user)
+    professional_name = current_user.professional.name.to_s
+    self.updated_by= professional_name
   end
 
   def find_or_create_answer_by_concept_name concept_name

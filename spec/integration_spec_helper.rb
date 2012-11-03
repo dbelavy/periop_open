@@ -47,12 +47,11 @@ end
 
 RSpec.configure do |config|
   config.before(:each) do
-  Capybara.default_wait_time = 10
-  Capybara.default_driver = :webkit
-  Capybara.javascript_driver = :webkit
-  Capybara.run_server = false
-  Capybara.app_host = ENV["TEST_SERVER"] || 'http://localhost:3000'
-  puts ' using remote server : '+ Capybara.app_host.to_s
+    Capybara.server_port = 57050
+    Capybara.default_wait_time = 10
+    Capybara.register_driver :selenium_firefox do |app|
+      Capybara::Selenium::Driver.new(app, :browser => :firefox) 
+    end
   end
 end
 

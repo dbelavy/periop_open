@@ -60,7 +60,7 @@ end
 gem "heroku"
 gem "cancan"
 
-gem "heroku-mongo-backup"
+gem "heroku-mongo-backup" ,github: 'akhitev/heroku-mongo-backup'
 gem "fog"
 gem "bootstrap-datepicker-rails"
 

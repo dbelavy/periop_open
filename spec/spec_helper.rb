@@ -50,7 +50,7 @@ Spork.prefork do
     # Clean up the database
     require 'database_cleaner'
     config. before(:suite) do
-      Capybara.javascript_driver = :webkit
+      Capybara.server_port = 57050
       DatabaseCleaner.strategy = :truncation
       DatabaseCleaner.orm = "mongoid"
       end

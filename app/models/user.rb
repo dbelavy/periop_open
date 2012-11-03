@@ -4,7 +4,7 @@ class User
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
 
-  devise :database_authenticatable,:recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable,:recoverable, :rememberable, :trackable, :validatable, :timeoutable
 
   if (Rails.application.config.registerable == true )
     devise :registerable
