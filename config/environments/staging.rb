@@ -85,4 +85,10 @@ Periop::Application.configure do
   config.environment_type = "staging"
 
   config.registerable = true
+
+  config.middleware.use ExceptionNotifier,
+          :email_prefix => "[ExceptionNotifier] ",
+          :sender_address => %{"notifier" <staging-notifier@pre-op.net>},
+          :exception_recipients => %w{alexander.khitev@gmail.com}
+
 end
