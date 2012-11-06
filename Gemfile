@@ -66,3 +66,4 @@ gem "bootstrap-datepicker-rails"
 
 gem "newrelic_rpm"
 gem "browser"
+gem 'validates_timeliness', '~> 3.0'

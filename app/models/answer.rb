@@ -10,6 +10,9 @@ class Answer
   field :date_value, type: Date
   embedded_in :assessment
 
+  validates_date :date_value, :allow_nil => true
+
+
   def value_to_s
     if !value.blank?
       return value
