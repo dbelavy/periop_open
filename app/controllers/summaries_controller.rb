@@ -39,19 +39,29 @@ class SummariesController < ApplicationController
           end
         elsif concept.conflict_resolution == Concept::PROFESSIONAL
           if assessment.updated_by != "Patient"
-            concepts_array << summary_row(assessment,ans)
+            add_row_to_concept(concepts_array,summary_row(assessment,ans))
           end
         elsif concept.conflict_resolution == Concept::PATIENT
           if assessment.updated_by == "Patient"
-            concepts_array << summary_row(assessment,ans)
+            add_row_to_concept(concepts_array,summary_row(assessment,ans))
           end
         else
           #consider "ALL" as default strategy
-          concepts_array << summary_row(assessment,ans)
+          add_row_to_concept(concepts_array,summary_row(assessment,ans))
         end
         logger.debug 'concepts_array : ' + concepts_array.to_s
+        puts 'concepts_array : ' + concepts_array.to_s
       }
     }
+  end
+
+  def add_row_to_concept(concepts_array, row)
+    #concepts_array << row
+    downcased_answers = concepts_array.map{|el| el[:answer].to_s.downcase }
+    puts downcased_answers.to_s + ' include> ' + row[:answer].to_s.downcase
+    if !downcased_answers.include? row[:answer].to_s.downcase
+      concepts_array << row
+    end
   end
 
 
