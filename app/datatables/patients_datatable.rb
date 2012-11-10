@@ -35,7 +35,9 @@ private
         h(patient.anesthetist.nil? ? '' : patient.anesthetist.name),
         h(patient.surgeon),
         h(patient.planned_date_of_surgery),
-        link_to('show summary', Rails.application.routes.url_helpers.patient_summary_path(patient)),
+        link_to('show summary',
+                Rails.application.routes.url_helpers.show_printable_patient_summary_path(patient),
+                :target => "_blank")
       ]
     end
   end
