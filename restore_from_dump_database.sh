@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $1 = 'live' ] ;
+if [ $1 == 'live' ] ;
 then
 
 # live

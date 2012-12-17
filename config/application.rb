@@ -76,5 +76,6 @@ module Periop
     config.mongoid.observers = :assessment_observer
 
     Date::DATE_FORMATS[:default] = "%d-%m-%Y"
+    DateTime::DATE_FORMATS[:default] = "%d-%m-%Y"
   end
 end

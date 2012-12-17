@@ -137,11 +137,11 @@ class Assessment
   end
 
   def date_str
-    self.date_started.nil? ? " " : self.date_started.strftime(" %m/%d/%Y")
+    self.date_started.nil? ? " " : self.date_started.to_date.to_s
   end
 
   def summary
-    self.name + date_str + ' status: ' + self.status
+    self.name + " " +  date_str + ' status: ' + self.status
   end
 
   def get_anesthetist_id
