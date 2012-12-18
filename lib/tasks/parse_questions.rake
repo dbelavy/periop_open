@@ -130,7 +130,7 @@ def parse_questions doc
 
   used_in_new_patient_col = column_for(doc,"New_Patient_Form")
   used_in_patient_assessment_col = column_for(doc,"Question used in patient assessment")
-  used_in_professional_assessment_col = column_for(doc,"Question used in clinic or bedside assessment by professional")
+  used_in_professional_assessment_col = column_for(doc,"Professional_assessment")
   used_in_telephone_assessment_col = column_for(doc,"Question used in telephone assessment by professional")
   used_in_new_operation_assessment_col = column_for(doc,"New_Operation_Form")
   used_in_quick_note_assessment_col = column_for(doc,"Quick_note")

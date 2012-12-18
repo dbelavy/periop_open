@@ -30,6 +30,7 @@ class Ability
         can [:unassigned,:assign,:unassign], Assessment,:anesthetist_id => professional_id
         can [:read,:edit,:update,:destroy], Assessment do |assessment|
           result = (assessment.anesthetist_id.to_s == professional_id.to_s)
+          result = result || (assessment.patient.anesthetist_id ==  professional_id)
           puts 'authorizing assessment '+ result.to_s
           result
         end
