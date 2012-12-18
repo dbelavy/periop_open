@@ -13,6 +13,9 @@ def parse_concepts(doc)
 
 
     name = doc.cell(line, 'A').downcase
+    if name.include? ' '
+      raise "concept_name contains space " + name + " for line " + line.to_s
+    end
     if(!Concept.exists?(:conditions => {name: name}))
        puts 'creating new concept : ' + name
     end
@@ -93,6 +96,7 @@ def create_forms
   Form.find_or_create_by(name: Form::TELEPHONE_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::CLINIC_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::NEW_OPERATION).update_attributes(person_role: [Question::PROFESSIONAL])
+  Form.find_or_create_by(name: Form::QUICK_NOTE_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
 end
 
 def column_for doc,name
@@ -118,6 +122,9 @@ def parse_questions doc
   clinic_form = Form.where(name: Form::CLINIC_ASSESSMENT).first
   clinic_form.clear_questions
 
+  note_form = Form.where(name: Form::QUICK_NOTE_ASSESSMENT).first
+  note_form.clear_questions
+
   operation_form = Form.where(name: Form::NEW_OPERATION).first
   operation_form.clear_questions
 
@@ -126,6 +133,7 @@ def parse_questions doc
   used_in_professional_assessment_col = column_for(doc,"Question used in clinic or bedside assessment by professional")
   used_in_telephone_assessment_col = column_for(doc,"Question used in telephone assessment by professional")
   used_in_new_operation_assessment_col = column_for(doc,"New_Operation_Form")
+  used_in_quick_note_assessment_col = column_for(doc,"Quick_note")
 
   required_col = column_for(doc,"Required_field")
 
@@ -207,6 +215,11 @@ def parse_questions doc
     if doc.cell(line, used_in_new_operation_assessment_col)
       #  add to form
       operation_form.questions.push question
+    end
+
+    if doc.cell(line, used_in_quick_note_assessment_col)
+      #  add to form
+      note_form.questions.push question
     end
     #puts 'created question: ' + question.to_s
   end

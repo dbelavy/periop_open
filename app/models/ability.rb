@@ -33,7 +33,7 @@ class Ability
           puts 'authorizing assessment '+ result.to_s
           result
         end
-        can [:create,:operation_assessment_form],Assessment
+        can [:create,:operation_assessment_form,:clinician_assessment_form,:note_assessment_form],Assessment
         can [:read,:update], Patient, :anesthetist_id => professional_id
         can :create, Patient
 

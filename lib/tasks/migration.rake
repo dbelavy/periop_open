@@ -41,8 +41,31 @@ namespace :db do
   task migrate: :environment do
     #Rake::Task['db:synchronise_anesthetists'].invoke
     update_assessments
+    delete_unused_concepts_and_questions
     #Rake::Task['db:migrate_patient_fields'].invoke
     #Rake::Task['db:lookup_field_value'].invoke
+  end
+
+  def delete_unused_concepts_and_questions
+    all_names = Concept.all.map{|c| c.name}
+    doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
+    doc.default_sheet = 'Concept heirarchy position'
+    3.upto(doc.last_row) do |line|
+        if doc.cell(line, 'A').blank?
+          next
+        end
+        name = doc.cell(line, 'A').downcase
+        all_names.delete(name)
+    end
+    all_names.each do |name|
+      concept = Concept.where(name: name).first
+      Question.where(concept_id: concept._id).each do |q|
+        puts "Question removed " + q.display_name
+        q.remove
+      end
+      puts "Concept removed " + concept.name
+      concept.remove
+    end
   end
 
   def update_assessments

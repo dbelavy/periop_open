@@ -7,6 +7,7 @@ class Form
   PATIENT_ASSESSMENT = "Patient assessment"
   TELEPHONE_ASSESSMENT = "Telephone assessment"
   CLINIC_ASSESSMENT = "Clinic assessment"
+  QUICK_NOTE_ASSESSMENT = "Quick note"
   NEW_PATIENT = "New patient"
   NEW_OPERATION = "New Operation"
 

@@ -1,6 +1,7 @@
 class AssessmentsController < ApplicationController
   load_resource :patient,:except => [:patient_assessment_form,:update_patient_assessment]
   load_and_authorize_resource :assessment,:new => [:patient_assessment_form,:operation_assessment_form,
+                                                   :clinician_assessment_form, :note_assessment_form,
                                                    :update_patient_assessment]
   #, :through => :patient
 
@@ -80,6 +81,20 @@ class AssessmentsController < ApplicationController
   def operation_assessment_form
       #@assessment = Assessment.new
       @assessment.form= Form.new_operation_form
+      @questions = @assessment.form.questions
+      @url = patient_assessments_path(@patient)
+      render "new"
+  end
+
+  def clinician_assessment_form
+      @assessment.form= Form.find_by_name(Form::CLINIC_ASSESSMENT)
+      @questions = @assessment.form.questions
+      @url = patient_assessments_path(@patient)
+      render "new"
+  end
+
+  def note_assessment_form
+      @assessment.form= Form.find_by_name(Form::QUICK_NOTE_ASSESSMENT)
       @questions = @assessment.form.questions
       @url = patient_assessments_path(@patient)
       render "new"
