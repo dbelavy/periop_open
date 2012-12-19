@@ -16,12 +16,15 @@ $(document).ready ->
     newValue = $(this).val()
     if shortname == dob_name
       shortname = "patient_age"
+      window.age = undefined
     event = $.Event('question.' + shortname)
     $(formSelector).trigger(event,newValue)
   )
 
   calculateAge = () ->
     dateStr = $('[data-short-name=' + dob_name + ']').val()
+    if !dateStr
+      return 0
     dateArr = dateStr.split("-")
     day = dateArr[0]
     month = dateArr[1] - 1
@@ -72,7 +75,8 @@ $(document).ready ->
     checkAtomic: (conditionHash) ->
       if conditionHash != null
         if conditionHash.shortname == 'patient_age'
-          value =  calculateAge()
+          window.age =  window.age || calculateAge()
+          value =  window.age
         else
           value = $('[data-short-name=\"' +conditionHash.shortname + '\"].question').val()
           if (value)

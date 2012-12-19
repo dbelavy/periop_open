@@ -1,15 +1,21 @@
 module ApplicationHelper
 
   def setup_assessment assessment
+    contains_dob = false
     assessment.form.questions.sorted.each do |q|
+
       if !q.nil?
+        if q.concept.name == "Patient_DOB"
+          contains_dob = true
+        end
         if assessment.answer(q).nil?
           assessment.answers_attributes= [{:question => q}]
         end
       end
     end
-  return assessment
-end
+    assessment[:contains_dob] = contains_dob
+    return assessment
+  end
 
 def patient_signed_in?
   # TODO remove occurrences

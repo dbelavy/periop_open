@@ -178,6 +178,10 @@ def parse_questions doc
     end
 
     question = Question.find_or_create_by(question_id: question_id)
+    option_list_name = doc.cell(line, "H")
+    if !@option_list_names.include? option_list_name
+      puts '!! option_list_name : ' + option_list_name + ' for question :' + doc.cell(line, "E") + ' not exist'
+    end
     #puts "overall pos: " + doc.cell(line, "A").to_s
     question.update_attributes!(question_id: question_id,
                                 display_name: doc.cell(line, "E"),
@@ -186,7 +190,7 @@ def parse_questions doc
                                 text_length: doc.cell(line, "I"),
                                 ask_details: doc.cell(line, "J"),
                                 ask_details_criteria: ask_details_criteria,
-                                option_list_name: doc.cell(line, "H"),
+                                option_list_name: option_list_name,
                                 validation_criteria: doc.cell(line, validation_col),
                                 sort_order: doc.cell(line, "A").to_i
                                 )
@@ -259,6 +263,7 @@ end
 
 
 def parse_option_lists doc
+  @option_list_names = []
   puts "parse_option_lists"
   OptionList.delete_all
   doc.default_sheet = 'Option_List'
@@ -271,29 +276,13 @@ def parse_option_lists doc
                                      :order_number => doc.cell(line, "B"),
                                      :label => doc.cell(line, "C"),
                                      :value => value)
+    @option_list_names << option_list.name
     #puts 'created option List: ' + option_list.to_s
   end
 end
 
 
   namespace :db do
-    desc "Parse questions spreadsheet"
-    task parse: :environment do
-      require 'roo'
-
-      #workbook = RubyXL::Parser.parse("./spreadsheet/Question_properties.xlsx")
-      #workbook.worksheets[0] #returns first worksheet
-      #row = workbook[0].sheet_data[0]  #returns first worksheet
-      #puts row
-
-      doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
-      delete_data
-      create_forms
-      parse_categories(doc)
-      parse_concepts(doc)
-      parse_questions doc
-      parse_option_lists doc
-    end
 
     def check_and_fix_assessments
         assessments_with_duplicate_answers = []
@@ -341,9 +330,9 @@ end
         create_forms
         parse_categories(doc)
         parse_concepts(doc)
-        parse_questions doc
         parse_option_lists doc
-        #setup_question_order
+        parse_questions doc
+      #setup_question_order
     end
 
     desc "Perfoms some data checks"

@@ -1,7 +1,8 @@
 %h3 #{@assessment.name}
 - form_disabled ||= false
 - url = @url.nil? ? patient_assessment_form_path : @url
-= simple_form_for(setup_assessment(@assessment),:url => url,
+- assessment = setup_assessment(@assessment)
+= simple_form_for(assessment,:url => url,
 :html => {:class => 'assessment' ,:disabled => form_disabled },
 :defaults => {:disabled => form_disabled}) do |f|
   = f.error_notification
@@ -14,6 +15,8 @@
       = a.object.to_json
     - else
       = render "assessments/answer",:a => a
+  - if assessment[:contains_dob] != true
+    %input{:type => :hidden , :data => {:"short-name" => "patient_dob"}, :value => @assessment.patient.dob}
   - if user_signed_in?
     - if current_user.professional?
       = f.input :status,:as => :hidden, :collection => Assessment.status_list

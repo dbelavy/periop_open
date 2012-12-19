@@ -56,7 +56,6 @@ class AssessmentsController < ApplicationController
   # GET /assessments/new
   # GET /assessments/new.json
   def new
-    #@assessment = Assessment.new
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @assessment }
@@ -79,25 +78,23 @@ class AssessmentsController < ApplicationController
   end
 
   def operation_assessment_form
-      #@assessment = Assessment.new
-      @assessment.form= Form.new_operation_form
-      @questions = @assessment.form.questions
-      @url = patient_assessments_path(@patient)
-      render "new"
+      base_assessment_form Form::NEW_OPERATION
   end
 
   def clinician_assessment_form
-      @assessment.form= Form.find_by_name(Form::CLINIC_ASSESSMENT)
-      @questions = @assessment.form.questions
-      @url = patient_assessments_path(@patient)
-      render "new"
+      base_assessment_form Form::CLINIC_ASSESSMENT
   end
 
   def note_assessment_form
-      @assessment.form= Form.find_by_name(Form::QUICK_NOTE_ASSESSMENT)
-      @questions = @assessment.form.questions
-      @url = patient_assessments_path(@patient)
-      render "new"
+      base_assessment_form Form::QUICK_NOTE_ASSESSMENT
+  end
+
+  def base_assessment_form form_name
+    @assessment.patient= @patient
+    @assessment.form= Form.find_by_name(form_name)
+    @questions = @assessment.form.questions
+    @url = patient_assessments_path(@patient)
+    render "new"
   end
 
   def create
