@@ -16,7 +16,7 @@ $(document).ready ->
     newValue = $(this).val()
     if shortname == dob_name
       shortname = "patient_age"
-      window.age = undefined
+      window.age = calculateAge()
     event = $.Event('question.' + shortname)
     $(formSelector).trigger(event,newValue)
   )

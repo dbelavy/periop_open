@@ -5,7 +5,7 @@ module ApplicationHelper
     assessment.form.questions.sorted.each do |q|
 
       if !q.nil?
-        if q.concept.name == "Patient_DOB"
+        if q.concept.name == "patient_dob"
           contains_dob = true
         end
         if assessment.answer(q).nil?
@@ -14,6 +14,7 @@ module ApplicationHelper
       end
     end
     assessment[:contains_dob] = contains_dob
+    puts 'contains_dob ' + contains_dob.to_s
     return assessment
   end
 

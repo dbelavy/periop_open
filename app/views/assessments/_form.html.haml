@@ -15,7 +15,7 @@
       = a.object.to_json
     - else
       = render "assessments/answer",:a => a
-  - if assessment[:contains_dob] != true
+  - if assessment[:contains_dob] != true && !@assessment.patient.nil?
     %input{:type => :hidden , :data => {:"short-name" => "patient_dob"}, :value => @assessment.patient.dob}
   - if user_signed_in?
     - if current_user.professional?
