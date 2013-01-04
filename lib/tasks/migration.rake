@@ -167,4 +167,21 @@ namespace :db do
 
   end
 
+
+  task safe_for_test: :environment do
+    i = 0
+    User.all.each do |u|
+      if u.admin?
+        email = dev_email ("ad1" + i.to_s )
+      else
+        email = dev_email ("p1" + i.to_s )
+      end
+      i += 1
+      puts 'setting u ' + u.to_s + ' email to ' + email
+      u.email= email
+      u.save!
+    end
+
+    end
+
 end

@@ -146,6 +146,10 @@ def parse_questions doc
       next
     end
 
+    if doc.cell(line, "G").include? "_section"
+      next
+    end
+
     condition = doc.cell(line, "F")
     if !condition.nil?
 
