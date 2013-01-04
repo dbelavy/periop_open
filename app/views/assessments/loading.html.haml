@@ -1,0 +1,17 @@
+%h1 New assessment
+= render 'patients/nav'
+- if !@patient.nil?
+  =render 'patients/detailed_info'
+#form_placeholder.loading
+  -#%h2.centered loading
+= render 'patients/nav'
+
+:javascript
+  loadData = function (){
+  var url = decodeURIComponent($(document).getUrlParam('q'))
+  $.get(url, function(data) {data;
+  $('#form_placeholder').removeClass('loading')
+  },"script");
+
+  }
+  loadData();

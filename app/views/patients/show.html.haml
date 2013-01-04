@@ -15,7 +15,7 @@
     %li
       =link_to('New operation', patient_operation_assessment_form_path(@patient))
     %li
-      =link_to('New clinician assessment', patient_clinician_assessment_form_path(@patient))
+      =link_to('New clinician assessment', patient_loading_screen_path(@patient,:q => patient_clinician_assessment_form_path(@patient)))
     %li
       =link_to('New quick note', patient_note_assessment_form_path(@patient))
 

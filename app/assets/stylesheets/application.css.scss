@@ -115,6 +115,14 @@ table#summary {
   }
 }
 
+.loading {
+  background-image: url('ajax-loader.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+
+  min-height: 30px;
+          }
+
 //td.category h3{
 //  text-align: center
 //}

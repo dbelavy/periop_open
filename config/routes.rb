@@ -19,6 +19,7 @@ Periop::Application.routes.draw do
     end
     get 'operation_assessment_form' => 'assessments#operation_assessment_form'
     get 'clinician_assessment_form' => 'assessments#clinician_assessment_form'
+    get 'loading_screen' => 'assessments#loading_screen'
     get 'note_assessment_form'      => 'assessments#note_assessment_form'
     resource :summary, :only => [:show,:show_printable] do
       get 'show_printable'

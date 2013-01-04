@@ -35,6 +35,7 @@ class Ability
           result
         end
         can [:create,:operation_assessment_form,:clinician_assessment_form,:note_assessment_form],Assessment
+        can [:loading_screen],Assessment
         can [:read,:update], Patient, :anesthetist_id => professional_id
         can :create, Patient
 

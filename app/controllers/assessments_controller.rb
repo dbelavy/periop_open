@@ -81,8 +81,12 @@ class AssessmentsController < ApplicationController
       base_assessment_form Form::NEW_OPERATION
   end
 
+  def loading_screen
+    render "loading"
+  end
+
   def clinician_assessment_form
-      base_assessment_form Form::CLINIC_ASSESSMENT
+    base_assessment_form Form::CLINIC_ASSESSMENT
   end
 
   def note_assessment_form
