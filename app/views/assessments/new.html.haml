@@ -1,5 +1,6 @@
 %h1 New assessment
 = render 'patients/nav'
-
+- if !@patient.nil?
+  =render 'patients/detailed_info'
 = render 'form'
 = render 'patients/nav'
