@@ -172,13 +172,17 @@ namespace :db do
     i = 0
     User.all.each do |u|
       if u.admin?
-        email = dev_email ("ad1" + i.to_s )
+        email = dev_email ("ad" + i.to_s )
       else
-        email = dev_email ("p1" + i.to_s )
+        email = dev_email ("p" + i.to_s )
       end
       i += 1
       puts 'setting u ' + u.to_s + ' email to ' + email
-      u.email= email
+      params = {}
+      params[:password] ="123456"
+      params[:password_confirmation ] = "123456"
+      params[:email] = email
+      u.update_with_password params
       u.save!
     end
 
