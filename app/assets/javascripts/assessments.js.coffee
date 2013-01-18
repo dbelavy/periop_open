@@ -132,20 +132,23 @@ $(document).ready ->
 
 
   window.condition =condition
-  $(questionsSelector).each(
-     ->
-       condObj = condition.getConditions($(this))
-       if condObj != null
-         for condHash in condObj.condArr
-           $(formSelector).bind('question.' + condHash.shortname,{input: this}
-             (event) ->
-               input = event.data.input
-               condition.checkAndApply($(input))
-             )
-           true
-           condition.checkAndApply($(this))
+  window.checkAllDocument = () ->
+    $(questionsSelector).each(
+       ->
+         condObj = condition.getConditions($(this))
+         if condObj != null
+           for condHash in condObj.condArr
+             $(formSelector).bind('question.' + condHash.shortname,{input: this}
+               (event) ->
+                 input = event.data.input
+                 condition.checkAndApply($(input))
+               )
+             true
+             condition.checkAndApply($(this))
 
-    )
+      )
+
+  checkAllDocument()
 
 jQuery ->
         $('#assessments').dataTable
