@@ -53,8 +53,8 @@ Periop::Application.configure do
   config.environment_type = "live"
   config.registerable = true
 
-  config.middleware.use ExceptionNotifier,
-        :email_prefix => "[ExceptionNotifier] ",
-        :sender_address => %{"notifier" <notifier@pre-op.net>},
-        :exception_recipients => %w{alexander.khitev@gmail.com}
+  #config.middleware.use ExceptionNotifier,
+  #      :email_prefix => "[ExceptionNotifier] ",
+  #      :sender_address => %{"notifier" <notifier@pre-op.net>},
+  #      :exception_recipients => %w{alexander.khitev@gmail.com}
 end

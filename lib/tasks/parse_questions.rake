@@ -107,6 +107,20 @@ def column_for doc,name
   end
 end
 
+def display_deleted_questions(question_ids)
+  if (question_ids.size > 0)
+    puts '!!! following questions now not exist question_id\'s: ' + question_ids.to_s
+
+    question_ids.each do |id|
+      Question.where(question_id: id).each do |q|
+        puts 'question : ' + q.inspect
+      end
+    end
+    puts 'end of deleted questions'
+  end
+end
+
+
 def parse_questions doc
   puts 'parse_questions'
   doc.default_sheet = 'Questions'
@@ -142,13 +156,13 @@ def parse_questions doc
   all_question_ids = Question.all.map{|q| q.question_id}
 
   2.upto(doc.last_row) do |line|
-    if doc.cell(line, "D").nil?
+    if doc.cell(line, "A").nil?
       next
     end
 
-    if doc.cell(line, "G").include? "_section"
-      next
-    end
+    #if doc.cell(line, "G").include? "_section"
+    #  next
+    #end
 
     condition = doc.cell(line, "F")
     if !condition.nil?
@@ -198,13 +212,18 @@ def parse_questions doc
                                 validation_criteria: doc.cell(line, validation_col),
                                 sort_order: doc.cell(line, "A").to_i
                                 )
-    concept_name = doc.cell(line, "D").downcase
-    question.concept = Concept.where(name: concept_name).first
-    question.save!
-    if question.concept.nil?
-      raise "Not found concept " + concept_name
-      puts "Not found concept " + concept_name
+
+    concept_name_cell = doc.cell(line, "D")
+    if !concept_name_cell.nil? && !concept_name_cell.blank?
+      concept_name = concept_name_cell.downcase
+      question.concept = Concept.where(name: concept_name).first
+      question.save!
+      if question.concept.nil?
+        raise "Not found concept " + concept_name
+        puts "Not found concept " + concept_name
+      end
     end
+
     # used in patient assessment
     if doc.cell(line, used_in_patient_assessment_col)
       patient_form.questions.push question
@@ -232,10 +251,7 @@ def parse_questions doc
     #puts 'created question: ' + question.to_s
   end
 
-  if (all_question_ids.size > 0)
-    puts '!!! question with following ids now not exist : ' + all_question_ids.to_s
-  end
-
+  display_deleted_questions(all_question_ids)
 end
 
 def setup_question_order

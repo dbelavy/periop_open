@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.accordion
 //= require bootstrap
 //= require bootstrap-datepicker/core
 //= require dataTables/jquery.dataTables

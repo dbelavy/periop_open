@@ -11,7 +11,7 @@
   = f.input :name, :as => :hidden
   = f.simple_fields_for :answers do |a|
     - question = a.object.question
-    - if question .nil?
+    - if question.nil?
       = a.object.to_json
     - else
       = render "assessments/answer",:a => a

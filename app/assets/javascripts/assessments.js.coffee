@@ -167,3 +167,9 @@ jQuery ->
               startDate: $(this).data('start-date')
               endDate: $(this).data('end-date')
         )
+
+jQuery ->
+        $('.form-inputs').accordion
+          collapsible: true
+          header: ".heading"
+          heightStyle: "content"
