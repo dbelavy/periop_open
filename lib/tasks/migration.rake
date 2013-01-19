@@ -47,7 +47,7 @@ namespace :db do
   end
 
   def delete_unused_concepts_and_questions
-    all_names = Concept.all.map{|c| c.name}
+    deleted_concept_names = Concept.all.map{|c| c.name}
     doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
     doc.default_sheet = 'Concept heirarchy position'
     3.upto(doc.last_row) do |line|
@@ -55,9 +55,9 @@ namespace :db do
           next
         end
         name = doc.cell(line, 'A').downcase
-        all_names.delete(name)
+        deleted_concept_names.delete(name)
     end
-    all_names.each do |name|
+    deleted_concept_names.each do |name|
       concept = Concept.where(name: name).first
       Question.where(concept_id: concept._id).each do |q|
         puts "Question removed " + q.display_name

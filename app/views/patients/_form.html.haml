@@ -6,7 +6,6 @@
     = f.simple_fields_for(setup_assessment(@patient.new_patient_assessment),:html => {:class => 'assessment' }, :defaults => {:disabled => form_disabled}) do |s|
       = s.error_notification
       = s.error :base, {:class => "alert alert-error"}
-      .form-inputs
       = s.simple_fields_for :answers do |a|
         = render "assessments/answer",:a => a
   .form-actions
