@@ -66,6 +66,7 @@ do
 			echo "Update questions"
 			heroku run rake db:update_questions --app periop
 			echo "*******Check all the messages to ensure none of it failed*******"
+			;;
         "Quit")
             break
             ;;
