@@ -60,7 +60,7 @@ do
 			echo "Set account to Demo"
 			heroku accounts:set Demo
 			echo "Push"
-			git push -v --tags Staging master:master
+			git push -v --tags heroku master:master
 			echo "Run migration script"
 			heroku run rake db:migrate --app periop
 			echo "Update questions"
