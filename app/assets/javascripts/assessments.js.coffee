@@ -172,7 +172,9 @@ jQuery ->
         )
 
 jQuery ->
-        $('.form-inputs').accordion
-          collapsible: true
-          header: ".heading"
-          heightStyle: "content"
+  window.accordion = () ->
+    $('.form-inputs').accordion
+            collapsible: true
+            header: ".heading"
+            heightStyle: "content"
+  window.accordion()
