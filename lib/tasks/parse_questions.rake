@@ -352,6 +352,7 @@ end
         parse_concepts(doc)
         parse_option_lists doc
         parse_questions doc
+      check_sections
       #setup_question_order
     end
 
