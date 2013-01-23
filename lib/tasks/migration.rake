@@ -168,6 +168,40 @@ namespace :db do
   end
 
 
+  def check_sections
+    Form.all.each do |form|
+      puts 'checking form' + form.name
+      open_tag = ""
+      form.questions.sorted.each do |q|
+        if q.input_type == 'Start_section'
+          if open_tag.blank?
+          open_tag = q.display_name
+            puts 'start_section' + open_tag
+          else
+            puts '! trying to open new section ' + q.display_name  + ' previously open section ' + open_tag + ' not been closed'
+          end
+        end
+
+        if q.input_type == 'End_section'
+          if open_tag == q.display_name
+            open_tag = ""
+            puts 'end_section' + open_tag
+          else
+            puts '!!! trying to close section ' + q.display_name +  ' but previously open section ' + open_tag + ' not been closed'
+          end
+        end
+
+      end
+      if !open_tag.blank?
+        puts 'previously open section ' + open_tag + ' not been closed'
+      end
+    end
+  end
+
+  task check_sections: :environment do
+    check_sections
+  end
+
   task safe_for_test: :environment do
     i = 0
     User.all.each do |u|

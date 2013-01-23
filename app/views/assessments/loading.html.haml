@@ -8,9 +8,8 @@
 
 :javascript
   loadData = function (){
-  var url = decodeURIComponent($(document).getUrlParam('q'))
+  var url = '#{@url}';
   $.get(url, function(data) {data;
-  window.checkAllDocument();
   $('#form_placeholder').removeClass('loading')
   },"script");
 

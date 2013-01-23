@@ -67,7 +67,10 @@ class AssessmentsController < ApplicationController
     #@assessment = Assessment.find(params[:id])
     @questions = @assessment.form.questions
     @url = patient_assessment_path(@patient,@assessment)
-    #@patient = Patient.find(params[:patient_id])
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @assessment}
+    end
   end
 
   # GET /patient_assessment_form
@@ -82,6 +85,8 @@ class AssessmentsController < ApplicationController
   end
 
   def loading_screen
+    @url = params[:q]
+    params[:q] = nil
     render "loading"
   end
 
