@@ -1,5 +1,8 @@
 class OptionList
   include Mongoid::Document
+
+  cache
+
   field :name , :type => String
   field :order_number, :type => Integer
   field :label, :type => String

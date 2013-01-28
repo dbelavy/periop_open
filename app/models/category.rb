@@ -1,5 +1,8 @@
 class Category
   include Mongoid::Document
+
+  cache
+
   field :level_1_name, :type => String
   field :level_1_order, :type => Integer
   field :level_2_name, :type => String

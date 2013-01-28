@@ -1,6 +1,8 @@
 class Question
   include Mongoid::Document
 
+  cache
+
   PATIENT = :patient
   PROFESSIONAL = :professional
 

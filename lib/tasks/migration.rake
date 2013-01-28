@@ -42,6 +42,7 @@ namespace :db do
     #Rake::Task['db:synchronise_anesthetists'].invoke
     update_assessments
     delete_unused_concepts_and_questions
+    Rake::Task['db:check_and_fix_data'].invoke
     #Rake::Task['db:migrate_patient_fields'].invoke
     #Rake::Task['db:lookup_field_value'].invoke
   end
