@@ -1,5 +1,8 @@
   class Concept
   include Mongoid::Document
+
+  cache
+
   field :name, :type => String
   field :display_name, :type => String
   field :order_in_category, :type => Integer

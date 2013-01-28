@@ -5,7 +5,7 @@ class AssessmentObserver < Mongoid::Observer
   end
 
   def after_save(assessment)
-    if (assessment.patient)
+    if (!assessment.patient.nil?)
       assessment.patient.update_values
     end
   end

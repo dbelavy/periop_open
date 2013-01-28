@@ -306,14 +306,54 @@ end
 
     def check_and_fix_assessments
         assessments_with_duplicate_answers = []
+        @@alternate_questions = {}
+        @updated_count = 0
         Assessment.all.each do |a|
           if !a.answers_unique?
             assessments_with_duplicate_answers << a
           end
-          a.answers_exist_in_form?
+          check_and_fix_question_not_exist_in_form a
         end
+        puts 'total updated question number : ' +  @updated_count.to_s
       assessments_with_duplicate_answers.each do |a|
         fix_duplicate_answers a
+      end
+    end
+
+
+    def check_and_fix_question_not_exist_in_form assessment
+      form = assessment.form
+      @@alternate_questions[form] = @@alternate_questions[form] || {}
+      questions_array = form.questions.map {|q| q._id}
+      assessment.answers.each  do |ans|
+        if ans.question_id.nil?
+          result = false
+          message = '!!! assessment : ' + assessment._id.to_s + ' has answer that does not have question id ' +  ans._id.to_s
+          Rails.logger.error message
+          puts message
+        elsif !questions_array.include? ans.question_id
+          # find analogue question
+          if (@@alternate_questions[form][ans.question_id].nil?)
+            concept = Question.find(ans.question_id).concept
+            question = form.questions.by_concept(concept)
+            if question.nil?
+              message = 'no alternate question with concept : ' +concept.name + ' exist in form :' + form._id.to_s
+              Rails.logger.error message
+              puts message
+              @@alternate_questions[form][ans.question_id] = -1
+              next
+            else
+              @@alternate_questions[form][ans.question_id] = question._id
+            end
+          end
+          if @@alternate_questions[form][ans.question_id] != -1
+            message = 'changing q._id :'  + ans.question_id.to_s + ' => ' + @@alternate_questions[form][ans.question_id].to_s
+            Rails.logger.warn message
+            puts message
+            @updated_count = @updated_count + 1
+            ans.update_attribute(:question_id ,@@alternate_questions[form][ans.question_id])
+          end
+        end
       end
     end
 
@@ -324,8 +364,9 @@ end
           answers_ids = []
           question_answers[0]
           for i in 1..question_answers.size-1 do
-            if question_answers[0].value_to_s != question_answers[i].value_to_s
-              raise '!!! Duplicate answers in assessment :'  + a._id + '  is not equal '
+            if (question_answers[0].value_to_s != question_answers[i].value_to_s)&&
+                !question_answers[i].value_to_s.blank?
+              raise '!!! Duplicate answers in assessment :'  + a._id.to_s + '  is not equal '
               + question_answers[0].value_to_s + '!= ' + question_answers[i].value_to_s
             end
             answers_ids << question_answers[i]._id
@@ -357,7 +398,7 @@ end
     end
 
     desc "Perfoms some data checks"
-    task check_data: :environment do
+    task check_and_fix_data: :environment do
       check_and_fix_assessments
     end
 end

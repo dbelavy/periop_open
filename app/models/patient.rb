@@ -50,6 +50,8 @@ class Patient
 
   def get_answer_value_from_patient_form concept_name
     answer = self.new_patient_assessment.find_answer_value_by_concept_name concept_name
+    puts 'get_answer_value_from_patient_form  ' + concept_name + ' value: ' + answer.to_s
+    answer
   end
 
   def get_answer_from_patient_form concept_name
@@ -79,8 +81,8 @@ class Patient
   def update_values
     # denormalized values for sorting
 
-    self.firstname=  self.get_answer_value_from_patient_form "patient_first_name"
-    self.middlename= self.get_answer_value_from_patient_form "patient_middle_name"
+    self.firstname =  self.get_answer_value_from_patient_form "patient_first_name"
+    self.middlename =  self.get_answer_value_from_patient_form "patient_middle_name"
     self.surname= self.get_answer_value_from_patient_form"patient_surname"
     self.ssn= self.get_answer_value_from_patient_form "social_security_number"
     self.dob= self.get_answer_value_from_patient_form "patient_dob"
@@ -143,11 +145,11 @@ class Patient
   end
 
   def new_patient_assessment
-    assessments.each { |a|
+    assessments.each do |a|
       if a.name == Form::NEW_PATIENT
         return a
       end
-    }
+    end
     assessment = Assessment.create_for_patient(Form.new_patient_form,self)
     assessment.start_and_complete_assessment
     assessment

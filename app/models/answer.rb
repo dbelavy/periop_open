@@ -26,6 +26,7 @@ class Answer
     if !id_value.nil? && !id_value.blank?
       return Professional.find(id_value).label
     end
+    ""
   end
 
   def update_answer value

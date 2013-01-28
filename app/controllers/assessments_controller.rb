@@ -110,12 +110,13 @@ class AssessmentsController < ApplicationController
     @assessment.patient= @patient
     @assessment.set_update_by(current_user)
     @assessment.status= Assessment::COMPLETE
+    @url = patient_assessments_path(@patient)
       respond_to do |format|
         if @assessment.save
           format.html { redirect_to @patient, notice: 'Assessment was successfully created.' }
           format.json { head :no_content }
         else
-          format.html { render action: "edit" }
+          format.html { render action: "new" }
           format.json { render json: @assessment.errors, status: :unprocessable_entity }
         end
       end

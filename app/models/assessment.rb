@@ -46,11 +46,11 @@ class Assessment
     self.answers.each  do |a|
       if a.question_id.nil?
         result = false
-        message = '!!! assessment' + self._id.to_s + ' has answer that does not have question id ' +  a._id.to_s
+        message = '!!! assessment : ' + self._id.to_s + ' has answer that does not have question id ' +  a._id.to_s
         logger.error message
         puts message
       elsif !questions_array.include? a.question_id
-        message = '!!! assessment' + self._id.to_s + ' has answer that not exist in form ' +  a._id.to_s
+        message = '!!! assessment : ' + self._id.to_s + ' has answer : ' + a._id.to_s + ' to question: ' + a.question_id.to_s + '  that not exist in form '
         logger.error message
         puts message
         result = false
@@ -64,7 +64,7 @@ class Assessment
     self.form.questions.each do |q|
       question_answers = self.answers.where(:question_id => q._id)
       if question_answers.size > 1
-        message = '!!! Patient\'s '  + self.patient.surname + self.patient._id.to_s +  ' assessment  ' + self.to_s + ' is invalid ' + ' question ' +
+        message = '!!!  assessment  ' + self._id.to_s + ' is invalid ' + ' question ' +
             q.to_s + ' have more than one answers:' + question_answers.all.map{|a| a.value_to_s }.to_s
         logger.error message
         puts message
@@ -117,7 +117,9 @@ class Assessment
     if answer.nil?
       return ""
     end
-    answer.value_to_s
+    result = answer.value_to_s
+    #puts 'find_answer_value_by_concept_name ' + concept + ' value: ' + result.to_s
+    result
   end
 
 
@@ -179,7 +181,6 @@ class Assessment
 
   def form
     if self.name
-      puts 'form :' + self.name
       return Form.find_by_name(self.name)
     else
       return Form.find(self.form_id)
