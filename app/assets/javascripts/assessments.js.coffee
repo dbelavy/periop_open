@@ -162,6 +162,7 @@ jQuery ->
           sAjaxSource: $('#assessments').data('source')
 
 jQuery ->
+  window.datepicker = () ->
         $('.datepicker').each(
           ->
             $(this).datepicker
@@ -170,6 +171,7 @@ jQuery ->
               startDate: $(this).data('start-date')
               endDate: $(this).data('end-date')
         )
+  window.datepicker()
 
 jQuery ->
   window.accordion = () ->
