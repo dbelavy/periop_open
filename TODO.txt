@@ -20,3 +20,5 @@ in the form
 
 in asssessments
 504f8b6fb9576500020001a1 , 2
+
+http://stackoverflow.com/questions/9032287/session-timeout-message-in-ror-using-devise
