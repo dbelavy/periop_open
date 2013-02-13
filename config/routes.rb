@@ -48,6 +48,7 @@ Periop::Application.routes.draw do
   root :to => "home#index"
 
   get 'privacy' => "home#privacy"
+  get 'tos' => "home#tos"
 
   if (Rails.application.config.registerable)
     devise_for :users ,:controllers => {:registrations => "registrations"}
