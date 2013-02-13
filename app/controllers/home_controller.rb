@@ -21,4 +21,8 @@ class HomeController < ApplicationController
   def privacy
     render 'privacy'
   end
+
+  def tos
+    render 'tos'
+  end
 end
