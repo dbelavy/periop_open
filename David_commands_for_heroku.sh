@@ -39,20 +39,20 @@ do
 			echo "Run migration script"
 			heroku run rake db:migrate --app pre-op-demo
 			echo "Update questions"
-			heroku run rake db:update_questions --app pre-op-demo
+				heroku run rake db:update_questions --app pre-op-demo
 			;;
 		"Push to Production")
 			echo "You chose to Push to Production"
 			echo "Set account to Production"
-			heroku accounts:set Production
+				heroku accounts:set Production
 			echo "Backup Production"
-			heroku run rake mongo:backup --app pre-op
+				heroku run rake mongo:backup --app pre-op
 			echo "Push"
-			git push -v --tags Production master:master
+				git push -v --tags Production master:master
 			echo "Run migration script"
-			heroku run rake db:migrate --app pre-op
+				heroku run rake db:migrate --app pre-op
 			echo "Update questions"
-			heroku run rake db:update_questions --app pre-op
+				heroku run rake db:update_questions --app pre-op
 			echo "*******Check all the messages to ensure none of it failed*******"
 			;;
 		"Push to Staging")
