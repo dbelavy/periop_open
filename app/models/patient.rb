@@ -115,14 +115,14 @@ class Patient
     recent_answer = nil
     self.assessments.each do |a|
       answer =  a.find_answer_by_concept_name concept
-
-      if answer && !answer.blank?
+      if answer && !answer.value_to_s.blank?
         if recent_answer.nil? ||(recent_answer.assessment.date_started.to_time < answer.assessment.date_started.to_time)
           recent_answer = answer
         end
       end
     end
     recent_answer
+    #puts 'recent ' + recent_answer.value_to_s
   end
 
   def assigned
