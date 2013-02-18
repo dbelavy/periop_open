@@ -22,8 +22,8 @@
   belongs_to :category
   has_many :questions
 
-  def self.find_by_name name
-    self.where(name: name).first
+  def self.find_by_name namestr
+    self.where(name: namestr).first
   end
 
 

@@ -10,7 +10,7 @@ class SummariesController < ApplicationController
       if !assessment.completed?
         next
       end
-      #puts 'assessment ' + assessment.to_s
+      logger.debug 'processing assessment : ' + assessment._id.to_s
       assessment.answers.each {|ans|
         if ans.value_to_s.blank?
           next
@@ -19,9 +19,10 @@ class SummariesController < ApplicationController
         concept = ans.question.concept
         concept_id = concept._id
         category =  ans.question.concept.category
-        logger.debug 'concept :' + concept.name
         logger.debug 'category :' + category.summary_display
+        logger.debug 'concept :' + concept.name
         logger.debug 'answer : ' + ans.value_to_s.to_s
+        logger.debug 'answer : ' + ans.details if !ans.details.nil?
         if @summary[category._id].nil?
           @summary[category._id] = {}
         end
@@ -59,7 +60,7 @@ class SummariesController < ApplicationController
     #concepts_array << row
     downcased_answers = concepts_array.map{|el| el[:answer].to_s.downcase }
     puts downcased_answers.to_s + ' include> ' + row[:answer].to_s.downcase
-    if !downcased_answers.include? row[:answer].to_s.downcase
+    if (!downcased_answers.include? row[:answer].to_s.downcase) || !row[:details].blank?
       concepts_array << row
     end
   end

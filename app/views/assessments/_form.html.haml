@@ -12,7 +12,7 @@
     = f.simple_fields_for :answers do |a|
       - question = a.object.question
       - if question.nil?
-        = a.object.to_json
+        ''
       - else
         = render "assessments/answer",:a => a
     - if assessment[:contains_dob] != true && !@assessment.patient.nil?
