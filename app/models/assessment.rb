@@ -86,6 +86,7 @@ class Assessment
   def update_assessment params, current_user
     result = true
     set_update_by(current_user)
+    self.date_started = Time.now
     if result
       result = update_attributes(params)
     end
