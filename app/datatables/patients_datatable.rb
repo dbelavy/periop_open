@@ -59,7 +59,7 @@ private
         end_of_year = Date.ordinal(search.to_i,-1)
         patients = patients.where(:dob.gte => start_of_year,:dob.lte => end_of_year)
       else
-        regex = /#{params[:sSearch]}/i
+        regex = /#{Regexp.escape(params[:sSearch])}/i
         patients = patients.where({ "$or" => [{firstname: regex},{surname: regex},{surgeon: regex}]})
         # workaround for issue #133
         # TODO make ability filter works, probably updating to mongoid 3.0
