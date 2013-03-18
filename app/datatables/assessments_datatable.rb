@@ -49,7 +49,7 @@ private
       assessments = assessments.find_possible_matches_by_patient @patient
     else
       if params[:sSearch].present?
-        regex = /#{params[:sSearch]}/i
+        regex = /#{Regexp.escape(params[:sSearch])}/i
         assessments = assessments.find_possible_matches [regex ]
       end
     end
