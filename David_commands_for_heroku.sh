@@ -5,23 +5,24 @@ select opt in "${options[@]}"
 do
     case $opt in
         "Change to Demo user")
-            echo "you chose choice 1"
+            echo "you chose change to Demo user"
             heroku accounts:set Demo
             ;;
         "Change to Production user")
-            echo "you chose choice 2"
+            echo "you chose change to Production user"
             heroku accounts:set Production
             ;;   
 
         "Ad hoc backup Demo")
-            echo "you chose choice 5"
+            echo "you chose Ad hoc backup demo"
             heroku run rake mongo:backup --app pre-op-demo
             ;;
         "Ad hoc backup Production")
-            echo "you chose choice 6"
+            echo "you chose choice Ad hoc backup Production"
             heroku run rake mongo:backup --app pre-op
             ;;
         "Keep Demo alive")
+        	echo "you chose Keep demo alive"
             while :
             	do		
 				curl -kv https://pre-op-demo.herokuapp.com
