@@ -371,17 +371,28 @@ end
               end
             end
 
+          duplicate_answers_ids = []
+
           if non_empty_answers_ids.size > 1
             prev_answer = nil
             for i in 0..non_empty_answers_ids.size-1 do
-              if !prev_answer.nil? && (a.answers.find(non_empty_answers_ids[i]).value_to_s != prev_answer)
-                raise 'dupplicate  answers found' + a.answers.find(non_empty_answers_ids[i]).inspect
+              if !prev_answer.nil?
+                if (a.answers.find(non_empty_answers_ids[i]).value_to_s != prev_answer)
+                  raise 'duplicate not equals answers found' + a.answers.find(non_empty_answers_ids[i]).inspect
+                else
+                  duplicate_answers_ids << non_empty_answers_ids[i]
+                end
               else
                 prev_answer = a.answers.find(non_empty_answers_ids[i]).value_to_s
               end
+
             end
           end
           empty_answers_ids.each do |id|
+            a.answers.find(id).delete
+            puts 'empty answer removed'
+          end
+          duplicate_answers_ids.each do |id|
             a.answers.find(id).delete
             puts 'duplicate answer removed'
           end
