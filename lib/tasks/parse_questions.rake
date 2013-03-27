@@ -361,17 +361,27 @@ end
       a.form.questions.each do |q|
         question_answers = a.answers.where(:question_id => q._id)
         if question_answers.size > 1
-          answers_ids = []
-          question_answers[0]
-          for i in 1..question_answers.size-1 do
-            if (question_answers[0].value_to_s != question_answers[i].value_to_s)&&
-                !question_answers[i].value_to_s.blank?
-              raise '!!! Duplicate answers in assessment :'  + a._id.to_s + '  is not equal '
-              + question_answers[0].value_to_s + '!= ' + question_answers[i].value_to_s
+          empty_answers_ids = []
+          non_empty_answers_ids = []
+            for i in 0..question_answers.size-1 do
+              if !question_answers[i].value_to_s.blank?
+                empty_answers_ids << question_answers[i]._id
+              else
+                non_empty_answers_ids << question_answers[i]._id
+              end
             end
-            answers_ids << question_answers[i]._id
+
+          if non_empty_answers_ids.size > 1
+            prev_answer = nil
+            for i in 0..non_empty_answers_ids.size-1 do
+              if !prev_answer.nil? && (a.answers.find(non_empty_answers_ids[i]).value_to_s != prev_answer)
+                raise 'dupplicate  answers found' + a.answers.find(non_empty_answers_ids[i]).inspect
+              else
+                prev_answer = a.answers.find(non_empty_answers_ids[i]).value_to_s
+              end
+            end
           end
-          answers_ids.each do |id|
+          empty_answers_ids.each do |id|
             a.answers.find(id).delete
             puts 'duplicate answer removed'
           end
