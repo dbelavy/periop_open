@@ -20,6 +20,7 @@ class Ability
         can :read, Patient
         can :manage, Professional
         can :manage, User
+        can [:unassigned,:read], Assessment
         can :manage, Question
       elsif user.professional?
         professional_id = user.professional._id

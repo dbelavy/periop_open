@@ -2,9 +2,8 @@
 
 FactoryGirl.define do
   factory :question do
-    display_conditions "MyString"
+    condition "MyString"
     short_name "MyString"
-    clinical_terms "MyString"
     question_for_patient "MyString"
     compulsory_for_patient_reported_assessment "MyString"
     input_type "MyString"
