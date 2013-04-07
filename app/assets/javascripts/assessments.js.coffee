@@ -31,7 +31,7 @@ $(document).ready ->
     year = dateArr[2]
     today=new Date();
     age = today.getFullYear()-year;
-    if(today.getMonth()<month || (today.getMonth()==month && today.getDate()<day))
+    if(today.getMonth()< month || ((today.getMonth()== month) && today.getDate()<day))
       age--
     age
 
@@ -142,13 +142,12 @@ $(document).ready ->
                (event) ->
                  input = event.data.input
                  condition.checkAndApply($(input))
+                 true
                )
-             true
              condition.checkAndApply($(this))
-
       )
 
-  checkAllDocument()
+  window.checkAllDocument()
 
 jQuery ->
         $('#assessments').dataTable
