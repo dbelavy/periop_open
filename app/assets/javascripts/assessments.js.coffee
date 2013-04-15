@@ -130,6 +130,12 @@ $(document).ready ->
             $el.hide(animation_speed)
             $el.find('input').attr("disabled","disabled")
 
+#    checkOnEvent:(event)  ->
+#      $input = event.data.$input
+#      condition.checkAndApply($input)
+#      true
+
+
 
   window.condition =condition
   window.checkAllDocument = () ->
@@ -138,14 +144,15 @@ $(document).ready ->
          condObj = condition.getConditions($(this))
          if condObj != null
            for condHash in condObj.condArr
-             $(formSelector).bind('question.' + condHash.shortname,{input: this}
+             $(formSelector).bind('question.' + condHash.shortname,{$input: $(this)}
                (event) ->
-                 input = event.data.input
-                 condition.checkAndApply($(input))
+                 $input = event.data.$input
+                 condition.checkAndApply($input)
                  true
-               )
+             )
              condition.checkAndApply($(this))
-      )
+           true
+    )
 
   window.checkAllDocument()
 
