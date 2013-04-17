@@ -6,11 +6,10 @@ $(document).ready ->
   animation_speed = 'fast'
   dob_name = "patient_dob"
   formSelector = 'form.assessment'
-  questionsSelector = formSelector  + ' .question'
   questionsSelector = formSelector  + ' [data-condition]'
 
   #onChange fire event with shortname
-  $(document).delegate(questionsSelector, 'change',
+  $(questionsSelector).on('change',
   ->
     shortname = $(this).data("short-name")
     newValue = $(this).val()
@@ -81,13 +80,13 @@ $(document).ready ->
           value = $('[data-short-name=\"' +conditionHash.shortname + '\"].question').val()
           if (value)
             value = value.toLowerCase()
-        if conditionHash.operation == "="
+        if conditionHash.operation == "eq"
           return value == conditionHash.value
-        else if conditionHash.operation == "<"
+        else if conditionHash.operation == "less"
           return value < conditionHash.value
-        else if conditionHash.operation == ">"
+        else if conditionHash.operation == "more"
           return value > conditionHash.value
-        else if conditionHash.operation == "!="
+        else if conditionHash.operation == "neq"
           return value != conditionHash.value
         else
           alert "operation not implemented" + JSON.stringify(conditionHash)
@@ -129,13 +128,6 @@ $(document).ready ->
           else
             $el.hide(animation_speed)
             $el.find('input').attr("disabled","disabled")
-
-#    checkOnEvent:(event)  ->
-#      $input = event.data.$input
-#      condition.checkAndApply($input)
-#      true
-
-
 
   window.condition =condition
   window.checkAllDocument = () ->

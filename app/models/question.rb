@@ -66,9 +66,9 @@ class Question
   def details_criteria
     if !concept.nil? && !ask_details_criteria.nil?
       if ask_details_criteria.include? '!='
-        concept.name.downcase + " " + ask_details_criteria
+        concept.name.downcase + " neq " + ask_details_criteria
       else
-        concept.name.downcase + " = " + ask_details_criteria
+        concept.name.downcase + " eq " + ask_details_criteria
       end
 
     end

@@ -121,6 +121,32 @@ def display_deleted_questions(question_ids)
 end
 
 
+def prepare_condition(condition)
+  if !condition.nil?
+
+    if condition.downcase == "all"
+      condition = ""
+    else
+      if /\S=\S/.match condition
+        condition.gsub!("=", " = ")
+      end
+      if (/<\S/.match condition)
+        condition.gsub!("<", "< ")
+      end
+      if (/\S</.match condition)
+        condition.gsub!("<", " <")
+      end
+    end
+    condition.gsub!(/\s[\s]*/, " ")
+
+  condition.gsub!("=", "eq")
+  condition.gsub!("!=", "neq")
+  condition.gsub!("<", "less")
+  condition.gsub!(">", "more")
+  end
+  condition
+end
+
 def parse_questions doc
   puts 'parse_questions'
   doc.default_sheet = 'Questions'
@@ -164,24 +190,7 @@ def parse_questions doc
     #  next
     #end
 
-    condition = doc.cell(line, "F")
-    if !condition.nil?
-
-      if condition.downcase == "all"
-        condition = ""
-      else
-        if /\S=\S/.match condition
-          condition.gsub!("=", " = ")
-        end
-        if (/<\S/.match condition)
-        condition.gsub!("<", "< ")
-        end
-        if (/\S</.match condition)
-        condition.gsub!("<", " <")
-        end
-      end
-      condition.gsub!(/\s[\s]*/, " ")
-    end
+    condition = prepare_condition(doc.cell(line, "F"))
 
     check_conditon condition
 
