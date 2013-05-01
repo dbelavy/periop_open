@@ -8,17 +8,15 @@ $(document).ready ->
   formSelector = 'form.assessment'
   questionsSelector = formSelector  + ' [data-condition]'
 
-  #onChange fire event with shortname
-  $(questionsSelector).on('change',
-  ->
-    shortname = $(this).data("short-name")
-    newValue = $(this).val()
+  bindChangeEvent = ($input) ->
+    shortname = $input.data("short-name")
+    newValue = $input.val()
     if shortname == dob_name
       shortname = "patient_age"
       window.age = calculateAge()
     event = $.Event('question.' + shortname)
     $(formSelector).trigger(event,newValue)
-  )
+
 
   calculateAge = () ->
     dateStr = $('[data-short-name=' + dob_name + ']').val()
@@ -133,19 +131,23 @@ $(document).ready ->
   window.checkAllDocument = () ->
     $(questionsSelector).each(
        ->
-         condObj = condition.getConditions($(this))
+         $this = $(this)
+         $this.on('change',
+           ->
+            bindChangeEvent($this)
+         )
+         condObj = condition.getConditions($this)
          if condObj != null
            for condHash in condObj.condArr
-             $(formSelector).bind('question.' + condHash.shortname,{$input: $(this)}
+             $(formSelector).bind('question.' + condHash.shortname,{$input: $this}
                (event) ->
                  $input = event.data.$input
                  condition.checkAndApply($input)
                  true
              )
-             condition.checkAndApply($(this))
+             condition.checkAndApply($this)
            true
     )
-
   window.checkAllDocument()
 
 jQuery ->

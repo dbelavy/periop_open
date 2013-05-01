@@ -6,4 +6,3 @@ $(document).ajaxError (e,error) ->
   if error.status == 401
     console.log 'session timeout'
     location.reload()
-
