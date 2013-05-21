@@ -36,7 +36,7 @@ do
 			echo "Backup demo"
 			heroku run rake mongo:backup --app pre-op-demo
 			echo "Push"
-			git push -v --tags Demo master:master
+			git push -v --tags demo master:master
 			echo "Update questions"
 			heroku run rake db:update_questions --app pre-op-demo
 			echo "Run migration script"
@@ -49,7 +49,7 @@ do
 			echo "Backup Production"
 			heroku run rake mongo:backup --app pre-op
 			echo "Push"
-			git push -v --tags Production master:master
+			git push -v --tags production master:master
 			echo "Update questions"
 			heroku run rake db:update_questions --app pre-op
 			echo "Run migration script"
@@ -61,7 +61,7 @@ do
 			echo "Set account to Demo"
 			heroku accounts:set Demo
 			echo "Push"
-			git push -v --tags heroku master:master
+			git push -v --tags staging master:master
 			echo "Update questions"
 			heroku run rake db:update_questions --app periop
 			echo "Run migration script"
