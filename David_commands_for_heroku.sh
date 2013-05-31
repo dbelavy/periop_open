@@ -122,6 +122,8 @@ do
 			heroku run rake db:migrate --app pre-op
 			echo "*******Check all the messages to ensure none of it failed*******"
 			echo "*******remember to update the backup for pre-op-demo.herokuapp.com*******"
+
+			;;
 			
 
 
@@ -130,6 +132,9 @@ do
         "Quit")
             break
             ;;
-        *) echo invalid option;;
+
+        *) 
+			echo invalid option;;
+
     esac
 done
