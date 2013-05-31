@@ -1,6 +1,6 @@
 #!/bin/bash
 PS3='Please enter your choice: '
-options=("Change to Demo user" "Change to Production user"  "Ad hoc backup Demo" "Ad hoc backup Production" "Keep Demo alive" "Push to Demo" "Push to Production" "Push to Staging" "Quit")
+options=("Change to Demo user" "Change to Production user"  "Ad hoc backup Demo" "Ad hoc backup Production" "Keep Demo alive" "Push to Demo" "Push to Production" "Push to Staging" "Push to Github" "Push to All including Github" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -41,6 +41,7 @@ do
 			heroku run rake db:update_questions --app pre-op-demo
 			echo "Run migration script"
 			heroku run rake db:migrate --app pre-op-demo
+			echo "Remember to update your backup *************"
 			;;
 		"Push to Production")
 			echo "You chose to Push to Production"
@@ -68,6 +69,64 @@ do
 			heroku run rake db:migrate --app periop
 			echo "*******Check all the messages to ensure none of it failed*******"
 			;;
+
+
+		 "Push to Github")
+			echo "You chose push to Github"
+			echo "Pushing to github"
+			git push origin
+			;;
+
+
+
+		 "Push to All including Github")
+
+			echo "You chose to Push to All environments."
+
+			echo "Pushing to github"
+				git push origin
+
+			echo "Pushing to Staging"
+			echo "Set account to Demo"
+				heroku accounts:set Demo
+			echo "Push"
+				git push -v --tags staging master:master
+			echo "Update questions"
+				heroku run rake db:update_questions --app periop
+			echo "Run migration script"
+				heroku run rake db:migrate --app periop
+			
+			
+			echo "Pushing to Demo"
+			echo "Set account to Demo"
+			heroku accounts:set Demo
+			echo "Backup demo"
+			heroku run rake mongo:backup --app pre-op-demo
+			echo "Push"
+			git push -v --tags demo master:master
+			echo "Update questions"
+			heroku run rake db:update_questions --app pre-op-demo
+			echo "Run migration script"
+			heroku run rake db:migrate --app pre-op-demo
+			
+			echo "You chose to Push to Production"
+			echo "Set account to Production"
+			heroku accounts:set Production
+			echo "Backup Production"
+			heroku run rake mongo:backup --app pre-op
+			echo "Push"
+			git push -v --tags production master:master
+			echo "Update questions"
+			heroku run rake db:update_questions --app pre-op
+			echo "Run migration script"
+			heroku run rake db:migrate --app pre-op
+			echo "*******Check all the messages to ensure none of it failed*******"
+			echo "*******remember to update the backup for pre-op-demo.herokuapp.com*******"
+			
+
+
+
+
         "Quit")
             break
             ;;
