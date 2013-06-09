@@ -219,7 +219,8 @@ def parse_questions doc
                                 ask_details_criteria: ask_details_criteria,
                                 option_list_name: option_list_name,
                                 validation_criteria: doc.cell(line, validation_col),
-                                sort_order: doc.cell(line, "A").to_i
+                                sort_order: doc.cell(line, "A").to_i,
+                                required: doc.cell(line,required_col)
                                 )
 
     concept_name_cell = doc.cell(line, "D")

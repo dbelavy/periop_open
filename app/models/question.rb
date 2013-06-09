@@ -16,6 +16,7 @@ class Question
   field :ask_details, :type =>  String
   field :validation_criteria, :type =>  String
   field :ask_details_criteria, :type =>  String
+  field :required, :type => String
   field :sort_order, type: Integer
 
 
