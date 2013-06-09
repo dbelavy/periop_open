@@ -24,6 +24,10 @@ describe Assessment do
         @assessment.find_or_create_answer(@required_question)
       end
       specify {@assessment.should_not be_valid }
+      it " " do
+        @assessment.valid?
+        puts @assessment.errors.inspect
+      end
       context "with answered required questions" do
         before(:each) do
           @assessment.find_or_create_answer(@required_question).value = 'other value'

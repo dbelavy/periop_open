@@ -7,6 +7,7 @@
 :defaults => {:disabled => form_disabled}) do |f|
   = f.error_notification
   = f.error :base, {:class => "alert alert-error"}
+  = assessment.errors.full_messages.to_sentence
   .form-inputs
     = f.input :name, :as => :hidden
     = f.simple_fields_for :answers do |a|

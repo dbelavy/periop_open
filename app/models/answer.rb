@@ -32,7 +32,8 @@ class Answer
 
   def require_questions_answered
       if self.question.required.eql?('Y')&& self.value_to_s.blank?
-        errors.add(:base, 'All answers can\'t be blank')
+        #errors.add(:base, 'Answer required')
+        errors.add(:value, 'can\'t be blank')
       end
   end
 
