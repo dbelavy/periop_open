@@ -19,11 +19,11 @@ class Assessment
 
   validate :answers_empty
 
- def answers_empty
+  def answers_empty
    if answers.all?{|answer| answer.value_to_s.blank? }
      errors.add(:base, 'All answers can\'t be blank')
    end
- end
+  end
 
   def self.create_for_patient(form, patient)
     assessment = self.new
@@ -148,11 +148,11 @@ class Assessment
   end
 
   def get_anesthetist_id
-      answer  = self.find_answer_by_concept_name 'anesthetist'
-      if (!answer.nil?)&&(!answer[:id_value].nil?)&&(!answer[:id_value].blank?)
-        answer[:id_value]
-      end
+    answer  = self.find_answer_by_concept_name 'anesthetist'
+    if (!answer.nil?)&&(!answer[:id_value].nil?)&&(!answer[:id_value].blank?)
+      answer[:id_value]
     end
+  end
 
   def get_anesthetist
     id = get_anesthetist_id

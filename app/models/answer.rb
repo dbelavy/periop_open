@@ -11,7 +11,7 @@ class Answer
   embedded_in :assessment
 
   validates_date :date_value, :allow_nil => true
-
+  validate :require_questions_answered
 
   def value_to_s
     if !value.blank?
@@ -27,6 +27,14 @@ class Answer
       return Professional.find(id_value).label
     end
     ""
+  end
+
+
+  def require_questions_answered
+      if self.question.required.eql?('Y')&& self.value_to_s.blank?
+        #errors.add(:base, 'Answer required')
+        errors.add(:value, 'can\'t be blank')
+      end
   end
 
   def update_answer value

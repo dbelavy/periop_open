@@ -71,7 +71,6 @@ namespace :db do
 
   def update_assessments
     Assessment.all.each do |a|
-      puts 'assesment :' + a._id.to_s
       if a.name.nil?
         puts 'assesment name is nil ' + a._id.to_s
         if !a.form_id.nil?
