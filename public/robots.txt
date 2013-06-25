@@ -2,5 +2,8 @@
 #
 # To ban all spiders from the entire site uncomment the next two lines:
 User-Agent: *
+Allow: /
+Allow: /privacy
+Allow: /contact
 Disallow: /patients
 Disallow: /users
