@@ -50,7 +50,7 @@ RSpec.configure do |config|
     Capybara.server_port = 57050
     Capybara.default_wait_time = 10
     Capybara.register_driver :selenium_firefox do |app|
-      Capybara::Selenium::Driver.new(app, :browser => :firefox) 
+    Capybara::Selenium::Driver.new(app, :browser => :firefox)
     end
   end
 end
@@ -144,19 +144,12 @@ def login prof
 end
 
 def create_patient options
-  login options[:professionals][0]
-  click_link 'Patients'
-  should_have_no_errors
-  patients = options[:patients]
-  patients.each do |pat|
-    puts 'create patients ' + pat.to_s
     click_link 'New Patient'
-    fill_answers  pat[:answers]
+    fill_answers options
     select_random_values
     click_button 'Create Patient'
     page.should have_content "Patient was successfully created"
     click_link 'Back'
-  end
 end
 
 
