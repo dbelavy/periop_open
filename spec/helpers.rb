@@ -12,13 +12,15 @@ def create_professional_dev(speciality, email, name)
   return user
 end
 
-def create_professional(speciality, email, name)
+def create_professional(options = {})
+  puts options.inspect
+  options[:password] = options[:password] || default_password
   role = 'professional'
-  user = User.create!(:email => email, :password => default_password,
-                      :password_confirmation => default_password, :confirmed_at => Time.now.utc,
+  user = User.create!(:email => options[:email], :password => options[:password],
+                      :password_confirmation => options[:password], :confirmed_at => Time.now.utc,
   )
   user.assign_role role
-  user.send(role).update_attributes(:name => name,:speciality => speciality)
+  user.send(role).update_attributes(:name => options[:name],:speciality => options[:speciality])
   return user
 end
 

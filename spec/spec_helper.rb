@@ -3,6 +3,7 @@ require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
+
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
@@ -10,6 +11,8 @@ Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
+  require 'capybara/rspec'
+  require 'capybara-screenshot/rspec'
   require 'email_spec'
   require 'rspec/autorun'
   require 'factory_girl_rails'
@@ -46,6 +49,7 @@ Spork.prefork do
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
+    Capybara.javascript_driver = :webkit
 
     # Clean up the database
     require 'database_cleaner'

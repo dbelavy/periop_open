@@ -14,6 +14,7 @@ gem 'jquery-rails'
 gem "haml", ">= 3.1.5"
 gem "haml-rails", ">= 0.3.4", :group => :development
 gem "rspec-rails", ">= 2.10.1", :group => [:development, :test]
+gem 'capybara-screenshot', :group => [:development, :test]
 gem "database_cleaner", ">= 0.7.2", :group => :test
 gem "mongoid-rspec", ">= 1.4.4", :group => :test
 gem "factory_girl", :group => [:development, :test,:production],:require => false

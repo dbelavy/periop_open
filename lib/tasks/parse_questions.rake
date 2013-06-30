@@ -413,11 +413,7 @@ end
 
     desc "Update data from questions spreadsheet"
     task update_questions: :environment do
-      require 'roo'
-        #workbook = RubyXL::Parser.parse("./spreadsheet/Question_properties.xlsx")
-        #workbook.worksheets[0] #returns first worksheet
-        #row = workbook[0].sheet_data[0]  #returns first worksheet
-        #puts row
+        require 'roo'
         doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
         create_forms
         parse_categories(doc)
