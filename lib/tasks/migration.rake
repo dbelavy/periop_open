@@ -192,7 +192,7 @@ namespace :db do
         end
 
         if q.input_type == 'End_section'
-          if open_tag == q.display_name
+          if open_tag.downcase == q.display_name.downcase
             open_tag = ""
             puts 'end_section' + open_tag
           else
