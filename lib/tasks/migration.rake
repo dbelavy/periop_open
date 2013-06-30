@@ -43,8 +43,8 @@ namespace :db do
     update_assessments
     delete_unused_concepts_and_questions
     Rake::Task['db:check_and_fix_data'].invoke
+    Rake::Task['db:lookup_field_value'].invoke
     Rake::Task['db:migrate_patient_fields'].invoke
-    #Rake::Task['db:lookup_field_value'].invoke
   end
 
   def delete_unused_concepts_and_questions
@@ -113,6 +113,10 @@ namespace :db do
       if (!answers.nil?)
         puts 'answers  ' + answers.to_s + ' '+ answers.size.to_s
         answers.each do |ans|
+          if ans.value_to_s.blank?
+            puts 'skipping empty answer'
+            next
+          end
           puts " lookup answer found : " + ans._id.to_s + " : "  + ans.value_to_s.to_s
           professional = Professional.where(name: ans[:value]).first
           if !professional.nil?
@@ -121,7 +125,7 @@ namespace :db do
             ans.save!
           end
           if (ans[:id_value].nil? || ans[:id_value].blank?)
-          puts 'setting id_value ' + ans[:value].to_s
+          puts 'setting id_value ' + ans[:value].to_s + "answer " + ans.inspect
           ans[:id_value] = ans[:value]
           ans[:value] = nil
           ans.save!
