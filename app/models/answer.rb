@@ -31,10 +31,15 @@ class Answer
 
 
   def require_questions_answered
+    if self.question.nil?
+      # TODO delete this answers
+      puts 'answer without question' + self.inspect
+    else
       if self.question.required.eql?('Y')&& self.value_to_s.blank?
         #errors.add(:base, 'Answer required')
         errors.add(:value, 'can\'t be blank')
       end
+    end
   end
 
   def update_answer value
