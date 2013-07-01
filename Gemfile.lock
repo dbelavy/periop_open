@@ -48,7 +48,7 @@ GEM
     bootstrap-datepicker-rails (0.6.22)
       railties (>= 3.0)
     bootstrap-sass (2.1.0.0)
-    browser (0.1.5)
+    browser (0.2.0)
     bson (1.7.0)
     bson_ext (1.7.0)
       bson (~> 1.7.0)
@@ -353,7 +353,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-sass (>= 2.0.1)
-  browser
+  browser (>= 0.2.0)
   bson_ext (>= 1.6.2)
   cancan
   capybara
