@@ -41,16 +41,23 @@ namespace :db do
   task migrate: :environment do
     #Rake::Task['db:synchronise_anesthetists'].invoke
     update_assessments
+    update_unassigned_assessments
     delete_unused_concepts_and_questions
-    #delete_answers_without_questions
+
     Rake::Task['db:check_and_fix_data'].invoke
     Rake::Task['db:migrate_patient_fields'].invoke
     Rake::Task['db:lookup_field_value'].invoke
   end
 
-  def delete_answers_without_questions
-    Answer.where(answer: nil)
+  def update_unassigned_assessments
+    puts ' update_unassigned_assessments '
+    Assessment.unassigned.each do |a|
+      #this will run callbacks again so anesthetist will be assigned if available
+      puts a.inspect
+      a.save
+    end
   end
+
 
   def delete_unused_concepts_and_questions
     deleted_concept_names = Concept.all.map{|c| c.name}
