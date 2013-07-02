@@ -3,12 +3,24 @@ class Professional
 
   SURGEON = 'Surgeon'
   ANESTHETIST = 'Anesthetist'
+  ADMINISTRATIVE_STAFF = 'Administrative staff'
+
 
 
   field :name, :type => String
   field :speciality, :type => String
   belongs_to :user
   field :discontinued, :type => Boolean, :default => false
+  field :shared_professionals_ids, :type => Array
+
+  def shared_professionals_ids
+    if self[:shared_professionals_ids].nil?
+      return []
+    else
+      return self[:shared_professionals_ids].select{|id| BSON::ObjectId.new(id) if !id.blank?}
+    end
+
+  end
 
   #has_many :surgeon_patients,:class_name => 'Patient',  inverse_of: :surgeon
   has_many :anesthetist_patients,:class_name => 'Patient',  inverse_of: :anesthetist
@@ -21,10 +33,12 @@ class Professional
       find(:all).where(:speciality => ANESTHETIST).excludes(discontinued: true)
   end
 
-
+  def self.anesthetists_without_self id
+    find(:all).where(:speciality => ANESTHETIST).excludes(discontinued: true).excludes(:id => id)
+  end
 
   def self.specialities
-    [SURGEON,ANESTHETIST ]
+    [SURGEON,ANESTHETIST,ADMINISTRATIVE_STAFF ]
   end
 
   def label
@@ -35,6 +49,14 @@ class Professional
   #  @credit_card = CreditCard.new(attributes)
   #end
 
+  def has_access_to
+    result = []
+    if self.speciality == ANESTHETIST
+      result << self._id
+    end
+    result.concat shared_professionals_ids
+    result
+  end
 
   def create_professional
     user = self.user

@@ -1,13 +1,14 @@
 = simple_form_for(@professional) do |f|
   = f.error_notification
-  = f.simple_fields_for :user do |u|
+  = f.simple_fields_for(:user,@professional.user )do |u|
     = u.error_notification
     = u.input :email
   .form-inputs
     = f.input :name
     = f.input :speciality,:collection => Professional.specialities
+    = f.input :shared_professionals_ids, :as => :check_boxes,:label => 'Has access to the records of',:include_blank => false, :collection => Professional.anesthetists_without_self(@professional.id),
+    :label_method => :name , :value_method => :_id,:checked => @professional.shared_professionals_ids
     = f.input :discontinued,:as => :boolean
   .form-actions
     = f.button :submit
-= @professional.user.nil? ? "" :@professional.user.errors.messages
-= debug @professional
+-#= @professional.user.nil? ? "" :@professional.user.errors.messages

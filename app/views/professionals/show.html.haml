@@ -5,6 +5,12 @@
   Email: #{@professional.user.email if @professional.user.email}
 %p
   Speciality: #{@professional.speciality}
+%p
+  Have acccess to records of:
+  - @professional.shared_professionals_ids.each do |id|
+    -if !id.blank?
+      %br
+      = Professional.find(id).name
 - if !current_user.nil? && (current_user.admin?)
   %p
   Discontinued: #{@professional.discontinued}
