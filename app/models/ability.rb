@@ -24,14 +24,14 @@ class Ability
         can :manage, Question
       elsif user.professional?
         professional_ids = user.professional.has_access_to
-        Rails.logger.debug 'professional user : has access to ' + professional_ids.inspect
+        #Rails.logger.debug 'professional user : has access to ' + professional_ids.to_s
         #can :manage, Patient
         can :read, User, :_id => user._id
         can :read, Professional, :user_id => user._id
         professional_ids.each do |id|
-          Rails.logger.debug 'checking ability for id => ' + id.to_s
+          Rails.logger.debug 'checking ability for id => ' + id.inspect
           can [:unassigned,:assign,:unassign], Assessment,:anesthetist_id => id
-          can [:read,:update], Patient, :anesthetist_id => id
+          can :manage, Patient, :anesthetist_id => id
         end
         can [:read,:edit,:update,:destroy], Assessment do |assessment|
           #result = (professional_ids.include? assessment.anesthetist_id.to_s )
@@ -43,7 +43,7 @@ class Ability
         end
         can [:create,:operation_assessment_form,:clinician_assessment_form,:note_assessment_form],Assessment
         can [:loading_screen],Assessment
-        can :create, Patient
+        #can :create, Patient
       else
         # if guest user
        can [:patient_assessment_form,:update_patient_assessment],Assessment

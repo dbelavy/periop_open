@@ -17,9 +17,8 @@ class Professional
     if self[:shared_professionals_ids].nil?
       return []
     else
-      return self[:shared_professionals_ids].select{|id| BSON::ObjectId.new(id) if !id.blank?}
+      return self[:shared_professionals_ids].select{|id| !id.blank?}.map{|id| BSON::ObjectId(id)}
     end
-
   end
 
   #has_many :surgeon_patients,:class_name => 'Patient',  inverse_of: :surgeon
