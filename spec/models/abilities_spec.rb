@@ -17,6 +17,11 @@ describe "abilities" do
 
       @ability = Ability.new @assistant_user
       @patient = create(:patient,:anesthetist_id => @anesthetist.id)
+
+
+      form = create :form
+
+      @unassigned_assessment = create(:assessment,anesthetist_id: @anesthetist.id.to_s,form: form)
     end
 
     it "have access to returns anesthetist id as bson id" do
@@ -25,6 +30,13 @@ describe "abilities" do
     it "able to see anesthetist patients" do
       @ability.should be_able_to(:read,@patient)
     end
+
+    it "able to see unassigned_assessment referenced anesthetist" do
+
+    @ability.should be_able_to(:read,@unassigned_assessment)
+    @ability.should be_able_to(:edit,@unassigned_assessment)
+    end
+
 
   end
 end

@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :assessment do
-    name form.name
+    form
+    answers {[FactoryGirl.build(:answer),FactoryGirl.build(:answer)]}
   end
 end

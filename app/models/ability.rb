@@ -30,14 +30,14 @@ class Ability
         can :read, Professional, :user_id => user._id
         professional_ids.each do |id|
           Rails.logger.debug 'checking ability for id => ' + id.inspect
-          can [:unassigned,:assign,:unassign], Assessment,:anesthetist_id => id
+          can [:unassigned,:assign,:unassign], Assessment,:anesthetist_id => id.to_s
           can :manage, Patient, :anesthetist_id => id
         end
         can [:read,:edit,:update,:destroy], Assessment do |assessment|
           #result = (professional_ids.include? assessment.anesthetist_id.to_s )
-          result = (professional_ids.include? assessment.anesthetist_id )
+          result = (professional_ids.include? BSON::ObjectId(assessment.anesthetist_id) )
           if !assessment.patient.nil?
-            result = result || (professional_ids.include? assessment.patient.anesthetist_id)
+            result = result || (professional_ids.include? BSON::ObjectId(assessment.patient.anesthetist_id))
           end
           result
         end

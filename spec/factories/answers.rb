@@ -3,5 +3,6 @@
 FactoryGirl.define do
   factory :answer do
     question
+    value "42"
   end
 end
