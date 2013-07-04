@@ -20,8 +20,11 @@ describe "abilities" do
 
 
       form = create :form
-
-      @unassigned_assessment = create(:assessment,anesthetist_id: @anesthetist.id.to_s,form: form)
+      puts 'form ' + form.inspect
+      puts 'question ' + form.questions[0].inspect
+      puts 'concept ' + form.questions[0].concept.inspect
+      #@concept = create(:concept)
+      @unassigned_assessment = Assessment.new
     end
 
     it "have access to returns anesthetist id as bson id" do

@@ -31,7 +31,8 @@ class Ability
         professional_ids.each do |id|
           Rails.logger.debug 'checking ability for id => ' + id.inspect
           can [:unassigned,:assign,:unassign], Assessment,:anesthetist_id => id.to_s
-          can :manage, Patient, :anesthetist_id => id
+          can [:read,:edit,:update], Patient, :anesthetist_id => id
+          can [:create], Patient
         end
         can [:read,:edit,:update,:destroy], Assessment do |assessment|
           #result = (professional_ids.include? assessment.anesthetist_id.to_s )
