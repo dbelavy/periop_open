@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'capybara/rspec'
 
 include Warden::Test::Helpers
 Warden.test_mode!
@@ -10,8 +9,6 @@ describe "authorisation checks" do
   describe "for signed in patient " do
     puts 'before create'
 
-    let(:user1) { create(:patient_user) }
-    let(:user2) { create(:patient_user) }
 
     it "should be not access other patient" do
       #Warden.test_reset!

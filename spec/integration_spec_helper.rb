@@ -1,13 +1,3 @@
-#require 'rubygems'
-#require 'capybara'
-#require 'capybara/dsl'
-#require 'capybara/rspec'
-#require 'capybara-webkit'
-#require 'launchy'
-
-
-#require 'capybara_helper'
-
 
 def screenshot
   require 'capybara/util/save_and_open_page'
@@ -49,9 +39,9 @@ RSpec.configure do |config|
   config.before(:each) do
     Capybara.server_port = 57050
     Capybara.default_wait_time = 10
-    Capybara.register_driver :selenium_firefox do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :firefox)
-    end
+    #Capybara.register_driver :selenium_firefox do |app|
+    #Capybara::Selenium::Driver.new(app, :browser => :firefox)
+    #end
   end
 end
 
@@ -60,6 +50,7 @@ end
 def should_have_no_errors
   page.should_not have_content "something went wrong"
   page.should_not have_css ".alert-error"
+  page.status_code.should be(200)
 end
 
 def find_answer concept
@@ -135,7 +126,7 @@ end
 
 def login prof
   visit '/'
-  puts prof.to_s
+  puts 'logging in as ' + prof.inspect
   click_link "Login"
   fill_in "user_email", {with: prof['email']}
   fill_in "user_password", {with: prof['password']}

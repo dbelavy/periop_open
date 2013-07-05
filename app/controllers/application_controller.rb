@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
+    logger.debug("flash[:error] = " + exception.message.inspect)
     redirect_to root_url
   end
 

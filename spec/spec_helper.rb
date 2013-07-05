@@ -49,7 +49,11 @@ Spork.prefork do
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
+
+    config.filter_run_excluding disabled: true
+
     Capybara.javascript_driver = :webkit
+
 
     # Clean up the database
     require 'database_cleaner'

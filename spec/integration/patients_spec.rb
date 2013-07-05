@@ -2,9 +2,10 @@ require 'spec_helper'
 require 'integration_spec_helper'
 require 'helpers.rb'
 #require_relative '../../lib/tasks/parse_questions.rake'
+require 'capybara/rspec'
 
-Rake::Task.clear # necessary to avoid tasks being loaded several times in dev mode
-Periop::Application.load_tasks # providing your application name is 'sample'
+#Rake::Task.clear # necessary to avoid tasks being loaded several times in dev mode
+#Periop::Application.load_tasks # providing your application name is 'sample'
 
 include Warden::Test::Helpers
 
@@ -20,12 +21,25 @@ before :all do
 end
 
 before :each do
-  pending
-  create_professional(data[:professionals][0])
+  @profesional = data[:professionals][0]
+  user = create_professional(@profesional)
+  puts 'user ' + user.inspect
+  puts 'professional ' + user.professional.inspect
 end
 
 
-  describe "patient_assessments" ,:js => true, :disable => true do
+describe "session expiry"  do
+  it "give message on session expiry" do
+    login(@profesional)
+  end
+end
+
+
+
+
+
+
+  describe "patient_assessments" ,:js => true, :disabled => true do
     #data = YAML::load(File.read('spec/integration/initial_data.yml'))
     #puts data[:patients_assessments].to_s
     it "should populate patient assessment"  ,:js => true do
@@ -36,17 +50,17 @@ end
   end
 
 
-describe "patient_create" ,:js => true do
+describe "patient_create" ,:js => true ,:disabled => true do
   it "should create patient " do
     puts 'should create patient javascript_driver  :' + Capybara.javascript_driver.to_s
     data = YAML::load(File.read('spec/integration/initial_data.yml'))
-    login data[:professionals][0]
+    login @profesional
     should_have_no_errors
     create_patient data[:patients][0][:answers]
   end
 end
 
-describe "pair_create" ,:js => true, :disable => true do
+describe "pair_create" ,:js => true, :disabled => true do
   it "should create patient " do
     #puts 'should create patient javascript_driver  :' + Capybara.javascript_driver.to_s
     #data = YAML::load(File.read('spec/integration/initial_data.yml'))
@@ -60,7 +74,7 @@ describe "pair_create" ,:js => true, :disable => true do
   end
 end
 
-describe "assign" ,:js => true, :disable => true  do
+describe "assign" ,:js => true, :disabled => true  do
   it "should create patient " do
     #data = YAML::load(File.read('spec/integration/initial_data.yml'))
     #assign_assessments data[:professionals][0]

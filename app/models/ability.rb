@@ -10,7 +10,7 @@ class Ability
       can :read, :question
       can :show, Patient do |patient|
         result = patient.eql? user
-        Rails.logger.debug 'current patient: ' + patient.name + ' authoirzed: ' + result.to_s
+        Rails.logger.debug 'current patient: ' + patient.name + ' authorized: ' + result.to_s
         result
       end
     elsif user.nil? || (user.instance_of? User)
@@ -23,6 +23,7 @@ class Ability
         can [:unassigned,:read], Assessment
         can :manage, Question
       elsif user.professional?
+        Rails.logger.debug 'checking ability for professional ' + user.inspect
         professional_ids = user.professional.has_access_to
         #Rails.logger.debug 'professional user : has access to ' + professional_ids.to_s
         #can :manage, Patient
