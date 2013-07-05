@@ -180,3 +180,6 @@ jQuery ->
             header: ".heading"
             heightStyle: "content"
   window.accordion()
+
+jQuery ->
+  $('.anesthetist-select').select2()

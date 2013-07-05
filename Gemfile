@@ -45,6 +45,8 @@ gem "will_paginate_mongoid"
 gem "therubyracer", :group => :assets, :platform => :ruby
 gem "simple_form"
 
+gem "select2-rails"
+
 group :production do
   gem 'thin'
 end

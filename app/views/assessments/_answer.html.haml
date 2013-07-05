@@ -38,7 +38,7 @@
               = a.input :id_value,:label => label,:as => :select , :collection => anesthetists_option_list,:include_blank => true,
                       :label_method => :name , :value_method => :_id,
                       :input_html => {:data => {:short_name => question.concept.name.downcase, :condition => question.condition },
-                      :class => 'question'}
+                      :class => 'question anesthetist-select'}
               - else if (question.input_type == 'Statement')
                 - else
                   = a.input :value,:label => label ,
