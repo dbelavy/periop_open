@@ -16,28 +16,36 @@ data = HashWithIndifferentAccess.new(YAML::load(File.read('spec/integration/init
 
 before :all do
 
-  # TODO leave this for some long version test
+  # TODO move this for some long version test
   # Rake::Task['db:update_questions'].invoke
 end
 
 before :each do
   @profesional = data[:professionals][0]
-  user = create_professional(@profesional)
-  puts 'user ' + user.inspect
-  puts 'professional ' + user.professional.inspect
+  @user = create_professional(@profesional)
 end
 
 
-describe "session expiry"  do
+describe "session expiry" ,:js => true do
   it "give message on session expiry" do
+
     login(@profesional)
+    last_access = Time.now
+    # some hack for altering timeout value
+    class User
+      def timeout_in
+        1.second
+      end
+    end
+    sleep 1
+    @user.timedout?(last_access).should be_true
+    # just any restricted
+    visit "/users/edit"
+    # it should have only one error box
+    expect(page.all(:css,'.alert-error').size).to eq 1
+    screenshot
   end
 end
-
-
-
-
-
 
   describe "patient_assessments" ,:js => true, :disabled => true do
     #data = YAML::load(File.read('spec/integration/initial_data.yml'))
