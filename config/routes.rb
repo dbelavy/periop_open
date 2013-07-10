@@ -30,6 +30,9 @@ Periop::Application.routes.draw do
 
   resources :assessments ,:only => [:show,:destroy,:patient_assessment_form] do
     get "unassigned" => "assessments#unassigned",:on => :collection
+    resource :assessment_summary,:as => :summary ,:only => [:show,:show_printable] do
+      get 'show_printable'
+    end
   end
   get "patient_assessment_form" => "assessments#patient_assessment_form"
   post "patient_assessment_form" => "assessments#update_patient_assessment"
