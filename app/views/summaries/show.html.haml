@@ -1,5 +1,6 @@
 %h2 Pre-op summary
-= render('patients/nav')
+- if !@patient.nil?
+  = render('patients/nav')
 %table#summary{:class => "table table-striped table-bordered" }
   %thead
     %tr
@@ -37,4 +38,5 @@
                     =sum[:date]
                   %td
                     =sum[:assessment_name]
-= render('patients/nav')
+- if !@patient.nil?
+  = render('patients/nav')

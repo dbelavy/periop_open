@@ -191,4 +191,14 @@ class Assessment
   def form= form
     self.name= form.name
   end
+
+  def patient_assesment_title
+    find_answer_value_by_concept_name("patient_first_name") + " " +
+    find_answer_value_by_concept_name("patient_surname") + " " +
+    find_answer_value_by_concept_name("patient_dob").to_s
+  end
+
+  def summary_preparation
+    "#{name} #{updated_by} #{date_str}"
+  end
 end
