@@ -61,7 +61,7 @@ namespace :db do
 
   def delete_unused_concepts_and_questions
     deleted_concept_names = Concept.all.map{|c| c.name}
-    doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
+    doc = Excel.new("./spreadsheet/Question_properties.xls")
     doc.default_sheet = 'Concept heirarchy position'
     3.upto(doc.last_row) do |line|
         if doc.cell(line, 'A').blank?

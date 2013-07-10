@@ -414,7 +414,7 @@ end
     desc "Update data from questions spreadsheet"
     task update_questions: :environment do
         require 'roo'
-        doc = Excelx.new("./spreadsheet/Question_properties.xlsx")
+        doc = Excel.new("./spreadsheet/Question_properties.xls")
         create_forms
         parse_categories(doc)
         parse_concepts(doc)
