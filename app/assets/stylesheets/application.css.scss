@@ -105,8 +105,15 @@ table#summary {
   }
 }
 
-.centered {
+centered {
   text-align: center;
+}
+
+table.centered {
+  td,th {
+    text-align: center;
+  }
+
 }
 
 .privacy{
