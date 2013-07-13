@@ -22,6 +22,7 @@ gem "faker", :group => [:development, :test,:production]
 gem "email_spec", ">= 1.2.1", :group => :test
 gem "guard", ">= 0.6.2", :group => :development
 gem "roo"
+gem "json", " >= 1.7.7"
 case HOST_OS
   when /darwin/i
     gem 'rb-fsevent', :group => :development
@@ -71,4 +72,9 @@ gem "browser", '>= 0.2.0'
 gem 'validates_timeliness', '~> 3.0'
 
 gem 'exception_notification'
+
+group :development do
+  gem 'brakeman', :require => false
+end
+
 

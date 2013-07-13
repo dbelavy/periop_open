@@ -85,7 +85,7 @@ class AssessmentsController < ApplicationController
   end
 
   def loading_screen
-    @url = params[:q]
+    @url = h(params[:q])
     params[:q] = nil
     render "loading"
   end
