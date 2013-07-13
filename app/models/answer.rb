@@ -10,7 +10,7 @@ class Answer
   field :date_value, type: Date
   embedded_in :assessment
 
-  validates_date :date_value, :allow_nil => true
+  validates_date :date_value, :allow_nil => true,:allow_blank => true
   validate :require_questions_answered
 
   def value_to_s
