@@ -37,7 +37,10 @@ class Answer
     else
       if self.question.required.eql?('Y')&& self.value_to_s.blank?
         #errors.add(:base, 'Answer required')
+
         errors.add(:value, 'can\'t be blank')
+        errors.add(:date_value, 'can\'t be blank')
+        errors.add(:id_value, 'can\'t be blank')
       end
     end
   end

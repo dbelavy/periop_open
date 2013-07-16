@@ -47,7 +47,8 @@ GEM
     bcrypt-ruby (3.0.1)
     bootstrap-datepicker-rails (0.6.22)
       railties (>= 3.0)
-    bootstrap-sass (2.1.0.0)
+    bootstrap-sass (2.3.2.0)
+      sass (~> 3.2)
     brakeman (2.0.0)
       erubis (~> 2.6)
       fastercsv (~> 1.5)
@@ -359,7 +360,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-datepicker-rails
-  bootstrap-sass (>= 2.0.1)
+  bootstrap-sass (~> 2.3.2.0)
   brakeman
   browser (>= 0.2.0)
   bson_ext (>= 1.6.2)
@@ -397,7 +398,7 @@ DEPENDENCIES
   rb-inotify
   roo
   rspec-rails (>= 2.10.1)
-  sass-rails (~> 3.2.3)
+  sass-rails (~> 3.2)
   select2-rails
   simple_form
   spork (= 0.9.0)

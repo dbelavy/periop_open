@@ -102,7 +102,7 @@ class Question
   end
 
   def self.sorted
-    asc(:sort_order)
+    asc(:sort_order,:question_id)
   end
 
 

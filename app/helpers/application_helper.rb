@@ -18,12 +18,6 @@ module ApplicationHelper
     return assessment
   end
 
-def patient_signed_in?
-  # TODO remove occurrences
-  false
-end
-
-
   def printed_answer concept_composite
     puts "concept_composite " + concept_composite.to_s
     concept_composite.map {|sum|

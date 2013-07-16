@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 gem 'rails', '3.2.11'
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails', '~> 3.2'
+  gem 'bootstrap-sass', '~> 2.3.2.0'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
@@ -41,7 +42,6 @@ gem "guard-rspec", ">= 0.4.3", :group => :development
 gem "bson_ext", ">= 1.6.2"
 gem "mongoid", ">= 2.4.10"
 gem "devise", ">= 2.1.3"
-gem "bootstrap-sass", ">= 2.0.1"
 gem "will_paginate_mongoid"
 gem "therubyracer", :group => :assets, :platform => :ruby
 gem "simple_form"
