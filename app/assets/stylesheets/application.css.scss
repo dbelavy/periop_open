@@ -40,6 +40,11 @@
    list-style: none ;
  }
 
+table {
+    max-width: none;
+}
+
+
 // print features
 table#summary_printed td{
   width: 30%;
