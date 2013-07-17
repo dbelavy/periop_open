@@ -23,20 +23,19 @@ private
       [
       (a.find_answer_value_by_concept_name 'patient_surname'),
       (a.find_answer_value_by_concept_name 'patient_first_name'),
-      (a.find_answer_value_by_concept_name 'patient_gender'),
       (a.find_answer_value_by_concept_name 'patient_dob'),
       (a.date_started.to_date.to_formatted_s(:db)),
       (a.find_answer_value_by_concept_name 'procedure_date_patient_reported'),
       (a.find_answer_value_by_concept_name 'referring_surgeon'),
       (a.find_answer_value_by_concept_name 'anesthetist'),
       (if !@patient.nil?
-        (link_to '<i class="icon-list" ></i>'.html_safe, patient_assessment_path(@patient,a),:class=> "btn ")
+        (link_to('<i class="icon-list" ></i>'.html_safe, patient_assessment_path(@patient,a),:class=> "btn ",:title => "Questionnaire"))
       else
-        (link_to '<i class="icon-list" ></i>'.html_safe, a,:class=> "btn btn-small")
+        (link_to '<i class="icon-list" ></i>'.html_safe, a,:class=> "btn btn-small",:title => "Questionnaire")
       end),
-      link_to('<i class="icon-folder-open" ></i>'.html_safe,assessment_summary_path(a),:class=> "btn btn-small"),
-      link_to('<i class="icon-print" ></i>'.html_safe,show_printable_assessment_summary_path(a),:class=> "btn btn-small"),
-      (link_to("<i class=\'icon-remove\'></i>".html_safe, a,:class => "btn btn-small btn-danger",:confirm => 'Are you sure?', :method => :delete))
+      link_to('<i class="icon-folder-open" ></i>'.html_safe,assessment_summary_path(a),:class=> "btn btn-small",:title => "Assessment"),
+      link_to('<i class="icon-print" ></i>'.html_safe,show_printable_assessment_summary_path(a),:class=> "btn btn-small",:title => "Printable"),
+      (link_to("<i class=\'icon-remove\'></i>".html_safe, a,:class => "btn btn-small btn-danger",:confirm => 'Are you sure?', :method => :delete,:title => "Delete"))
       ]
     end
   end

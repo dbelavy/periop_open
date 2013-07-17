@@ -12,24 +12,19 @@
     %tr
       %th Surname
       %th Firstname
-      %th Gender
       %th DOB
       %th Date of assessment
       %th Date of surgery
       %th Surgeon
       %th Anesthetist
       %th
-        Questionnaire
-        %i.icon-list
+        %i.icon-list{:title => "Questionnaire"}
       %th
-        Assessment
-        %i.icon-folder-open
+        %i.icon-folder-open{:title => "Assessment"}
       %th
-        Printable
-        %i.icon-print
+        %i.icon-print{:title => "Printable"}
       %th
-        Delete
-        %i.icon-remove
+        %i.icon-remove{:title => "Delete"}
   %tbody
 %br
 = render('patients/nav')
