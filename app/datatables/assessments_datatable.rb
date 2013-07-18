@@ -26,7 +26,6 @@ private
       (a.find_answer_value_by_concept_name 'patient_dob'),
       (a.date_started.to_date.to_formatted_s(:db)),
       (a.find_answer_value_by_concept_name 'procedure_date_patient_reported'),
-      (a.find_answer_value_by_concept_name 'referring_surgeon'),
       (a.find_answer_value_by_concept_name 'anesthetist'),
       (if !@patient.nil?
         (link_to('<i class="icon-list" ></i>'.html_safe, patient_assessment_path(@patient,a),:class=> "btn ",:title => "Questionnaire"))
