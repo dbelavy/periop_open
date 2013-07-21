@@ -57,6 +57,9 @@ table#summary_printed td{
 //      {display: none;}
 //  }
 
+// Twitter bootstrap changes content sizes at 979px and 768px. "Responsive" http://twitter.github.io/bootstrap/customize.html
+// This way, the table decreases the number of columns once the page width is less than 979px.
+
   @media only screen and (max-width: 980px) {
     table#assessments td:nth-child(3),
     table#assessments th:nth-child(3),
