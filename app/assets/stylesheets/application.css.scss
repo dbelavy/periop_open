@@ -133,6 +133,35 @@ table#summary {
   }
 }
 
+
+
+/* Smartphones small screens or devices ----------- */
+@media only screen 
+and (max-width : 640px) {
+/* Styles */
+#welcome {
+
+  h1{
+  font-size: 50px
+  }
+  a{
+    font-size: 20px;
+  }
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 .centered {
   text-align: center;
 }
