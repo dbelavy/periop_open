@@ -47,17 +47,17 @@ table#summary_printed td{
   width: 30%;
 }
 
-  @media only screen and (max-width: 800px) {
-      table#assessments td:nth-child(6),
-      table#assessments th:nth-child(6),
-      table#assessments td:nth-child(7),
-      table#assessments th:nth-child(7),
-      table#assessments td:nth-child(10),
-      table#assessments th:nth-child(10)
-      {display: none;}
-  }
+//  @media only screen and (max-width: 800px) {
+//      table#assessments td:nth-child(6),
+//      table#assessments th:nth-child(6),
+//      table#assessments td:nth-child(7),
+//      table#assessments th:nth-child(7),
+//      table#assessments td:nth-child(10),
+//      table#assessments th:nth-child(10)
+//      {display: none;}
+//  }
 
-  @media only screen and (max-width: 640px) {
+  @media only screen and (max-width: 800px) {
     table#assessments td:nth-child(3),
     table#assessments th:nth-child(3),
     table#assessments td:nth-child(6),
