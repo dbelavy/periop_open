@@ -8,7 +8,7 @@ describe "abilities" do
       @anesthetist_user = create(:professional_user)
       @assistant_user = create(:professional_user)
       @assistant = @assistant_user.professional
-      @assistant
+
       @anesthetist = @anesthetist_user.professional
       @anesthetist.speciality = Professional::ANESTHETIST
       # important! it is stored as plain string
@@ -25,6 +25,7 @@ describe "abilities" do
       puts 'concept ' + form.questions[0].concept.inspect
       #@concept = create(:concept)
       @unassigned_assessment = Assessment.new
+      @unassigned_assessment.anesthetist_id = @anesthetist.id
     end
 
     it "have access to returns anesthetist id as bson id" do
