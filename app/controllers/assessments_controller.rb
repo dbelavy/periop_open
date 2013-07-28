@@ -85,7 +85,8 @@ class AssessmentsController < ApplicationController
   end
 
   def loading_screen
-    @url = h(params[:q])
+    @url = ERB::Util.html_escape(params[:q])
+
     params[:q] = nil
     render "loading"
   end
