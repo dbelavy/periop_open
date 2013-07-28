@@ -2,6 +2,8 @@
 
 FactoryGirl.define do
   factory :professional do
-    name Faker::Name.name
+    factory :anesthetist do
+      speciality Professional::ANESTHETIST
+    end
   end
 end

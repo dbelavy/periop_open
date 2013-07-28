@@ -1,3 +1,4 @@
+# This class is specific to patient assessments only
 class AssessmentsDatatable
   delegate :params, :h, :link_to,:patient_assessment_path,:assessment_summary_path, :show_printable_assessment_summary_path, :number_to_currency, to: :@view
 

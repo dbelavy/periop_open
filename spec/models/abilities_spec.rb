@@ -1,19 +1,13 @@
 require 'rspec'
 require "cancan/matchers"
+require 'data_setup_helper'
 
 describe "abilities" do
 
   context "when user is an assistant" do
     before :each do
-      @anesthetist_user = create(:professional_user)
-      @assistant_user = create(:professional_user)
-      @assistant = @assistant_user.professional
-
-      @anesthetist = @anesthetist_user.professional
-      @anesthetist.speciality = Professional::ANESTHETIST
-      # important! it is stored as plain string
-      @assistant.shared_professionals_ids = [@anesthetist.id.to_s]
-      @assistant.save!
+      setup_anesthetist
+      setup_assistant
 
       @ability = Ability.new @assistant_user
       @patient = create(:patient,:anesthetist_id => @anesthetist.id)

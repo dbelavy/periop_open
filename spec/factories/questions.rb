@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :question do
+    input_type 'Free_text'
     concept
     condition "MyString"
     short_name "MyString"

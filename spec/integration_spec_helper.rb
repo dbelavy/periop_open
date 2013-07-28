@@ -127,9 +127,10 @@ end
 def login prof
   visit '/'
   puts 'logging in as ' + prof.inspect
+  puts 'password: ' + prof.password
   click_link "Login"
-  fill_in "user_email", {with: prof['email']}
-  fill_in "user_password", {with: prof['password']}
+  fill_in "user_email", {with: prof.email}
+  fill_in "user_password", {with: prof.password}
   click_button "Sign in"
   should_have_no_errors
 end
