@@ -1,5 +1,11 @@
 Periop::Application.routes.draw do
 
+  constraints(:host => "pre-op.net") do
+    match "(*x)" => redirect {|params, request|
+      URI.parse(request.url).tap { |x| x.host = "www.#{x.host}" }.to_s
+    }
+  end
+
   resources :categories
 
   resources :forms
@@ -48,6 +54,7 @@ Periop::Application.routes.draw do
   authenticated :user do
     root :to => 'home#index'
   end
+
   root :to => "home#index"
 
   get 'privacy' => "home#privacy"
@@ -64,11 +71,5 @@ Periop::Application.routes.draw do
   end
 
   resources :users, :only => [:show, :index]
-
-
-  constraints(:host => /pre-op.net/) do
-    root :to => redirect("www.pre-op.net")
-    match '/*path', :to => redirect {|params| "www.pre-op.net/#{params[:path]}"}
-  end
 
 end
