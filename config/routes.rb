@@ -66,9 +66,9 @@ Periop::Application.routes.draw do
   resources :users, :only => [:show, :index]
 
 
-  constraints(:host => /^pre-op.net/) do
-    root :to => redirect("http://www.pre-op.net")
-    match '/*path', :to => redirect {|params| "http://www.pre-op.net/#{params[:path]}"}
+  constraints(:host => /pre-op.net/) do
+    root :to => redirect("www.pre-op.net")
+    match '/*path', :to => redirect {|params| "www.pre-op.net/#{params[:path]}"}
   end
 
 end
