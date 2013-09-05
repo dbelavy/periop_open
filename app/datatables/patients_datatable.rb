@@ -63,7 +63,10 @@ private
         patients = patients.where({ "$or" => [{firstname: regex},{surname: regex},{surgeon: regex}]})
         # workaround for issue #133
         # TODO make ability filter works, probably updating to mongoid 3.0
-        patients = patients.where(anesthetist_id: current_user.professional._id)
+        if current_user.professional?
+          patients = patients.all_in(anesthetist_id: current_user.has_access_to)
+        end
+
       end
     end
     patients = patients.send("#{sort_direction}","#{sort_column}")
