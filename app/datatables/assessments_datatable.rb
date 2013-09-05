@@ -55,6 +55,7 @@ private
       end
     end
 
+    assessments = assessments.send("desc","date_started")
     assessments.paginate(:page => page,:per_page => per_page)
   end
 
@@ -67,6 +68,8 @@ private
   end
 
   def sort_column
+    columns = %w[surname	firstname	dob	form_date	surgery_date anesthetist]
+    columns[params[:iSortCol_0].to_i||"form_date"]
   end
 
   def sort_direction
