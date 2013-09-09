@@ -64,7 +64,7 @@ private
         # workaround for issue #133
         # TODO make ability filter works, probably updating to mongoid 3.0
         if current_user.professional?
-          patients = patients.all_in(anesthetist_id: current_user.has_access_to)
+          patients = patients.all_in(anesthetist_id: current_user.professional.has_access_to)
         end
 
       end
