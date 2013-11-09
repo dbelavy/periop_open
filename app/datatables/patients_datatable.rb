@@ -37,7 +37,10 @@ private
         h(patient.planned_date_of_surgery),
         link_to('show summary',
                 Rails.application.routes.url_helpers.show_printable_patient_summary_path(patient),
-                :target => "_blank")
+                :target => "_blank"),
+        link_to('<i class="icon-trash"></i>'.html_safe,
+                Rails.application.routes.url_helpers.patient_path(patient),
+                :method => :delete,:confirm => "Are you sure?")
       ]
     end
   end

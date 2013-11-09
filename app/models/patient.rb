@@ -1,6 +1,8 @@
 class Patient
   include Mongoid::Document
   include Mongoid::MultiParameterAttributes
+  include Mongoid::Paranoia
+
 
   field :email, :type => String
   field :firstname, :type => String

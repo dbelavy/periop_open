@@ -25,6 +25,16 @@ class PatientsController < ApplicationController
     return assessment
   end
 
+  def destroy
+    #doing safe delete
+    @patient.delete
+
+      respond_to do |format|
+        format.html { redirect_to patients_path }
+        format.json { head :no_content }
+      end
+  end
+
   def new
     @patient = Patient.new
     respond_to do |format|
