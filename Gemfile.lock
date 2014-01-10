@@ -213,7 +213,7 @@ GEM
     net-ssh (2.6.0)
       jruby-pageant (>= 1.1.1)
     netrc (0.7.7)
-    newrelic_rpm (3.4.2.1)
+    newrelic_rpm (3.6.1.87)
     nokogiri (1.5.5)
     oauth (0.4.7)
     oauth2 (0.8.0)
@@ -393,7 +393,7 @@ DEPENDENCIES
   libnotify
   mongoid (>= 2.4.10)
   mongoid-rspec (>= 1.4.4)
-  newrelic_rpm
+  newrelic_rpm (>= 3.5.3.25)
   rails (= 3.2.11)
   rb-inotify
   roo

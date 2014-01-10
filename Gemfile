@@ -67,7 +67,7 @@ gem "heroku-mongo-backup" ,github: 'akhitev/heroku-mongo-backup'
 gem "fog"
 gem "bootstrap-datepicker-rails"
 
-gem "newrelic_rpm"
+gem "newrelic_rpm", " >= 3.5.3.25"
 gem "browser", '>= 0.2.0'
 gem 'validates_timeliness', '~> 3.0'
 
