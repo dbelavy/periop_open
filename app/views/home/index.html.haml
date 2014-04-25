@@ -1,6 +1,3 @@
-%meta{:name => "c923fbd2f5592a094045a0867ff98cfc29534a83", :content => "ddf419e5f9f65b40885664eb7047140f78f51310"}
-
-
 #welcome.hero-unit.centered
   - if (Rails.application.config.environment_type == 'live')
     %h1
@@ -23,7 +20,6 @@
       Username: demo@pre-op.net
       %br
       Password: demopassword
-      
   %br
   %p
     = link_to('Pre-op assessment',patient_assessment_form_path,:class=> "btn btn-success btn-large")
