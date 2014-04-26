@@ -12,7 +12,7 @@ class Form
   CLINIC_ASSESSMENT = "Clinic assessment"
   QUICK_NOTE_ASSESSMENT = "Quick note"
   NEW_PATIENT = "New patient"
-  NEW_OPERATION = "New Operation"
+  # NEW_OPERATION = "New Operation"
 
   def self.patient_form
     self.find_by_name PATIENT_ASSESSMENT
