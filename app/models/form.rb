@@ -22,9 +22,9 @@ class Form
     self.find_by_name NEW_PATIENT
   end
 
-  def self.new_operation_form
-    self.find_by_name NEW_OPERATION
-  end
+#  def self.new_operation_form
+#    self.find_by_name NEW_OPERATION
+#  end
 
   def self.find_by_name name
     self.where(name: name).first
