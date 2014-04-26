@@ -12,7 +12,7 @@ class Form
   CLINIC_ASSESSMENT = "Clinic assessment"
   QUICK_NOTE_ASSESSMENT = "Quick note"
   NEW_PATIENT = "New patient"
-  # NEW_OPERATION = "New Operation"
+  NEW_OPERATION = "New Operation"
 
   def self.patient_form
     self.find_by_name PATIENT_ASSESSMENT
@@ -22,9 +22,9 @@ class Form
     self.find_by_name NEW_PATIENT
   end
 
-#  def self.new_operation_form
-#    self.find_by_name NEW_OPERATION
-#  end
+  def self.new_operation_form
+    self.find_by_name NEW_OPERATION
+  end
 
   def self.find_by_name name
     self.where(name: name).first
