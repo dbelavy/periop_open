@@ -1,6 +1,7 @@
 # This class is specific to patient assessments only
 class AssessmentsDatatable
-  delegate :params, :h, :link_to,:patient_assessment_path,:assessment_summary_path, :show_printable_assessment_summary_path, :number_to_currency, to: :@view
+  delegate :params, :h, :link_to,:patient_assessment_path,:assessment_summary_path,
+           :show_printable_assessment_summary_path, :number_to_currency,:patient_assessment_assign_path, to: :@view
 
   def initialize(view,ability,patient=nil)
     @view = view
@@ -27,7 +28,7 @@ private
       (a.find_answer_value_by_concept_name 'patient_dob'),
       (a.date_started.to_date.to_formatted_s(:db)),
       (a.find_answer_value_by_concept_name 'procedure_date_patient_reported'),
-      (a.find_answer_value_by_concept_name 'anesthetist'),
+      (a.find_answer_value_by_concept_name 'referring_surgeon'),
       (if !@patient.nil?
         (link_to('<i class="icon-list" ></i>'.html_safe, patient_assessment_path(@patient,a),:class=> "btn ",:title => "Questionnaire"))
       else
@@ -35,6 +36,10 @@ private
       end),
       link_to('<i class="icon-folder-open" ></i>'.html_safe,assessment_summary_path(a),:class=> "btn btn-small",:title => "Assessment"),
       link_to('<i class="icon-print" ></i>'.html_safe,show_printable_assessment_summary_path(a),:class=> "btn btn-small",:title => "Printable"),
+      (if !@patient.nil? && a.patient.nil?
+          link_to('<i class="icon-plus" ></i>'.html_safe,patient_assessment_assign_path(@patient,a), :method => :put,
+                  :class=> "btn btn-small",:title => "Join")
+      end),
       (link_to("<i class=\'icon-remove\'></i>".html_safe, a,:class => "btn btn-small btn-danger",:confirm => 'Are you sure?', :method => :delete,:title => "Delete"))
       ]
     end
