@@ -32,6 +32,7 @@ def setup_questions
   result << create_question_with_concept("anesthetist")
   #
   result << create_question_with_concept("procedure_date_patient_reported")
+  result << create_question_with_concept("referring_surgeon")
   result
 end
 

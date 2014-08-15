@@ -58,7 +58,7 @@ describe "professional tests" do
       it "should display assessment page" do
         expect(page).to have_content ("Patient Assessments")
         expect(page).to have_link("Procedure management")
-        "epect name from assessment present"
+        "expect name from assessment present"
         expect(page).to have_content "John"
       end
 
