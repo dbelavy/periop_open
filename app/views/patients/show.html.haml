@@ -5,9 +5,12 @@
   = link_to 'Edit patient information', edit_patient_path(@patient)
 %h3 Pre-op information
 %p
+<<<<<<< Updated upstream
   =link_to('Show Pre-op Summary ',patient_summary_path(@patient))
 %h3 Add operations or assessments
 %p
+=======
+>>>>>>> Stashed changes
 - if (can? :edit, @patient) && !@patient.patient_assessment_assigned?
   %ul.unstyled
     %li
@@ -19,10 +22,19 @@
 
 %h3 Linked Assessments
 %p
+<<<<<<< Updated upstream
 %p
   %ul.unstyled
     - @patient.assessments_to_display.each do |a|
       %li #{link_to (a.summary), patient_assessment_path(@patient, a)}
+=======
+  TODO Start new assessment [link] - link to a list of available assessments
+%p
+  - @patient.assessments_to_display.each do |a|
+    %li #{link_to (a.summary), patient_assessment_path(@patient, a)}
+
+= link_to 'Back', patients_path
+>>>>>>> Stashed changes
 
 = render('patients/nav')
 

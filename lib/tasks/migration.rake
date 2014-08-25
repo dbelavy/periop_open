@@ -116,6 +116,9 @@ namespace :db do
     end
   end
 
+  task update_patient_forms: :environment do
+
+  end
 
   task lookup_field_value: :environment do
     q_ids = Question.where(input_type: "Lookup_User_Anesthetist").map{|q| q._id}

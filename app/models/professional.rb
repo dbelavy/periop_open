@@ -24,6 +24,14 @@ class Professional
   #has_many :surgeon_patients,:class_name => 'Patient',  inverse_of: :surgeon
   has_many :anesthetist_patients,:class_name => 'Patient',  inverse_of: :anesthetist
 
+  def slug
+    name.tr(" ","-")
+  end
+
+  def self.find_by_slug slug
+    find(:all).where(:name => slug.tr("-"," "))
+  end
+
   def self.surgeons
     find(:all).where(:speciality => SURGEON)
   end

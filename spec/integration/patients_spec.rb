@@ -11,5 +11,10 @@ include Warden::Test::Helpers
 
 
 describe "patient tests" do
+  before :each do
+    visit "/"
+end
 
+  expect(page).to have_content ("Who is your doctor?")
+  expect(page).to have_css("#doctor")
 end
