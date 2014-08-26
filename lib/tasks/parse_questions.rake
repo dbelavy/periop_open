@@ -5,7 +5,7 @@ require 'rubygems' #so it can load gems
 def parse_concepts(doc)
   all_names = Concept.all.map{|c| c.name}
   puts "parse_concepts"
-  doc.default_sheet = 'Concept heirarchy position'
+  doc.default_sheet = 'Concept hierarchy position'
   3.upto(doc.last_row) do |line|
     if doc.cell(line, 'A').blank?
       next

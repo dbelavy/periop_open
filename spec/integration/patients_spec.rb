@@ -13,8 +13,12 @@ include Warden::Test::Helpers
 describe "patient tests" do
   before :each do
     visit "/"
-end
+  end
 
-  expect(page).to have_content ("Who is your doctor?")
-  expect(page).to have_css("#doctor")
+  describe "start page", :js => true do
+    it "should display choose doctor" do
+      expect(page).to have_content ("Who is your doctor?")
+      expect(page).to have_css("#doctor")
+    end
+  end
 end

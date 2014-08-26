@@ -4,6 +4,7 @@ FactoryGirl.define do
   factory :professional do
     factory :anesthetist do
       speciality Professional::ANESTHETIST
+      name { Faker::Name.last_name}
     end
   end
 end
