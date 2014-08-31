@@ -5,7 +5,8 @@ require 'rubygems' #so it can load gems
 def parse_concepts(doc)
   all_names = Concept.all.map{|c| c.name}
   puts "parse_concepts"
-  doc.default_sheet = 'Concept hierarchy position'
+  # TODO typo in spreadsheet
+  doc.default_sheet = 'Concept heirarchy position'
   3.upto(doc.last_row) do |line|
     if doc.cell(line, 'A').blank?
       next
@@ -90,6 +91,7 @@ def delete_data
 end
 
 def create_forms
+  Form.delete_all
   puts 'create_forms'
   Form.find_or_create_by(name: Form::NEW_PATIENT).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT).update_attributes(person_role: [Question::PATIENT])
@@ -97,6 +99,13 @@ def create_forms
   Form.find_or_create_by(name: Form::CLINIC_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::NEW_OPERATION).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::QUICK_NOTE_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
+
+  @custom_patient_assessments_cols.keys.each do |name|
+    professional = Professional.find_by_name name
+    raise Exception.new('professional not found for name ' + name) if professional.nil?
+    puts 'create custom patient form for doctor ' + name
+    custom_form = Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT,professional_id: professional._id).update_attributes(person_role: [Question::PATIENT])
+  end
 end
 
 def column_for doc,name
@@ -258,6 +267,11 @@ def parse_questions doc
       #  add to form
       note_form.questions.push question
     end
+
+    @custom_patient_assessments_cols.keys.each do |name|
+      Form.patient_form(Professional.name_to_slug(name)).questions.push question
+    end
+
     #puts 'created question: ' + question.to_s
   end
 
@@ -415,6 +429,7 @@ end
     task update_questions: :environment do
         require 'roo'
         doc = Excel.new("./spreadsheet/Question_properties.xls")
+        @custom_patient_assessments_cols = populate_custom_patient_assessments_cols doc
         create_forms
         parse_categories(doc)
         parse_concepts(doc)
@@ -428,4 +443,23 @@ end
     task check_and_fix_data: :environment do
       check_and_fix_assessments
     end
+
+    private
+
+  def populate_custom_patient_assessments_cols doc
+    doc.default_sheet = 'Questions'
+    result = {}
+    done = false
+    # start column position of doctors custom patient assessment
+    column = 20
+    while !done do
+      if !doc.cell(1,column).nil? && (!doc.cell(1,column).empty?)
+        result[doc.cell(1,column)]=column
+        column +=1
+      else
+        done = true
+      end
+    end
+    result
+  end
 end
