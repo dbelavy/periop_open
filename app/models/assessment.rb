@@ -175,11 +175,6 @@ class Assessment
     where({"answers.value" => {"$in" => array}})
   end
 
-  def self.patient_assessment_question_by_concept_name concept_name
-    concept = Concept.find_by_name(concept_name)
-    Form.patient_form.questions.by_concept(concept)
-  end
-
   def form
     if self.name
       return Form.find_by_name(self.name)

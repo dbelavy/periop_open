@@ -189,7 +189,12 @@ namespace :db do
 
   def check_sections
     Form.all.each do |form|
-      puts 'checking form' + form.name
+      form_name =  form.name
+      if !form.professional_id.nil?
+        form_name += ' doctor : ' + Professional.find(form.professional_id).name
+      end
+      puts '      checking form : ' + form_name
+
       open_tag = ""
       form.questions.sorted.each do |q|
         if q.input_type == 'Start_section'
@@ -209,7 +214,6 @@ namespace :db do
             puts '!!! trying to close section ' + q.display_name +  ' but previously open section ' + open_tag + ' not been closed'
           end
         end
-
       end
       if !open_tag.blank?
         puts 'previously open section ' + open_tag + ' not been closed'

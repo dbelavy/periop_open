@@ -25,7 +25,7 @@ class Professional
   has_many :anesthetist_patients,:class_name => 'Patient',  inverse_of: :anesthetist
 
   def slug
-    name_to_slug(self.name)
+    Professional.name_to_slug(self.name)
   end
 
   def self.name_to_slug name
@@ -34,7 +34,7 @@ class Professional
 
 
   def self.find_by_slug slug
-    find(:all).where(:name => slug.tr("-"," "))
+    find(:all).where(:name => slug.tr("-"," ")).first
   end
 
   def self.find_by_name name

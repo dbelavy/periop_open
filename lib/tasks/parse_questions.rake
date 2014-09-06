@@ -103,8 +103,8 @@ def create_forms
   @custom_patient_assessments_cols.keys.each do |name|
     professional = Professional.find_by_name name
     raise Exception.new('professional not found for name ' + name) if professional.nil?
-    puts 'create custom patient form for doctor ' + name
-    custom_form = Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT,professional_id: professional._id).update_attributes(person_role: [Question::PATIENT])
+    puts 'find  or create custom patient form for doctor ' + name
+    Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT,professional_id: professional._id).update_attributes(person_role: [Question::PATIENT])
   end
 end
 
@@ -176,6 +176,10 @@ def parse_questions doc
 
   operation_form = Form.where(name: Form::NEW_OPERATION).first
   operation_form.clear_questions
+
+  @custom_patient_assessments_cols.keys.each do |name|
+    Form.patient_form(Professional.name_to_slug(name)).clear_questions
+  end
 
   used_in_new_patient_col = column_for(doc,"New_Patient_Form")
   used_in_patient_assessment_col = column_for(doc,"Question used in patient assessment")
@@ -269,10 +273,17 @@ def parse_questions doc
     end
 
     @custom_patient_assessments_cols.keys.each do |name|
-      Form.patient_form(Professional.name_to_slug(name)).questions.push question
+      if doc.cell(line, @custom_patient_assessments_cols[name])
+        form = Form.patient_form(Professional.name_to_slug(name))
+        form.questions.push(question)
+      end
     end
 
     #puts 'created question: ' + question.to_s
+  end
+
+  @custom_patient_assessments_cols.keys.each do |name|
+    puts 'patient form ' + name + " questions : " + Form.patient_form(Professional.name_to_slug(name)).questions.size.to_s
   end
 
   display_deleted_questions(all_question_ids)
