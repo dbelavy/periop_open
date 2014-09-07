@@ -162,8 +162,8 @@ def parse_questions doc
   new_patient_form = Form.where(name: Form::NEW_PATIENT).first
   new_patient_form.clear_questions
 
-  patient_form = Form.where(name: Form::PATIENT_ASSESSMENT).first
-  patient_form.clear_questions
+  default_patient_form = Form.where(name: Form::PATIENT_ASSESSMENT).first
+  default_patient_form.clear_questions
 
   telephone_form = Form.where(name: Form::TELEPHONE_ASSESSMENT).first
   telephone_form.clear_questions
@@ -249,7 +249,7 @@ def parse_questions doc
 
     # used in patient assessment
     if doc.cell(line, used_in_patient_assessment_col)
-      patient_form.questions.push question
+      default_patient_form.questions.push question
     end
     if doc.cell(line, used_in_new_patient_col)
       new_patient_form.questions.push question
@@ -273,7 +273,8 @@ def parse_questions doc
     end
 
     @custom_patient_assessments_cols.keys.each do |name|
-      if doc.cell(line, @custom_patient_assessments_cols[name])
+      column = @custom_patient_assessments_cols[name]
+      if doc.cell(line, column).eql? 'Y'
         form = Form.patient_form(Professional.name_to_slug(name))
         form.questions.push(question)
       end
@@ -464,8 +465,9 @@ end
     # start column position of doctors custom patient assessment
     column = 20
     while !done do
-      if !doc.cell(1,column).nil? && (!doc.cell(1,column).empty?)
-        result[doc.cell(1,column)]=column
+      doctor_name = doc.cell(1, column)
+      if !doctor_name.nil? && (!doctor_name.empty?)
+        result[doctor_name]=column
         column +=1
       else
         done = true

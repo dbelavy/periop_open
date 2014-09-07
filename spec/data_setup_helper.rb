@@ -37,7 +37,7 @@ def setup_questions
   result
 end
 
-def patient_form
+def default_patient_form
   if @patient_form.nil?
     @patient_form = create(:form,name: Form::PATIENT_ASSESSMENT)
     @patient_form.questions = setup_questions
@@ -49,7 +49,7 @@ require_relative '../app/helpers/application_helper'
 
 def setup_patient_assessment anesthetist
   assessment = Assessment.new
-  assessment.form = patient_form
+  assessment.form = default_patient_form
   assessment.anesthetist_id = anesthetist.id
 
   setup_assessment assessment
