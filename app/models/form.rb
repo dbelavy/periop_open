@@ -17,8 +17,8 @@ class Form
   NEW_OPERATION = "New Operation"
 
   def self.patient_form professional_slug
-    professional = Professional.find_by_slug professional_slug
-    result = self.where(name: PATIENT_ASSESSMENT,professional_id: professional._id).first
+    professional = Professional.find_by_slug professional_slug if !professional_slug.nil?
+    result = self.where(name: PATIENT_ASSESSMENT,professional_id: professional._id).first if !professional.nil?
     if result.nil?
       result = self.where(name: PATIENT_ASSESSMENT).first
     end
