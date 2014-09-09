@@ -274,7 +274,7 @@ def parse_questions doc
 
     @custom_patient_assessments_cols.keys.each do |name|
       column = @custom_patient_assessments_cols[name]
-      if doc.cell(line, column).eql? 'Y'
+      if doc.cell(line, column)
         form = Form.patient_form(Professional.name_to_slug(name))
         form.questions.push(question)
       end
