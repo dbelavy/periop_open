@@ -10,6 +10,7 @@ class Assessment
   field :date_started, :type => DateTime
   field :updated_by, :type => String
   field :name, :type => String
+  field :doctor_name, :type => String
 
   belongs_to :patient
 
@@ -178,11 +179,9 @@ class Assessment
   def form
     if self.name
       return Form.find_by_name(self.name)
-    else
-      return Form.find(self.form_id)
     end
   end
-
+  #TODO form can differ for each doctor
   def form= form
     self.name= form.name
   end

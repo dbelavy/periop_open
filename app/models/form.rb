@@ -20,6 +20,7 @@ class Form
     professional = Professional.find_by_slug professional_slug if !professional_slug.nil?
     result = self.where(name: PATIENT_ASSESSMENT,professional_id: professional._id).first if !professional.nil?
     if result.nil?
+      Rails.logger.debug "Not found patient_assessment form for doctor " + professional_slug + ' using default form'
       result = self.where(name: PATIENT_ASSESSMENT).first
     end
     result

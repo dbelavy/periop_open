@@ -8,6 +8,15 @@ def setup_anesthetist
 @anesthetist.save
 end
 
+
+def doctor_patient_form professional
+  patient_form = create(:form,name: Form::PATIENT_ASSESSMENT,professional_id: professional._id)
+  patient_form.questions = setup_questions
+  patient_form.questions.push(create_question_with_concept('doctor specific ' + professional.name))
+  patient_form.save!
+end
+
+
 def setup_assistant
   @assistant_user = create(:professional_user)
   @assistant = @assistant_user.professional
@@ -18,7 +27,7 @@ end
 
 def create_question_with_concept concept_name
   c = create(:concept, name: concept_name)
-  q = create(:question,concept: c)
+  q = create(:question,concept: c,display_name: concept_name )
 end
 
 def setup_questions
