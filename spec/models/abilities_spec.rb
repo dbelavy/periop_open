@@ -6,7 +6,7 @@ describe "abilities" do
 
   context "when user is an assistant" do
     before :each do
-      setup_anesthetist
+      @anesthetist = setup_anesthetist
       setup_assistant
 
       @ability = Ability.new @assistant_user

@@ -24,10 +24,10 @@ describe "professional tests" do
   context "as professional" do
 
     before :each do
-      setup_anesthetist
+      @anesthetist = setup_anesthetist
+      @anesthetist_user = @anesthetist.user
       setup_patient_assessment @anesthetist
       login(@anesthetist_user)
-
     end
 
     describe "session expiry", :js => true do

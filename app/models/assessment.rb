@@ -187,7 +187,7 @@ class Assessment
       return Form.find(self.form_id)
     end
   end
-  #TODO form can differ for each doctor
+
   def form= form
     self.name= form.name
     self.doctor_name= Professional.find(form.professional_id).name if !form.professional_id.nil?

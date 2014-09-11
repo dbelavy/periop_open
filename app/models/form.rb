@@ -56,6 +56,10 @@ private
   def self.patient_form_by_professional(professional)
     professional_id = nil
     professional_id = professional._id if !professional.nil?
-    self.where(name: PATIENT_ASSESSMENT, professional_id: professional_id).first
+    form = self.where(name: PATIENT_ASSESSMENT, professional_id: professional_id).first
+    if form.nil?
+      form = self.where(name: PATIENT_ASSESSMENT, professional_id: nil).first
+    end
+    form
   end
 end

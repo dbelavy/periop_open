@@ -1,11 +1,13 @@
 require 'spec_helper'
 include ApplicationHelper
+
 def setup_anesthetist
-@anesthetist_user = create(:professional_user)
-@anesthetist = @anesthetist_user.professional
-@anesthetist.name = Faker::Name.last_name
-@anesthetist.speciality = Professional::ANESTHETIST
-@anesthetist.save
+  anesthetist_user = create(:professional_user)
+  anesthetist = anesthetist_user.professional
+  anesthetist.name = Faker::Name.last_name
+  anesthetist.speciality = Professional::ANESTHETIST
+  anesthetist.save
+  anesthetist
 end
 
 

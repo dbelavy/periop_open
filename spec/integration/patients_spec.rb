@@ -14,7 +14,8 @@ include Warden::Test::Helpers
 describe "patient tests" do
 
   before :each do
-    setup_anesthetist
+    @anesthetist = setup_anesthetist
+    @other_anesthetist = setup_anesthetist
     doctor_patient_form @anesthetist
     default_patient_form.save!
     visit "/"
@@ -41,6 +42,15 @@ describe "patient tests" do
       click_button "Pre-op assessment"
       should_have_no_errors
       page.should have_content 'doctor specific ' + @anesthetist.name
+    end
+  end
+
+  describe "when other doctor selected", :js => true do
+    it "should display patient assesssment" do
+      page.find('#doctor/option[text()="' + @other_anesthetist["name"] + '"]').select_option
+      click_button "Pre-op assessment"
+      should_have_no_errors
+      page.should_not have_content 'doctor specific ' + @anesthetist.name
     end
   end
 end
