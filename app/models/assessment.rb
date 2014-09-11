@@ -178,12 +178,19 @@ class Assessment
 
   def form
     if self.name
-      return Form.find_by_name(self.name)
+      if self.name.eql? Form::PATIENT_ASSESSMENT
+        return Form.patient_form_by_professional_name self.doctor_name
+      else
+        return Form.find_by_name(self.name)
+      end
+    else
+      return Form.find(self.form_id)
     end
   end
   #TODO form can differ for each doctor
   def form= form
     self.name= form.name
+    self.doctor_name= Professional.find(form.professional_id).name if !form.professional_id.nil?
   end
 
   def patient_assesment_title

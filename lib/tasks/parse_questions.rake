@@ -440,7 +440,8 @@ end
     desc "Update data from questions spreadsheet"
     task update_questions: :environment do
         require 'roo'
-        doc = Excel.new("./spreadsheet/Question_properties.xls")
+        #doc = Excel.new("./spreadsheet/Question_properties.xls")
+        doc = Openoffice.new("./spreadsheet/Question_properties_OO.ods")
         @custom_patient_assessments_cols = populate_custom_patient_assessments_cols doc
         create_forms
         parse_categories(doc)

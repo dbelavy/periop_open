@@ -175,7 +175,7 @@ class AssessmentsController < ApplicationController
 
   def update_patient_assessment
     #@assessment = Assessment.new(params[:assessment])
-    @assessment.form= Form.patient_form(params[:doctor])
+    @assessment.form= Form.patient_form_by_professional_name(params[:assessment][:doctor_name])
     @assessment.start_and_complete_assessment
     respond_to do |format|
       if @assessment.save

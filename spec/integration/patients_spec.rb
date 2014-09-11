@@ -16,6 +16,7 @@ describe "patient tests" do
   before :each do
     setup_anesthetist
     doctor_patient_form @anesthetist
+    default_patient_form.save!
     visit "/"
   end
 

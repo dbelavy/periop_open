@@ -10,6 +10,7 @@
   = assessment.errors.full_messages.to_sentence if Rails.env.development?
   .form-inputs
     = f.input :name, :as => :hidden
+    = f.input :doctor_name, :as => :hidden
     = f.simple_fields_for :answers do |a|
       - question = a.object.question
       - if question.nil?

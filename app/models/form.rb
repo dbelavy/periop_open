@@ -18,12 +18,13 @@ class Form
 
   def self.patient_form professional_slug
     professional = Professional.find_by_slug professional_slug if !professional_slug.nil?
-    result = self.where(name: PATIENT_ASSESSMENT,professional_id: professional._id).first if !professional.nil?
-    if result.nil?
-      Rails.logger.debug "Not found patient_assessment form for doctor " + professional_slug + ' using default form'
-      result = self.where(name: PATIENT_ASSESSMENT).first
-    end
-    result
+    patient_form_by_professional(professional)
+  end
+
+
+  def self.patient_form_by_professional_name professional_name
+    professional = Professional.find_by_name professional_name if !professional_name.nil?
+    patient_form_by_professional(professional)
   end
 
   def self.new_patient_form
@@ -51,5 +52,10 @@ class Form
     name == PATIENT_ASSESSMENT
   end
 
-
+private
+  def self.patient_form_by_professional(professional)
+    professional_id = nil
+    professional_id = professional._id if !professional.nil?
+    self.where(name: PATIENT_ASSESSMENT, professional_id: professional_id).first
+  end
 end
