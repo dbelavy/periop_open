@@ -6,7 +6,7 @@
     %p
       We help patients and doctors manage information for perioperative care.
       %br
-      If your doctor has asked you to come here, please fill out a confidential Pre-op assessment.
+      Please complete a confidential questionnaire to send it to your doctor.
   - else
     %h2
       = Rails.application.config.site_url
@@ -24,10 +24,10 @@
   %p
     = form_tag(patient_assessment_form_path,:method => :get) do
       .form-inputs
-      = label_tag "doctor", "Who is your doctor?"
+      = label_tag "doctor", "Select your doctor from the list:"
       = select_tag("doctor",options_from_collection_for_select(anesthetists_option_list,:slug,:name),:include_blank => true,:input_html => {:class => 'question anesthetist-select'})
       %br
-      = submit_tag('Pre-op assessment',:class=> "btn btn-success btn-large",:name => nil)
+      = submit_tag('Fill in assessment',:class=> "btn btn-success btn-large",:name => nil)
 -#
 - if user_signed_in? && !current_user.name.nil?
   %p Logged in as: #{current_user.name + ' Role: ' +  current_user.user_role}
