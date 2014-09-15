@@ -149,6 +149,10 @@ class Assessment
   end
 
   def get_anesthetist_id
+    if !self.doctor_name.nil? && !self.doctor_name.blank?
+      professional = Professional.find_by_name doctor_name
+      return professional._id if !professional.nil?
+    end
     answer  = self.find_answer_by_concept_name 'anesthetist'
     if (!answer.nil?)&&(!answer[:id_value].nil?)&&(!answer[:id_value].blank?)
       answer[:id_value]

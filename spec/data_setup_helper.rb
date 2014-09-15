@@ -32,21 +32,26 @@ def create_question_with_concept concept_name
   q = create(:question,concept: c,display_name: concept_name )
 end
 
+ PATIENT_ASSESSMENT_CONCEPTS  = %w(patient_first_name patient_middle_name patient_surname patient_dob
+medicare_card_number medicare_card_number_identifier individual_healthcare_identifier
+anesthetist procedure_date_patient_reported referring_surgeon)
+
 def setup_questions
   result = []
-  result << create_question_with_concept("patient_first_name")
-  result << create_question_with_concept("patient_middle_name")
-  result << create_question_with_concept("patient_surname")
-  result << create_question_with_concept("patient_dob")
-  result << create_question_with_concept("medicare_card_number")
-  result << create_question_with_concept("medicare_card_number_identifier")
-  result << create_question_with_concept("individual_healthcare_identifier")
-  result << create_question_with_concept("anesthetist")
-  #
-  result << create_question_with_concept("procedure_date_patient_reported")
-  result << create_question_with_concept("referring_surgeon")
+  PATIENT_ASSESSMENT_CONCEPTS.each do |concept|
+    result << create_question_with_concept(concept)
+  end
   result
 end
+
+def fill_patient_assessment_data suffix
+  result = {}
+  PATIENT_ASSESSMENT_CONCEPTS.each do |concept|
+    result[concept] = concept + '_'+ suffix
+  end
+  result
+end
+
 
 def default_patient_form
   if @patient_form.nil?

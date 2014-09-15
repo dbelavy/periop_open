@@ -107,7 +107,7 @@ def populate_patient_assessment options
   fill_answers options[:answers]
   select_random_values
   click_button "Submit"
-  page.should have_content "Assessment was successfully created"
+  page.should have_content "assessment has been sent"
 end
 
 def populate_generated_patient_assessment index,professional

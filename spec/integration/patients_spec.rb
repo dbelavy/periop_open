@@ -23,14 +23,14 @@ describe "patient tests" do
 
   describe "start page", :js => true do
     it "should display choose doctor" do
-      expect(page).to have_content ("Who is your doctor?")
+      expect(page).to have_content ("Select your doctor")
       expect(page).to have_css("#doctor")
     end
   end
 
   describe "when no doctor selected", :js => true do
     it "should display patient assesssment" do
-    click_button "Pre-op assessment"
+    click_button "Fill in assessment"
     should_have_no_errors
     page.should_not have_content 'doctor specific ' + @anesthetist.name
     end
@@ -39,16 +39,22 @@ describe "patient tests" do
   describe "when doctor selected", :js => true do
     it "should display patient assesssment" do
       page.find('#doctor/option[text()="' + @anesthetist["name"] + '"]').select_option
-      click_button "Pre-op assessment"
+      click_button "Fill in assessment"
       should_have_no_errors
       page.should have_content 'doctor specific ' + @anesthetist.name
+      fill_answers(fill_patient_assessment_data 'john dow')
+      select_random_values
+      click_button "Submit"
+      page.should have_content "assessment has been sent"
+      a = Assessment.all.first
+      expect(a.get_anesthetist_id).eql? @anesthetist._id
     end
   end
 
   describe "when other doctor selected", :js => true do
     it "should display patient assesssment" do
       page.find('#doctor/option[text()="' + @other_anesthetist["name"] + '"]').select_option
-      click_button "Pre-op assessment"
+      click_button "Fill in assessment"
       should_have_no_errors
       page.should_not have_content 'doctor specific ' + @anesthetist.name
     end
