@@ -1,5 +1,6 @@
 class Professional
   include Mongoid::Document
+  extend Slug
 
   SURGEON = 'Surgeon'
   ANESTHETIST = 'Anesthetist'
@@ -27,11 +28,6 @@ class Professional
   def slug
     Professional.name_to_slug(self.name)
   end
-
-  def self.name_to_slug name
-    name.tr(" ","-")
-  end
-
 
   def self.find_by_slug slug
     find(:all).where(:name => slug.tr("-"," ")).first

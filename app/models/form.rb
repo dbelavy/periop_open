@@ -7,6 +7,7 @@ class Form
   field :person_role, :type => Array
 
   field :professional_id, :type => String
+  field :professional_name, :type => String
   has_and_belongs_to_many :questions, inverse_of: nil
 
   PATIENT_ASSESSMENT = "Patient assessment"
@@ -17,14 +18,15 @@ class Form
   NEW_OPERATION = "New Operation"
 
   def self.patient_form professional_slug
-    professional = Professional.find_by_slug professional_slug if !professional_slug.nil?
-    patient_form_by_professional(professional)
+    patient_form_by_professional_name(Professional.slug_to_name(professional_slug))
   end
 
-
   def self.patient_form_by_professional_name professional_name
-    professional = Professional.find_by_name professional_name if !professional_name.nil?
-    patient_form_by_professional(professional)
+    form = self.where(name: PATIENT_ASSESSMENT, professional_name: professional_name).first
+    if form.nil?
+      form = self.where(name: PATIENT_ASSESSMENT, professional_name: nil).first
+    end
+    form
   end
 
   def self.new_patient_form

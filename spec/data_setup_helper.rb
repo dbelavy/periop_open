@@ -12,7 +12,7 @@ end
 
 
 def doctor_patient_form professional
-  patient_form = create(:form,name: Form::PATIENT_ASSESSMENT,professional_id: professional._id)
+  patient_form = create(:form,name: Form::PATIENT_ASSESSMENT,professional_name: professional.name)
   patient_form.questions = setup_questions
   patient_form.questions.push(create_question_with_concept('doctor specific ' + professional.name))
   patient_form.save!
