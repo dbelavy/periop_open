@@ -21,7 +21,7 @@ class Answer
       return array_value * ","
     end
     if !date_value.nil?
-      return date_value
+      return date_value.to_s
     end
     if !id_value.nil? && !id_value.blank?
       return Professional.find(id_value).label
