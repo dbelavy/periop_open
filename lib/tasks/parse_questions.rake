@@ -83,11 +83,15 @@ end
 
 
 def delete_data
-  puts 'delete_data'
-  Form.delete_all
-  Category.delete_all
-  Concept.delete_all
-  Question.delete_all
+  # only to be used on development
+  puts 'delete_data!!!'
+  if !Rails.dev?
+    raise "ypu are going to delete all data"
+  end
+  #Form.delete_all
+  #Category.delete_all
+  #Concept.delete_all
+  #Question.delete_all
 end
 
 def create_forms
