@@ -102,9 +102,12 @@ def create_forms
 
   @custom_patient_assessments_cols.keys.each do |name|
     professional = Professional.find_by_name name
-    raise Exception.new('professional not found for name ' + name) if professional.nil?
-    puts 'find  or create custom patient form for doctor ' + name
-    Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT,professional_id: professional._id).update_attributes(person_role: [Question::PATIENT])
+    if professional.nil?
+      puts ('Skipping questionaire for ' + name + ' doctor not found')
+    else
+      puts 'Find  or create custom patient form for doctor ' + name
+      Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT,professional_id: professional._id).update_attributes(person_role: [Question::PATIENT])
+    end
   end
 end
 
