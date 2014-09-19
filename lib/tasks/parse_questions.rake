@@ -370,16 +370,22 @@ end
         elsif !questions_array.include? ans.question_id
           # find analogue question
           if (@@alternate_questions[form][ans.question_id].nil?)
-            concept = Question.find(ans.question_id).concept
-            question = form.questions.by_concept(concept)
+            question = Question.find(ans.question_id)
             if question.nil?
+              puts 'Question : ' + ans.question_id + ' not exist in DB !!! Form :' + form._id  + ' form.name ' + form.name
+                       ' answer : ' + ans._id + ' answer.value : ' + ans.value_to_s + 'Patient ' + assessment.patient.to_s
+              next
+            end
+            concept = Question.find(ans.question_id).concept
+            question_with_same_concept = form.questions.by_concept(concept)
+            if question_with_same_concept.nil?
               message = 'no alternate question with concept : ' +concept.name + ' exist in form :' + form._id.to_s
               Rails.logger.error message
               puts message
               @@alternate_questions[form][ans.question_id] = -1
               next
             else
-              @@alternate_questions[form][ans.question_id] = question._id
+              @@alternate_questions[form][ans.question_id] = question_with_same_concept._id
             end
           end
           if @@alternate_questions[form][ans.question_id] != -1
