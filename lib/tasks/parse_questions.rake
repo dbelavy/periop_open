@@ -273,6 +273,7 @@ def parse_questions doc
       column = @custom_patient_assessments_cols[name]
       if doc.cell(line, column)
         form = Form.patient_form(Professional.name_to_slug(name))
+        puts 'adding question : ' + question.display_name + ' for doctor ' + name + ' form : ' + form._id.to_s
         form.questions.push(question)
       end
     end
@@ -281,7 +282,7 @@ def parse_questions doc
   end
 
   @custom_patient_assessments_cols.keys.each do |name|
-    puts 'patient form ' + name + " questions : " + Form.patient_form(Professional.name_to_slug(name)).questions.size.to_s
+    puts 'patient form for doctor ' + name + "have " + Form.patient_form(Professional.name_to_slug(name)).questions.size.to_s + " questions"
   end
 
   display_deleted_questions(all_question_ids)
@@ -480,7 +481,12 @@ end
     while !done do
       doctor_name = doc.cell(1, column)
       if !doctor_name.nil? && (!doctor_name.empty?)
-        result[doctor_name]=column
+        professional = Professional.find_by_name doctor_name
+        if professional.nil?
+          puts ('Skipping questionaire for ' + doctor_name + ' doctor not found')
+        else
+          result[doctor_name]=column
+        end
         column +=1
       else
         done = true

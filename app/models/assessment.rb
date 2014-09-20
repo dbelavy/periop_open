@@ -194,7 +194,7 @@ class Assessment
 
   def form= form
     self.name= form.name
-    self.doctor_name= form.professional_name
+    self.doctor_name= Professional.find(form.professional_id).name if !form.professional_id.nil?
   end
 
   def patient_assesment_title
