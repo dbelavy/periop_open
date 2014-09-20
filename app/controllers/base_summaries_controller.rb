@@ -13,9 +13,9 @@ class BaseSummariesController < ApplicationController
       concept = ans.question.concept
       concept_id = concept._id
       category =  ans.question.concept.category
-      logger.debug 'category :' + category.summary_display
+      logger.debug 'category :' + (category.summary_display||'NULL')
       logger.debug 'concept :' + concept.name
-      logger.debug 'answer : ' + ans.value_to_s.to_s
+      logger.debug 'answer : ' + ans.value_to_s
       logger.debug 'answer : ' + ans.details if !ans.details.nil?
       if @summary[category._id].nil?
         @summary[category._id] = {}
