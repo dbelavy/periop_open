@@ -4,9 +4,9 @@ require 'rubygems' #so it can load gems
 namespace :db do
   desc "Fill database with sample data"
   task migrate_patient_fields: :environment do
+    puts 'migrate_patient_fields'
     Patient.all.each do |patient|
       patient.update_values
-      puts 'patient updated' + patient.to_s
     end
   end
 
@@ -59,8 +59,9 @@ namespace :db do
 
 
   def delete_unused_concepts_and_questions
+    puts 'delete_unused_concepts_and_questions'
     deleted_concept_names = Concept.all.map{|c| c.name}
-    doc = Excel.new("./spreadsheet/Question_properties.xls")
+    doc = open_doc
     doc.default_sheet = 'Concept heirarchy position'
     3.upto(doc.last_row) do |line|
         if doc.cell(line, 'A').blank?

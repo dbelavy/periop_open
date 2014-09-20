@@ -86,7 +86,7 @@ def delete_data
   # only to be used on development
   puts 'delete_data!!!'
   if !Rails.dev?
-    raise "ypu are going to delete all data"
+    raise "you are going to delete all data"
   end
   #Form.delete_all
   #Category.delete_all
@@ -98,7 +98,6 @@ def create_forms
   puts 'create_forms'
   Form.find_or_create_by(name: Form::NEW_PATIENT).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::PATIENT_ASSESSMENT).update_attributes(person_role: [Question::PATIENT])
-  Form.find_or_create_by(name: Form::TELEPHONE_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::CLINIC_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::NEW_OPERATION).update_attributes(person_role: [Question::PROFESSIONAL])
   Form.find_or_create_by(name: Form::QUICK_NOTE_ASSESSMENT).update_attributes(person_role: [Question::PROFESSIONAL])
@@ -171,9 +170,6 @@ def parse_questions doc
   default_patient_form = Form.where(name: Form::PATIENT_ASSESSMENT).first
   default_patient_form.clear_questions
 
-  telephone_form = Form.where(name: Form::TELEPHONE_ASSESSMENT).first
-  telephone_form.clear_questions
-
   clinic_form = Form.where(name: Form::CLINIC_ASSESSMENT).first
   clinic_form.clear_questions
 
@@ -190,7 +186,6 @@ def parse_questions doc
   used_in_new_patient_col = column_for(doc,"New_Patient_Form")
   used_in_patient_assessment_col = column_for(doc,"Question used in patient assessment")
   used_in_professional_assessment_col = column_for(doc,"Professional_assessment")
-  used_in_telephone_assessment_col = column_for(doc,"Question used in telephone assessment by professional")
   used_in_new_operation_assessment_col = column_for(doc,"New_Operation_Form")
   used_in_quick_note_assessment_col = column_for(doc,"Quick_note")
 
@@ -259,10 +254,6 @@ def parse_questions doc
     end
     if doc.cell(line, used_in_new_patient_col)
       new_patient_form.questions.push question
-    end
-    if doc.cell(line, used_in_telephone_assessment_col)
-      #  add to form
-      telephone_form.questions.push question
     end
     if doc.cell(line, used_in_professional_assessment_col)
       #  add to form
@@ -447,7 +438,7 @@ end
     task update_questions: :environment do
         require 'roo'
         #doc = Excel.new("./spreadsheet/Question_properties.xls")
-        doc = Openoffice.new("./spreadsheet/Question_properties_OO.ods")
+        doc = open_doc
         @custom_patient_assessments_cols = populate_custom_patient_assessments_cols doc
         create_forms
         parse_categories(doc)
@@ -473,6 +464,11 @@ end
       Rails.logger.warn message
     end
 
+    def open_doc
+      Openoffice.new("./spreadsheet/Question_properties_OO.ods")
+    end
+
+
     private
 
   def populate_custom_patient_assessments_cols doc
@@ -480,7 +476,7 @@ end
     result = {}
     done = false
     # start column position of doctors custom patient assessment
-    column = 20
+    column = column_for(doc,"Dr David Belavy")
     while !done do
       doctor_name = doc.cell(1, column)
       if !doctor_name.nil? && (!doctor_name.empty?)
@@ -490,6 +486,7 @@ end
         done = true
       end
     end
+    puts ' doctor\'s patitent assessments : '  + result.inspect
     result
   end
 end

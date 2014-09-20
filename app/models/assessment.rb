@@ -66,7 +66,7 @@ class Assessment
       question_answers = self.answers.where(:question_id => q._id)
       if question_answers.size > 1
         message = '!!!  assessment  ' + self._id.to_s + ' is invalid ' + ' question ' +
-            q.to_s + ' have more than one answers:' + question_answers.all.map{|a| a.value_to_s }.to_s
+            q.concept.name.to_s + ' have more than one answers:' + question_answers.all.map{|a| a.value_to_s }.to_s
         logger.error message
         puts message
         result = false
