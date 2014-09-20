@@ -30,9 +30,7 @@ class Patient
 
 
   def get_answer_value_from_patient_form concept_name
-    answer = self.new_patient_assessment.find_answer_value_by_concept_name concept_name
-    puts 'get_answer_value_from_patient_form  ' + concept_name + ' value: ' + answer.to_s
-    answer
+    self.new_patient_assessment.find_answer_value_by_concept_name concept_name
   end
 
   def get_answer_from_patient_form concept_name
@@ -92,7 +90,6 @@ class Patient
   end
 
   def get_recent_answer concept
-    puts ' get_recent_answer ' + concept.to_s
     recent_answer = nil
     self.assessments.each do |a|
       answer =  a.find_answer_by_concept_name concept

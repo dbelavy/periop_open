@@ -50,10 +50,9 @@ namespace :db do
   end
 
   def update_unassigned_assessments
-    puts ' update_unassigned_assessments '
+    puts 'update_unassigned_assessments '
     Assessment.unassigned.each do |a|
       #this will run callbacks again so anesthetist will be assigned if available
-      puts a.inspect
       a.save
     end
   end
@@ -82,6 +81,7 @@ namespace :db do
   end
 
   def update_assessments
+    puts 'update_assessments'
     Assessment.all.each do |a|
       if a.name.nil?
         puts 'assessment name is nil ' + a._id.to_s
@@ -121,26 +121,22 @@ namespace :db do
   end
 
   task lookup_field_value: :environment do
+    #this is probably redundant now cause all data should be good already
+    puts ' fix lookup field values. Change from professional_name -> professional._id '
     q_ids = Question.where(input_type: "Lookup_User_Anesthetist").map{|q| q._id}
-    puts q_ids.to_s
     Assessment.all.each do |a|
       answers = a.answers.in(question_id: q_ids)
       if (!answers.nil?)
-        puts 'answers  ' + answers.to_s + ' '+ answers.size.to_s
         answers.each do |ans|
           if ans.value_to_s.blank?
-            puts 'skipping empty answer'
             next
           end
-          puts " lookup answer found : " + ans._id.to_s + " : "  + ans.value_to_s.to_s
           professional = Professional.where(name: ans[:value]).first
           if !professional.nil?
-            puts ' found : '  +Professional.where(name: ans[:value]).size.to_s + ' professionals'
             ans[:value] = professional._id
             ans.save!
           end
           if (ans[:id_value].nil? || ans[:id_value].blank?)
-          puts 'setting id_value ' + ans[:value].to_s + "answer " + ans.inspect
           ans[:id_value] = ans[:value]
           ans[:value] = nil
           ans.save!
@@ -172,7 +168,6 @@ namespace :db do
         p[hash[:new_key]]= hash[:value]
         puts "setting "  + hash[:new_key].to_s + "=>  " + hash[:value].to_s
       end
-      puts "new object" + p.to_s
       p.update
     end
 
@@ -188,12 +183,12 @@ namespace :db do
 
 
   def check_sections
+    puts ' check_sections '
     Form.all.each do |form|
       form_name =  form.name
       if !form.professional_id.nil?
         form_name += ' doctor : ' + Professional.find(form.professional_id).name
       end
-      puts '      checking form : ' + form_name
 
       open_tag = ""
       form.questions.sorted.each do |q|
@@ -242,7 +237,5 @@ namespace :db do
       u.update_with_password params
       u.save!
     end
-
-    end
-
+  end
 end
