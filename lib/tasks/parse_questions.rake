@@ -366,13 +366,13 @@ end
         elsif !questions_array.include? ans.question_id
           # find analogue question
           if (@@alternate_questions[form][ans.question_id].nil?)
-            question = Question.find(ans.question_id)
-            if question.nil?
-              log_error 'Question : ' + ans.question_id + ' not exist in DB !!! Form :' + form._id  + ' form.name ' + form.name
-                       ' answer : ' + ans._id + ' answer.value : ' + ans.value_to_s + 'Patient ' + assessment.patient.to_s
+            if !Question.where(_id: ans.question_id).exists?
+              log_error 'Question : ' + ans.question_id.to_s + ' not exist in DB !!! Form :' + form._id.to_s  + ' form.name ' + form.name
+                        ' answer : ' + ans._id.to_s + ' answer.value : ' + ans.value_to_s + 'Patient ' + assessment.patient.to_s
               next
             end
-            concept = Question.find(ans.question_id).concept
+            question = Question.find(ans.question_id)
+            concept = question.concept
             question_with_same_concept = form.questions.by_concept(concept)
             if question_with_same_concept.nil?
               log_error 'no alternate question with concept : ' +concept.name + ' exist in form :' + form._id.to_s + ' answer.value : ' + ans.value_to_s
