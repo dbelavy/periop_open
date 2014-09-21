@@ -367,7 +367,9 @@ end
           # find analogue question
           if (@@alternate_questions[form][ans.question_id].nil?)
             if !Question.where(_id: ans.question_id).exists?
-              log_error 'Question : ' + ans.question_id.to_s + ' not exist in DB !!! Assessment :' + assessment._id.to_s + ' form.name ' + form.name + ' answer : ' + ans._id.to_s + ' answer.value : ' + ans.value_to_s + ' Patient ' + assessment.patient.to_s
+              log_error '!! Question : ' + ans.question_id.to_s + ' not exist in DB !!! Assessment :' + assessment._id.to_s + ' form.name ' + form.name + ' answer : ' + ans._id.to_s + ' answer.value : ' + ans.value_to_s + ' Patient ' + assessment.patient.to_s
+              log_error 'Answer will be deleted !!!'
+              ans.delete
               next
             end
             question = Question.find(ans.question_id)
