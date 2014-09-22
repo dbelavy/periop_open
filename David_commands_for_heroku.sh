@@ -1,6 +1,6 @@
 #!/bin/bash
 PS3='Please enter your choice: '
-options=("Change to Demo user" "Change to Production user"  "Ad hoc backup Demo" "Ad hoc backup Production" "Keep Demo alive" "Push to Demo" "Push to Production" "Push to Staging" "Push to Github" "Push to All including Github" "Quit")
+options=("Change to Demo user" "Change to Production user"  "Ad hoc backup Demo" "Ad hoc backup Production" "Keep Demo alive" "Push to Demo" "Push to Production" "Push to Staging with db migrate" "Push to Staging WITHOUT DB migration" "Push to Github" "Push to All including Github" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -57,7 +57,7 @@ do
 			heroku run rake db:migrate --app pre-op
 			echo "*******Check all the messages to ensure none of it failed*******"
 			;;
-		"Push to Staging")
+		"Push to Staging with db migrate")
 			echo "You chose to Push to Staging"
 			echo "Set account to Demo"
 			heroku accounts:set Demo
@@ -68,8 +68,17 @@ do
 			echo "Run migration script"
 			heroku run rake db:migrate --app periop
 			echo "*******Check all the messages to ensure none of it failed*******"
-			;;
-
+			;;	
+ 	  	"Push to Staging WITHOUT DB migration")
+            		echo "You chose to Push to Staging"
+            		echo "Set account to Demo"
+            		heroku accounts:set Demo
+            		echo "Push"
+            		git push -v --tags staging master:master
+            		echo "Update questions"
+        	    	heroku run rake db:update_questions --app periop
+           		 echo "*******Check all the messages to ensure none of it failed*******"
+            		;;
 
 		 "Push to Github")
 			echo "You chose push to Github"
