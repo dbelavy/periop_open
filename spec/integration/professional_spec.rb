@@ -72,6 +72,21 @@ describe "professional tests" do
       end
     end
 
+    describe "procedure management", :js => true do
+
+      before :each do
+        visit '/'
+      end
+
+
+      it "should display assessment page" do
+        expect(page).to have_link("Procedure management")
+        click_link("Procedure management")
+        should_have_no_errors
+      end
+    end
+
+
 
     describe "patient_create", :js => true, :disabled => true do
       it "should create patient " do
