@@ -17,10 +17,10 @@ class Ability
       user ||= User.new # create guest user (not logged in)
       if user.admin?
         Rails.logger.debug 'admin user'
-        can [:read,:destroy], Patient
+        can [:read,:destroy, :edit, :update], Patient
         can :manage, Professional
         can :manage, User
-        can [:unassigned,:read], Assessment
+        can [:unassigned,:read, :assign, :unassign], Assessment
         can :manage, Question
       elsif user.professional?
         Rails.logger.debug 'checking ability for professional ' + user.inspect
