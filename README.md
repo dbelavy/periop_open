@@ -12,9 +12,9 @@ The purpose of the application is to prepare a summary of a patient’s health b
 
 The information in this summary comes from 
 
-1. patient procedure information
-2. patient assessment completed by the patient (the form that I want you to work on)
-3. clinician assessment completed by the doctor.
+1. procedure information (New Procedure form - formerly new patient form)
+2. patient assessment form completed by the patient (the form that I want you to work on)
+3. clinician assessment form completed by the doctor.
 
 All of the questions are defined in the OpenOffice spreadsheet
 
@@ -32,16 +32,16 @@ Columns
 * E: Question text
 * F: Conditions for displaying the question.  This refers to the "concept" for questions asked earlier in the form.
 * G: Input type refers to how the data is collected
-** 	Statement - no input, puts a statement on the form
-**	Start_section - used form marking the start of a section (currently concertina and only used on Clinician Assessment Form)
-**	End_section - used form marking the end of a section
-**	Free_text - text box
-**	Text_box - larger text box
-**	Date - datepicker 
-**	OneOption - currently a dropdown but should be a radio button
-**	Lookup_User_Anesthetist - looks up a list of users
-**	ManyOptions - checkboxes
-**	Number - not sure if this really is a type or if it is stored as text
+ *	Statement - no input, puts a statement on the form
+ *	Start_section - used form marking the start of a section (currently concertina and only used on Clinician Assessment Form)
+ *	End_section - used form marking the end of a section
+ *	Free_text - text box
+ *	Text_box - larger text box
+ *	Date - datepicker 
+ *	OneOption - currently a dropdown but should be a radio button
+ *	Lookup_User_Anesthetist - looks up a list of users
+ *	ManyOptions - checkboxes
+ *	Number - not sure if this really is a type or if it is stored as text
 * H: Option list for OneOption and ManyOptions (the options are shown in the Option_List tab)
 * I: Length of text - I’m not sure if this is used or not
 * J: Ask_details - if this is Y, it will ask for more details if the answer matches column K
@@ -65,8 +65,8 @@ The view "assessments" determines how the questions are displayed.
 Important tasks
 
 1. Stop users from hitting enter and prematurely submitting the form
-2. Radio buttons
-3. Break the form up into sections to stop users taking the form out of order.  Age and gender a key inputs that determine much of the subsequent form and should be determined on the first page.  I can add a new section_break to the spreadsheet to help break up the forms.
+2. Radio buttons.  The option lists include a blank but the blanks can be removed when radio buttons are done.
+3. Break the form up into sections to stop users taking the form out of order.  Age and gender are key inputs that determine much of the subsequent form and should be determined on the first page.  I can add a new section_break to the spreadsheet to help break up the forms.
 4. Progress indicator
 5. Mobile friendly
 

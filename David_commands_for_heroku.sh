@@ -1,6 +1,6 @@
 #!/bin/bash
 PS3='Please enter your choice: '
-options=("Change to Demo user" "Change to Production user"  "Ad hoc backup Demo" "Ad hoc backup Production" "Keep Demo alive" "Push to Demo" "Push to Production" "Push to Staging with db migrate" "Push to Staging WITHOUT DB migration" "Push to Github" "Push to All including Github" "Quit")
+options=("Change to Demo user" "Change to Production user"  "Ad hoc backup Demo" "Ad hoc backup Production" "Keep Demo alive" "Push to Demo" "Push to Production" "Push to Staging with db migrate" "Push to Staging WITHOUT DB migration" "Push to Github" "Push to All including Github" "Use Inspectlet" "Turn Inspectlet off" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -134,7 +134,15 @@ do
 
 			;;
 			
-
+		"Use Inspectlet")
+			heroku accounts:set Production
+			heroku config:set USE_INSPECTLET=true --app pre-op
+			;;
+			
+		"Turn Inspectlet off")
+			heroku accounts:set Production
+			heroku config:set USE_INSPECTLET=false --app pre-op
+			;;
 
 
 
