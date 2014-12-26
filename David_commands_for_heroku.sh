@@ -19,7 +19,7 @@ do
             ;;
         "Ad hoc backup Production")
             echo "you chose choice Ad hoc backup Production"
-            heroku run rake mongo:backup --app pre-op
+            heroku run rake mongo:backup --app periop-com-au
             ;;
         "Keep Demo alive")
         	echo "you chose Keep demo alive"
@@ -48,13 +48,13 @@ do
 			echo "Set account to Production"
 			heroku accounts:set Production
 			echo "Backup Production"
-			heroku run rake mongo:backup --app pre-op
+			heroku run rake mongo:backup --app periop-com-au
 			echo "Push"
-			git push -v --tags production master:master
+			git push -v --tags periop-com-au master:master
 			echo "Update questions"
-			heroku run rake db:update_questions --app pre-op
+			heroku run rake db:update_questions --app periop-com-au
 			echo "Run migration script"
-			heroku run rake db:migrate --app pre-op
+			heroku run rake db:migrate --app periop-com-au
 			echo "*******Check all the messages to ensure none of it failed*******"
 			;;
 		"Push to Staging with db migrate")
@@ -122,26 +122,25 @@ do
 			echo "Set account to Production"
 			heroku accounts:set Production
 			echo "Backup Production"
-			heroku run rake mongo:backup --app pre-op
+			heroku run rake mongo:backup --app periop-com-au
 			echo "Push"
-			git push -v --tags production master:master
+			git push -v --tags periop-com-au master:master
 			echo "Update questions"
-			heroku run rake db:update_questions --app pre-op
+			heroku run rake db:update_questions --app periop-com-au
 			echo "Run migration script"
-			heroku run rake db:migrate --app pre-op
+			heroku run rake db:migrate --app periop-com-au
 			echo "*******Check all the messages to ensure none of it failed*******"
-			echo "*******remember to update the backup for pre-op-demo.herokuapp.com*******"
 
 			;;
 			
 		"Use Inspectlet")
 			heroku accounts:set Production
-			heroku config:set USE_INSPECTLET=true --app pre-op
+			heroku config:set USE_INSPECTLET=true --app periop-com-au
 			;;
 			
 		"Turn Inspectlet off")
 			heroku accounts:set Production
-			heroku config:set USE_INSPECTLET=false --app pre-op
+			heroku config:set USE_INSPECTLET=false --app periop-com-au
 			;;
 
 
