@@ -62,7 +62,7 @@ Periop::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { :host => 'www.pre-op.net' }
+  config.action_mailer.default_url_options = { :host => 'www.periop.com.au' }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
   config.action_mailer.delivery_method = :smtp
@@ -82,7 +82,7 @@ Periop::Application.configure do
 
   config.contact_mail_target = "enquiries@pre-op.net"
   config.mail_sender = "no-reply@pre-op.net"
-  config.site_url = "Pre-op.net"
+  config.site_url = "periop.com.au"
   config.environment_type = "live"
 
   config.registerable = false

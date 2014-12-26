@@ -21,3 +21,7 @@ export_env.sh
 run_guard.sh
 Heartbleed\ re-key/
 SSL\ Certs/
+<<<<<<< HEAD
+=======
+
+>>>>>>> last_good

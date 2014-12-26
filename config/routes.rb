@@ -7,7 +7,7 @@ Periop::Application.routes.draw do
   #}
   #end
 
-  constraints(:host => "pre-op.net") do
+  constraints(:host => "periop.com.au") do
     match "(*x)" => redirect {|params, request|
       URI.parse(request.url).tap { |x| x.host = "www.#{x.host}" }.tap { |x| x.scheme = "https"}.to_s
     }
