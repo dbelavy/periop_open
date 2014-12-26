@@ -20,4 +20,4 @@ pickle-email-*.html
 export_env.sh
 run_guard.sh
 Heartbleed\ re-key/
-
+SSL\ Certs/
