@@ -43,7 +43,7 @@ gem "bson_ext", ">= 1.6.2"
 gem "mongoid", ">= 2.4.10"
 gem "devise", ">= 2.1.3"
 gem "will_paginate_mongoid"
-gem "therubyracer", :group => :assets, :platform => :ruby
+gem "therubyracer", "0.12.1", :group => :assets, :platform => :ruby
 gem "simple_form"
 
 gem "select2-rails"
