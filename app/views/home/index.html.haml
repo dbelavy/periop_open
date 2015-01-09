@@ -1,8 +1,10 @@
 #welcome.hero-unit.centered
+  = image_tag 'logo.svg', "data-svg-fallback" => image_path('logo.png'), :class => "logo"
   - if (Rails.application.config.environment_type == 'live')
-    %h2
-      = Rails.application.config.site_url
-    %br
+    -# %h2
+    -#  = Rails.application.config.site_url
+    -# %br
+      
     %p
       We manage information for perioperative care.
       %br
