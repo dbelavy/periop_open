@@ -27,7 +27,7 @@
     = form_tag(patient_assessment_form_path,:method => :get) do
       .form-inputs
       = label_tag "doctor", "Select your doctor from the list:"
-      = select_tag("doctor",options_from_collection_for_select(anesthetists_option_list,:slug,:name),:include_blank => true,:input_html => {:class => 'question anesthetist-select'})
+      = select_tag("doctor",options_from_collection_for_select(anesthetists_option_list,:slug,:name),:include_blank => true, :allow_blank => false,:input_html => {:class => 'question anesthetist-select'})
       %br
       = submit_tag('Fill in assessment',:class=> "btn btn-success btn-large",:name => nil)
 -#
