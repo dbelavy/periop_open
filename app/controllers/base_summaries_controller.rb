@@ -11,7 +11,7 @@ class BaseSummariesController < ApplicationController
       end
       #puts 'answer ' + ans.value_to_s
       if ans.question.nil?
-        logger.debug 'question not exist for answer : ' + ans.to_s
+        logger.debug 'question not exist for answer : ' + ans.as_json.to_s
         next
       end
       concept = ans.question.concept
