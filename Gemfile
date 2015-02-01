@@ -55,7 +55,6 @@ group :test do
   gem 'capybara-screenshot'
 end
 
-gem "heroku"
 gem "cancan"
 
 gem "heroku-mongo-backup" ,github: 'akhitev/heroku-mongo-backup'

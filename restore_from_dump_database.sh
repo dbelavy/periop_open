@@ -1,9 +1,9 @@
 #!/bin/sh
 
-if  [$1 == 'live']  ; then
+if  $1 == 'live'  ; then
 
 # live
-  mongorestore -h localhost --drop -d periop_development dump/heroku/app8014812/
+  mongorestore -h localhost --drop -d periop_development dump/heroku/app32123745/
 
 else
 # staging

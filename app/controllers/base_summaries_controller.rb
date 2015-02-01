@@ -10,6 +10,10 @@ class BaseSummariesController < ApplicationController
         next
       end
       #puts 'answer ' + ans.value_to_s
+      if ans.question.nil?
+        logger.debug 'question not exist for answer : ' + ans.to_s
+        next
+      end
       concept = ans.question.concept
       concept_id = concept._id
       category =  ans.question.concept.category
