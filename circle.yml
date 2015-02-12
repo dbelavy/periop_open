@@ -4,3 +4,7 @@ machine:
 test:
   override:
     - RAILS_ENV=test bundle exec rspec
+notify:
+  webhooks:
+    - url: https://codecop.encore.io/api/hooks/circle.json
+
